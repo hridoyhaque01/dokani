@@ -1,0 +1,18 @@
+.sidebar {
+  transition: width 0.4s all ease-in-out;
+}
+
+.sidebar .active {
+  background-color: #faf4f4;
+  color: #ef5777;
+  border-radius: 16px;
+}
+
+/* .sidebar .active svg, */
+.sidebar .active svg path {
+  fill: #ef5777 !important;
+}
+
+.sidebar .active .stoke {
+  stroke: #ef5777;
+}
