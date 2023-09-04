@@ -12,7 +12,7 @@ function FeaturedFrom() {
     {
       id: 1,
       fileUrl: avatar,
-      name: "Mahhen Hasandddddddddddddddddddddddddddddddddddddd",
+      name: "Mahhen Hasan",
       email: "example@email.com",
       points: 50,
       category: "Nature",
