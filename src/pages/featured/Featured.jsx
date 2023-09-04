@@ -5,11 +5,11 @@ import NoData from "../../components/shared/ui/NoData";
 import SomethingWrong from "../../components/shared/ui/SomethingWrong";
 // import SalesTable from "../../components/tables/sales/SalesTable";
 import { avatar } from "../../assets/getAssets";
-import FeaturedTable from "../../components/tables/featured/FeaturedTable";
+import FeaturedCards from "../../components/shared/cards/FeaturedCards";
 function Featured() {
   const isLoading = false;
   const isError = false;
-  const [data] = useState([
+  const [data, setData] = useState([
     {
       id: 1,
       fileUrl: avatar,
@@ -18,7 +18,7 @@ function Featured() {
       points: 50,
       category: "Nature",
       timestamp: 1691027717,
-      status: false,
+      isTrending: false,
       downloaded: 12,
     },
     {
@@ -29,7 +29,7 @@ function Featured() {
       points: 40,
       category: "Nature",
       timestamp: 1693700791,
-      status: true,
+      isTrending: true,
       downloaded: 7,
     },
     {
@@ -40,7 +40,7 @@ function Featured() {
       points: 55,
       category: "Nature",
       timestamp: 1694501234,
-      status: false,
+      isTrending: false,
       downloaded: 10,
     },
     {
@@ -51,7 +51,7 @@ function Featured() {
       points: 62,
       category: "Nature",
       timestamp: 1695123456,
-      status: true,
+      isTrending: true,
       downloaded: 18,
     },
     {
@@ -62,7 +62,7 @@ function Featured() {
       points: 48,
       category: "Nature",
       timestamp: 1696012345,
-      status: false,
+      isTrending: false,
       downloaded: 15,
     },
     {
@@ -73,7 +73,7 @@ function Featured() {
       points: 37,
       category: "Nature",
       timestamp: 1697023456,
-      status: false,
+      isTrending: false,
       downloaded: 9,
     },
     {
@@ -84,7 +84,7 @@ function Featured() {
       points: 43,
       category: "Nature",
       timestamp: 1698009876,
-      status: true,
+      isTrending: true,
       downloaded: 11,
     },
     {
@@ -95,7 +95,7 @@ function Featured() {
       points: 57,
       category: "Nature",
       timestamp: 1699123456,
-      status: false,
+      isTrending: false,
       downloaded: 14,
     },
     {
@@ -106,7 +106,7 @@ function Featured() {
       points: 49,
       category: "Nature",
       timestamp: 1700023456,
-      status: false,
+      isTrending: false,
       downloaded: 16,
     },
     {
@@ -117,7 +117,7 @@ function Featured() {
       points: 58,
       category: "Nature",
       timestamp: 1700890123,
-      status: true,
+      isTrending: true,
       downloaded: 13,
     },
     {
@@ -128,7 +128,7 @@ function Featured() {
       points: 61,
       category: "Nature",
       timestamp: 1701754321,
-      status: false,
+      isTrending: false,
       downloaded: 20,
     },
     {
@@ -139,7 +139,7 @@ function Featured() {
       points: 46,
       category: "Nature",
       timestamp: 1702876543,
-      status: true,
+      isTrending: true,
       downloaded: 17,
     },
     {
@@ -150,7 +150,7 @@ function Featured() {
       points: 52,
       category: "Nature",
       timestamp: 1703123456,
-      status: true,
+      isTrending: true,
       downloaded: 8,
     },
     {
@@ -161,7 +161,7 @@ function Featured() {
       points: 39,
       category: "Nature",
       timestamp: 1704012345,
-      status: false,
+      isTrending: false,
       downloaded: 12,
     },
     {
@@ -172,10 +172,11 @@ function Featured() {
       points: 53,
       category: "Nature",
       timestamp: 1705123456,
-      status: false,
+      isTrending: false,
       downloaded: 11,
     },
   ]);
+
   const [searchValue, setSearchValue] = useState("");
 
   const onChange = (e) => {
@@ -183,8 +184,27 @@ function Featured() {
     setSearchValue(value);
   };
 
+  const toggleState = (id) => {
+    const updatedData = data?.map((item) => {
+      if (item?.id === id) {
+        return {
+          ...item,
+          isTrending: !item?.isTrending,
+        };
+      } else {
+        return item;
+      }
+    });
+
+    setData(updatedData);
+  };
+
   const sortByTime = (a, b) => {
     return b.timestamp - a.timestamp;
+  };
+
+  const filterByTrending = (data) => {
+    return data?.isTrending;
   };
 
   const filterBySearch = (data) => {
@@ -204,8 +224,13 @@ function Featured() {
   } else if (!isLoading && !isError && data?.length === 0) {
     content = <NoData></NoData>;
   } else if (!isLoading && !isError && data?.length > 0) {
-    const newData = [...data]?.sort(sortByTime)?.filter(filterBySearch);
-    content = <FeaturedTable data={newData}></FeaturedTable>;
+    const newData = [...data]
+      ?.filter(filterByTrending)
+      .sort(sortByTime)
+      ?.filter(filterBySearch);
+    content = (
+      <FeaturedCards data={newData} handler={toggleState}></FeaturedCards>
+    );
   }
 
   return (
@@ -217,7 +242,6 @@ function Featured() {
           value={searchValue}
           onChange={onChange}
         ></SearchBar>
-
         <div className="h-[calc(100%-75px)] overflow-auto flex flex-col justify-between flex-wrap">
           {content}
         </div>

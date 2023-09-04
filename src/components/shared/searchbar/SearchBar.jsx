@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function SearchBar({ title, value, onChange, path, isNotAddable, children }) {
   return (
-    <div className="bg-primaryColor px-3 py-4 sm:p-4 flex items-center justify-between">
+    <div className="bg-primaryColor px-3 py-4 sm:p-4 flex items-center justify-between rounded-t-2xl">
       <div className="flex items-center gap-8">
         <h4 className=" text-white text-lg sm:text-2xl font-bold">{title}</h4>
         {children}

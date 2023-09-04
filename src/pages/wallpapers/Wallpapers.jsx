@@ -66,7 +66,7 @@ function Wallpapers() {
   }
 
   return (
-    <section className="h-full w-full overflow-auto px-4 md:px-6 py-6">
+    <section className="h-full w-full px-4 md:px-6 py-6">
       <div className="bg-themeMid shadow-sm w-full h-full rounded-2xl overflow-hidden">
         <SearchBar
           title="Wallpapers"
@@ -75,10 +75,7 @@ function Wallpapers() {
           onChange={onChange}
           isNotAddable={true}
         ></SearchBar>
-
-        <div className="h-[calc(100%-75px)] overflow-auto flex flex-col justify-between flex-wrap">
-          {content}
-        </div>
+        <div className="h-[calc(100%-78px)]">{content}</div>
       </div>
     </section>
   );

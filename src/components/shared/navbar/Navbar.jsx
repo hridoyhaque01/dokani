@@ -2,11 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { profile } from "../../../assets/getAssets";
 
-function Navbar() {
+function Navbar({ toggleSidebar }) {
   return (
     <nav className="navbar py-5 px-8 bg-white">
       <div className="flex-1">
-        <button type="button">
+        <button type="button" onClick={() => toggleSidebar((prev) => !prev)}>
           <svg
             width="32"
             height="32"

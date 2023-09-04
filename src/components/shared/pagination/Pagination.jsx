@@ -27,7 +27,7 @@ export const Pagination = ({
   };
 
   return (
-    <section className="flex items-center justify-end gap-4 text-darkHigh w-full flex-nowrap whitespace-nowrap px-5 py-4 bg-white">
+    <section className="flex items-center justify-end gap-4 text-darkHigh w-full flex-nowrap whitespace-nowrap px-5 py-4 bg-white border-t border-slateLow">
       {/* <div>{renderPagination()}</div> */}
 
       <div className="flex items-center gap-2">
@@ -53,7 +53,7 @@ export const Pagination = ({
           </label>
           <ul
             tabIndex={3}
-            className="dropdown-content menu p-1 mt-2 m-0.5 shadow bg-whiteHigh rounded-md"
+            className="dropdown-content menu p-1 mt-2 m-0.5 shadow bg-white rounded-md"
           >
             <li>
               <p onClick={() => handleItemsPerPage(10)} className="py-1">

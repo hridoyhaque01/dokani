@@ -7,3 +7,13 @@
   --chkbg: var(--er);
   --chkfg: #fff;
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: #fff;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(238, 93, 124, 0.534);
+  border-radius: 10px;
+}
