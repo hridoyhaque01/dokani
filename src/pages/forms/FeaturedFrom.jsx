@@ -1,19 +1,18 @@
 import React, { useState } from "react";
-import SearchLoader from "../../components/loaders/SearchLoader";
-import SearchBar from "../../components/shared/searchbar/SearchBar";
-import NoData from "../../components/shared/ui/NoData";
-import SomethingWrong from "../../components/shared/ui/SomethingWrong";
-// import SalesTable from "../../components/tables/sales/SalesTable";
 import { avatar } from "../../assets/getAssets";
+import SearchLoader from "../../components/loaders/SearchLoader";
 import FeaturedCards from "../../components/shared/cards/FeaturedCards";
-function Featured() {
+import SearchBar from "../../components/shared/searchbar/SearchBar";
+import SomethingWrong from "../../components/shared/ui/SomethingWrong";
+
+function FeaturedFrom() {
   const isLoading = false;
   const isError = false;
   const [data, setData] = useState([
     {
       id: 1,
       fileUrl: avatar,
-      name: "Mahhen Hasan",
+      name: "Mahhen Hasandddddddddddddddddddddddddddddddddddddd",
       email: "example@email.com",
       points: 50,
       category: "Nature",
@@ -204,7 +203,7 @@ function Featured() {
   };
 
   const filterByTrending = (data) => {
-    return data?.isTrending;
+    return !data?.isTrending;
   };
 
   const filterBySearch = (data) => {
@@ -232,15 +231,15 @@ function Featured() {
       <FeaturedCards data={newData} handler={toggleState}></FeaturedCards>
     );
   }
-
   return (
     <section className="h-full w-full overflow-auto px-4 md:px-6 py-6">
       <div className="bg-themeMid shadow-sm w-full h-full rounded-2xl overflow-hidden">
         <SearchBar
-          title="Featured"
+          title="Featured Add"
           path="/featured-add"
           value={searchValue}
           onChange={onChange}
+          isNotAddable={true}
         ></SearchBar>
         <div className="h-[calc(100%-75px)] overflow-auto flex flex-col justify-between flex-wrap">
           {content}
@@ -250,4 +249,4 @@ function Featured() {
   );
 }
 
-export default Featured;
+export default FeaturedFrom;

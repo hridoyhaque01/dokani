@@ -5,6 +5,7 @@ import Login from "../pages/authentication/Login";
 import Categories from "../pages/categories/Categories";
 import Featured from "../pages/featured/Featured";
 import CategoriesForm from "../pages/forms/CategoriesForm";
+import FeaturedFrom from "../pages/forms/FeaturedFrom";
 import Home from "../pages/home/Home";
 import Notifications from "../pages/notifications/Notifications";
 import Profile from "../pages/profile/Profile";
@@ -67,6 +68,10 @@ export const routes = createBrowserRouter([
       {
         path: "/category-edit",
         element: <CategoriesForm></CategoriesForm>,
+      },
+      {
+        path: "/featured-add",
+        element: <FeaturedFrom></FeaturedFrom>,
       },
     ],
   },

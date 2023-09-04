@@ -62,8 +62,8 @@ export default function Home() {
       id: 3,
       title: "Total Wallpapers",
       number: 154225,
-      background: "bg-secondaryColor",
-      svgBg: "bg-errorHigh",
+      background: "bg-infoLight",
+      svgBg: "bg-infoHigh",
       svg: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -83,8 +83,8 @@ export default function Home() {
       id: 4,
       title: "Total Downloads",
       number: 25541,
-      background: "bg-secondaryColor",
-      svgBg: "bg-errorHigh",
+      background: "bg-successLight",
+      svgBg: "bg-successColor",
       svg: (
         <svg
           xmlns="http://www.w3.org/2000/svg"

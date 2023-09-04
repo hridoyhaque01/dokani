@@ -24,14 +24,28 @@ function FeaturedCards({ data, handler }) {
                 />
               </div>
               <div className="p-4 flex items-center justify-between">
-                <p className="font-semibold text-blackHigh">{item?.name}</p>
-                <button
-                  type="button"
-                  className="bg-fadeColor rounded-md py-2 px-4 text-white text-sm"
-                  onClick={() => handler(item?.id)}
-                >
-                  Remove
-                </button>
+                <p className="font-semibold text-blackHigh">
+                  {item?.name?.length > 18
+                    ? item?.name?.slice(0, 18) + "..."
+                    : item?.name}
+                </p>
+                {!item?.isTrending ? (
+                  <button
+                    type="button"
+                    className="bg-primaryColor rounded-md py-2 px-4 text-white text-sm"
+                    onClick={() => handler(item?.id)}
+                  >
+                    Set
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className="bg-fadeColor rounded-md py-2 px-4 text-white text-sm"
+                    onClick={() => handler(item?.id)}
+                  >
+                    Remove
+                  </button>
+                )}
               </div>
             </div>
           ))}
