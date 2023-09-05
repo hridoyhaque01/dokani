@@ -1,8 +1,10 @@
+import { Select } from "antd";
 import React, { useState } from "react";
 import { avatar } from "../../assets/getAssets";
 import SearchLoader from "../../components/loaders/SearchLoader";
 import FeaturedCards from "../../components/shared/cards/FeaturedCards";
 import SearchBar from "../../components/shared/searchbar/SearchBar";
+import NoData from "../../components/shared/ui/NoData";
 import SomethingWrong from "../../components/shared/ui/SomethingWrong";
 
 function FeaturedFrom() {
@@ -15,7 +17,7 @@ function FeaturedFrom() {
       name: "Mahhen Hasan",
       email: "example@email.com",
       points: 50,
-      category: "Nature",
+      category: "Pen & Ink",
       timestamp: 1691027717,
       isTrending: false,
       downloaded: 12,
@@ -26,7 +28,7 @@ function FeaturedFrom() {
       name: "Tusar Ahmed",
       email: "example@email.com",
       points: 40,
-      category: "Nature",
+      category: "Art",
       timestamp: 1693700791,
       isTrending: true,
       downloaded: 7,
@@ -37,7 +39,7 @@ function FeaturedFrom() {
       name: "John Doe",
       email: "example@email.com",
       points: 55,
-      category: "Nature",
+      category: "Pen & Ink",
       timestamp: 1694501234,
       isTrending: false,
       downloaded: 10,
@@ -48,7 +50,7 @@ function FeaturedFrom() {
       name: "Jane Smith",
       email: "example@email.com",
       points: 62,
-      category: "Nature",
+      category: "Art",
       timestamp: 1695123456,
       isTrending: true,
       downloaded: 18,
@@ -59,7 +61,7 @@ function FeaturedFrom() {
       name: "Alex Johnson",
       email: "example@email.com",
       points: 48,
-      category: "Nature",
+      category: "Illustrations",
       timestamp: 1696012345,
       isTrending: false,
       downloaded: 15,
@@ -70,7 +72,7 @@ function FeaturedFrom() {
       name: "Emily Davis",
       email: "example@email.com",
       points: 37,
-      category: "Nature",
+      category: "Art",
       timestamp: 1697023456,
       isTrending: false,
       downloaded: 9,
@@ -81,7 +83,7 @@ function FeaturedFrom() {
       name: "Michael Wilson",
       email: "example@email.com",
       points: 43,
-      category: "Nature",
+      category: "Illustrations",
       timestamp: 1698009876,
       isTrending: true,
       downloaded: 11,
@@ -92,7 +94,7 @@ function FeaturedFrom() {
       name: "Olivia Brown",
       email: "example@email.com",
       points: 57,
-      category: "Nature",
+      category: "Abstract",
       timestamp: 1699123456,
       isTrending: false,
       downloaded: 14,
@@ -103,7 +105,7 @@ function FeaturedFrom() {
       name: "William Lee",
       email: "example@email.com",
       points: 49,
-      category: "Nature",
+      category: "Sky",
       timestamp: 1700023456,
       isTrending: false,
       downloaded: 16,
@@ -114,7 +116,7 @@ function FeaturedFrom() {
       name: "Sophia Taylor",
       email: "example@email.com",
       points: 58,
-      category: "Nature",
+      category: "Sky",
       timestamp: 1700890123,
       isTrending: true,
       downloaded: 13,
@@ -125,7 +127,7 @@ function FeaturedFrom() {
       name: "Ethan Anderson",
       email: "example@email.com",
       points: 61,
-      category: "Nature",
+      category: "Abstract",
       timestamp: 1701754321,
       isTrending: false,
       downloaded: 20,
@@ -136,7 +138,7 @@ function FeaturedFrom() {
       name: "Ava Martin",
       email: "example@email.com",
       points: 46,
-      category: "Nature",
+      category: "Abstract",
       timestamp: 1702876543,
       isTrending: true,
       downloaded: 17,
@@ -147,7 +149,7 @@ function FeaturedFrom() {
       name: "Liam Garcia",
       email: "example@email.com",
       points: 52,
-      category: "Nature",
+      category: "Novelistic",
       timestamp: 1703123456,
       isTrending: true,
       downloaded: 8,
@@ -158,7 +160,7 @@ function FeaturedFrom() {
       name: "Mia Hernandez",
       email: "example@email.com",
       points: 39,
-      category: "Nature",
+      category: "Art",
       timestamp: 1704012345,
       isTrending: false,
       downloaded: 12,
@@ -169,14 +171,59 @@ function FeaturedFrom() {
       name: "Noah Martinez",
       email: "example@email.com",
       points: 53,
-      category: "Nature",
+      category: "Novelistic",
       timestamp: 1705123456,
       isTrending: false,
       downloaded: 11,
     },
   ]);
 
+  const [categories, setCategories] = useState([
+    {
+      id: 1,
+      fileUrl: avatar,
+      name: "Pen & Ink",
+      timestamp: 1693700791,
+    },
+    {
+      id: 2,
+      fileUrl: avatar,
+      name: "Art",
+      timestamp: 1693700791,
+    },
+    {
+      id: 3,
+      fileUrl: avatar,
+      name: "Illustrations",
+      timestamp: 1693700791,
+    },
+    {
+      id: 4,
+      fileUrl: avatar,
+      name: "Novelistic",
+      timestamp: 1693700791,
+    },
+
+    {
+      id: 6,
+      fileUrl: avatar,
+      name: "Abstract",
+      timestamp: 1693700791,
+    },
+    {
+      id: 7,
+      fileUrl: avatar,
+      name: "Sky",
+      timestamp: 1693700791,
+    },
+  ]);
+
   const [searchValue, setSearchValue] = useState("");
+  const [category, setCategory] = useState("all");
+
+  const handleChange = (value) => {
+    setCategory(value);
+  };
 
   const onChange = (e) => {
     const value = e.target.value;
@@ -213,6 +260,13 @@ function FeaturedFrom() {
       return true;
     }
   };
+  const filterByCategory = (data) => {
+    if (category === "all") {
+      return true;
+    } else {
+      return data?.category === category;
+    }
+  };
 
   let content = null;
 
@@ -224,6 +278,7 @@ function FeaturedFrom() {
     content = <NoData></NoData>;
   } else if (!isLoading && !isError && data?.length > 0) {
     const newData = [...data]
+      ?.filter(filterByCategory)
       ?.filter(filterByTrending)
       .sort(sortByTime)
       ?.filter(filterBySearch);
@@ -235,12 +290,25 @@ function FeaturedFrom() {
     <section className="h-full w-full overflow-auto px-4 md:px-6 py-6">
       <div className="bg-themeMid shadow-sm w-full h-full rounded-2xl overflow-hidden">
         <SearchBar
-          title="Featured Add"
+          title="Select Featured"
           path="/featured-add"
           value={searchValue}
           onChange={onChange}
           isNotAddable={true}
-        ></SearchBar>
+        >
+          <Select
+            className="whitespace-nowrap w-52"
+            defaultValue="all"
+            onChange={handleChange}
+          >
+            <Select.Option value="all">All</Select.Option>
+            {categories?.map((item, i) => (
+              <Select.Option value={item?.name} key={i}>
+                {item?.name}
+              </Select.Option>
+            ))}
+          </Select>
+        </SearchBar>
         <div className="h-[calc(100%-75px)] overflow-auto flex flex-col justify-between flex-wrap">
           {content}
         </div>

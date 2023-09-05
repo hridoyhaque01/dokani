@@ -10,11 +10,15 @@ export default {
       colors: {
         transparent: "transparent",
         white: "#fff",
-
+        "black-25": "rgba(0, 0, 0, 0.25)",
+        "black-04": "rgba(0, 0, 0, 0.04)",
         black: "#000",
         blackHigh: "#303C58",
         blackSemi: "#45526E",
         blackLow: "#707D9B",
+
+        blueColor: "#515EDB",
+        blueLight: "#F0F1FF",
 
         themeMid: "#EFF7FF",
         themeSemi: "#DAEDFF",
@@ -35,12 +39,15 @@ export default {
 
         successColor: "#7FC767",
         successHigh: "#2CC672",
+        successMid: "#12AA58",
+        successLow: "#EDFFF5",
         successLight: "#D9FFCC",
 
         errorColor: "#FF6B6B",
         errorHigh: "#F93A6E",
 
         fadeColor: "#B8B8B8",
+        fadeLight: "#F6F6F6",
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
