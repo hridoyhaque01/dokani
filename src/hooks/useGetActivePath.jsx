@@ -26,7 +26,7 @@ export default function useGetActivePath() {
       location?.pathname === "/category-edit"
     ) {
       dispatch(setActivePath("categories"));
-    } else if (location?.pathname === "/category-edit") {
+    } else if (location?.pathname === "/user-edit") {
       dispatch(setActivePath("users"));
     } else if (location?.pathname === "/featured-add") {
       dispatch(setActivePath("featured"));
@@ -34,6 +34,8 @@ export default function useGetActivePath() {
       dispatch(setActivePath("notification"));
     } else if (location?.pathname === "/profile") {
       dispatch(setActivePath(""));
+    } else if (location?.pathname === "/") {
+      dispatch(setActivePath("/"));
     }
   }, []);
 

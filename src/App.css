@@ -8,7 +8,48 @@
   --chkfg: #fff;
 }
 
+/* phone number input  */
+.PhoneInputCountrySelectArrow {
+  width: 0.5em !important;
+  height: 0.5em !important;
+  border-bottom-width: 2px !important;
+  border-right-width: 2px !important;
+  border-color: #555568 !important;
+  opacity: 1 !important;
+}
+
+.PhoneInputInput {
+  outline: none !important;
+  background-color: transparent !important;
+}
+
+.PhoneInputCountrySelect {
+  background-color: #fff;
+}
+
+.stdropdown-container {
+  border-color: #cdd2f0 !important;
+}
+
+.stsearch-box {
+  padding: 11px !important;
+}
+
+.stdropdown-input input {
+  border: none !important;
+  outline: none;
+  background-color: transparent;
+}
+
 /* ant style  */
+
+:where(.css-dev-only-do-not-override-nnuwmp).ant-picker {
+  padding: 17px 11px 17px;
+}
+
+.ant-picker-suffix {
+  color: #ef5777 !important;
+}
 
 .ant-select-arrow {
   display: none !important;
@@ -70,6 +111,13 @@
 /* ant style end  */
 
 /* daisy ui style start  */
+
+.menu li > *:not(ul):not(.menu-title):not(details):active,
+.menu li > *:not(ul):not(.menu-title):not(details).active,
+.menu li > details > summary:active {
+  background-color: transparent !important;
+  color: #303c58 !important;
+}
 
 .toggle-error:checked,
 .toggle-error[checked="true"],

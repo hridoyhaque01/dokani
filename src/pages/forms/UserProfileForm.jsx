@@ -1,30 +1,37 @@
-import { Select } from "antd";
+import { DatePicker, Select } from "antd";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 import React, { useEffect, useState } from "react";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 import { useLocation } from "react-router-dom";
 import { profile } from "../../assets/getAssets";
 import BackToPrev from "../../components/shared/back/BackToPrev";
-import PasswordInput from "../../components/shared/ui/PasswordInput";
-import checkStrong from "../../util/CheckStrong";
-import showPassword from "../../util/showPassword";
+import unixTimeToDate from "../../util/unixTimeToDate";
+dayjs.extend(customParseFormat);
 
-function Profile() {
-  const [role, setRole] = useState("admin");
-  const handleChange = (value) => {
-    setRole(value);
-  };
-
-  const location = useLocation();
-
-  const [isShowCurrentPassword, setIsShowCurrentPassword] = useState(false);
-  const [isShowNewPassword, setIsShowNewPassword] = useState(false);
-  const [isShowConfirmPassword, setIsShowConfirmPassword] = useState(false);
-  const [isShowCurrentIcon, setIsShowCurrentIcon] = useState(false);
-  const [isShowNewIcon, setIsShowNewIcon] = useState(false);
-  const [isShowConfirmIcon, setIsShowConfirmIcon] = useState(false);
-  const [isStrong, setIsStrong] = useState(false);
+function UserProfileForm() {
+  const [gender, setGender] = useState("male");
+  const [birthday, setBirthday] = useState();
+  const [value, setValue] = useState();
   const [imagePreview, setImagePreview] = useState(null);
   const [file, setFile] = useState(null);
   const [typeError, setTypeError] = useState(false);
+  const [timeLoading, setTimeLoading] = useState(true);
+
+  const { state } = useLocation();
+  const { payload } = state || {};
+
+  const handleChange = (value) => {
+    setGender(value);
+  };
+
+  console.log(payload);
+  console.log(value);
+
+  const onDateChange = (date, dateString) => {
+    setBirthday(dateString);
+  };
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -51,14 +58,21 @@ function Profile() {
   };
 
   useEffect(() => {
-    if (location?.pathname === "/profile") {
-      localStorage.setItem("activePath", "profile");
+    if (payload?.id) {
+      setImagePreview(payload.fileUrl);
+      setGender(payload.gender);
+      const convertedData = unixTimeToDate(payload?.birthday);
+      setValue(payload?.phone?.toString());
+      setBirthday(convertedData);
+      setTimeLoading(false);
     }
   }, []);
 
-  return (
+  return timeLoading ? (
+    <div>Loading...</div>
+  ) : (
     <section className="px-8 py-6 h-full overflow-auto">
-      <BackToPrev path="/" title="My Profile"></BackToPrev>
+      <BackToPrev path="/users" title="My Profile"></BackToPrev>
       <div className="bg-white p-6 rounded-2xl">
         <div>
           <form action="" onSubmit={handleSubmit}>
@@ -97,69 +111,78 @@ function Profile() {
               </div>
             </div>
             <div className="grid grid-cols-2 gap-y-4 gap-x-12">
-              {/* User role  */}
+              {/* full name */}
               <div className="flex flex-col gap-1">
-                <span className="text-blackHigh">User role</span>
-                <div className="w-full">
-                  <Select
-                    className="w-full border border-slateLow rounded-lg outline-none adSetting"
-                    defaultValue={role}
-                    onChange={handleChange}
-                    aria-required
-                  >
-                    <Select.Option value="admin">Admin</Select.Option>
-                    <Select.Option value="user">User</Select.Option>
-                    <Select.Option value="editor">Editor</Select.Option>
-                  </Select>
-                </div>
-              </div>
-              {/* Email Address */}
-              <div className="flex flex-col gap-1">
-                <span className="text-blackHigh">Email Address</span>
+                <span className="text-blackHigh">Full Name</span>
                 <input
-                  type="email"
-                  placeholder="Enter your email address"
+                  type="text"
+                  placeholder="Enter your full name"
                   required
-                  name="ApplicationId"
+                  name="fullname"
+                  defaultValue={payload?.name}
                   className={`w-full border border-slateLow  rounded-lg outline-none p-4`}
                 />
               </div>
-              {/* Current Password */}
+              {/* Email Address */}
               <div className="flex flex-col gap-1">
-                <span className="text-blackHigh">Current Password</span>
-                <PasswordInput
-                  isShowPassword={isShowCurrentPassword}
-                  setIsShowPassword={setIsShowCurrentPassword}
-                  isShowIcon={isShowCurrentIcon}
-                  onInput={(e) => showPassword(setIsShowCurrentIcon, e)}
-                  name="password"
-                  placeholder={"Current password"}
-                ></PasswordInput>
+                <span className="text-blackHigh">Email</span>
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  required
+                  name="email"
+                  defaultValue={payload?.email}
+                  className={`w-full border border-slateLow  rounded-lg outline-none p-4`}
+                />
               </div>
-              {/* New Password*/}
-              <div className="flex flex-col gap-1">
-                <span className="text-blackHigh">New Password</span>
 
-                <PasswordInput
-                  isShowPassword={isShowNewPassword}
-                  setIsShowPassword={setIsShowNewPassword}
-                  isShowIcon={isShowNewIcon}
-                  onInput={(e) => checkStrong(setIsShowNewIcon, setIsStrong, e)}
-                  name="password"
-                  placeholder={"Enter new password"}
-                ></PasswordInput>
-              </div>
-              {/* Confirm new Password */}
+              {/* User role  */}
               <div className="flex flex-col gap-1">
-                <span className="text-blackHigh">Confirm New Password</span>
-                <PasswordInput
-                  isShowPassword={isShowConfirmPassword}
-                  setIsShowPassword={setIsShowConfirmPassword}
-                  isShowIcon={isShowConfirmIcon}
-                  onInput={(e) => showPassword(setIsShowConfirmIcon, e)}
-                  name="password"
-                  placeholder={"Confirm password"}
-                ></PasswordInput>
+                <span className="text-blackHigh">Gender</span>
+                <div className="w-full">
+                  <Select
+                    className="w-full border border-slateLow rounded-lg outline-none adSetting"
+                    defaultValue={gender}
+                    onChange={handleChange}
+                    aria-required
+                  >
+                    <Select.Option value="male">Male</Select.Option>
+                    <Select.Option value="female">Female</Select.Option>
+                    {/* <Select.Option value="editor">Editor</Select.Option> */}
+                  </Select>
+                </div>
+              </div>
+              {/* Date of Birth */}
+              <div className="flex flex-col gap-1">
+                <span className="text-blackHigh">Date of Birth</span>
+                <DatePicker
+                  className="border-slateLow hover:border-slateLow text-base"
+                  onChange={onDateChange}
+                  defaultValue={birthday ? dayjs(birthday, "YYYY-MM") : ""}
+                />
+              </div>
+              {/* Phone number */}
+              <div className="flex flex-col gap-1">
+                <span className="text-blackHigh">Mobile Number</span>
+                <PhoneInput
+                  international
+                  defaultCountry="US"
+                  value={value}
+                  onChange={setValue}
+                  className="border border-slateLow text-black  w-full p-4  outline-none rounded-lg bg-white  flex items-center gap-2"
+                ></PhoneInput>
+              </div>
+              {/* Address */}
+              <div className="flex flex-col gap-1">
+                <span className="text-blackHigh">Address</span>
+                <input
+                  type="text"
+                  placeholder="Enter your address"
+                  required
+                  name="address"
+                  className={`w-full border border-slateLow  rounded-lg outline-none p-4`}
+                  defaultValue={payload?.address}
+                />
               </div>
             </div>
             <div className="mt-8">
@@ -177,4 +200,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default UserProfileForm;

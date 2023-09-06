@@ -7,7 +7,17 @@ function Login() {
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowIcon, setIsShowIcon] = useState(false);
 
-  const handleLogin = (event) => {};
+  const handleLogin = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    const data = {
+      email,
+      password,
+    };
+    localStorage.setItem("genieAuth", JSON.stringify(data));
+  };
   return (
     <section className="h-screen bg-whiteLow bg-authBg bg-bottom bg-no-repeat bg-cover flex flex-col items-center justify-center w-full">
       <div className="flex flex-col">

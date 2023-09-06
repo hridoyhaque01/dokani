@@ -7,6 +7,7 @@ import Categories from "../pages/categories/Categories";
 import Featured from "../pages/featured/Featured";
 import CategoriesForm from "../pages/forms/CategoriesForm";
 import FeaturedFrom from "../pages/forms/FeaturedFrom";
+import UserProfileForm from "../pages/forms/UserProfileForm";
 import Home from "../pages/home/Home";
 import NotificationAdd from "../pages/notifications/NotificationAdd";
 import Notifications from "../pages/notifications/Notifications";
@@ -78,6 +79,10 @@ export const routes = createBrowserRouter([
       {
         path: "/notification-add",
         element: <NotificationAdd></NotificationAdd>,
+      },
+      {
+        path: "/user-edit",
+        element: <UserProfileForm></UserProfileForm>,
       },
     ],
   },

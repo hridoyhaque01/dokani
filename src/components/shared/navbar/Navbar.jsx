@@ -53,10 +53,7 @@ function Navbar({ toggleSidebar }) {
             className="mt-3 z-[1] p-4 shadow menu menu-sm dropdown-content bg-base-100 w-[178px] rounded-none"
           >
             <li>
-              <Link
-                to="/profile"
-                className="bg-transparent hover:bg-transparent active:bg-transparent focus:bg-transparent"
-              >
+              <Link to="/profile" className="bg-transparent py-2">
                 <span>
                   <svg
                     width="24"
@@ -85,7 +82,7 @@ function Navbar({ toggleSidebar }) {
               </Link>
             </li>
             <li>
-              <Link to="/">
+              <Link to="/" className="py-2">
                 <span>
                   <svg
                     width="24"

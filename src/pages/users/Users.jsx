@@ -9,23 +9,31 @@ import UserTable from "../../components/tables/users/UsersTable";
 function Users() {
   const isLoading = false;
   const isError = false;
-  const [data] = useState([
+  const [data, setData] = useState([
     {
       id: 1,
       fileUrl: avatar,
+      gender: "male",
       name: "Mahhen Hasan",
       email: "example@email.com",
+      address: "Rajshahi",
       points: 50,
       uploads: 12,
+      birthday: 1691027717,
+      phone: "+880170331223",
       timestamp: 1691027717,
     },
     {
       id: 2,
       fileUrl: avatar,
+      gender: "male",
       name: "Tusar Ahmed",
       email: "example@email.com",
+      address: "Rajshahi",
       points: 40,
       uploads: 7,
+      birthday: 1693700791,
+      phone: "+8801693700791",
       timestamp: 1693700791,
     },
   ]);

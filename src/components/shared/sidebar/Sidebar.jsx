@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { logo } from "../../../assets/getAssets";
 import useGetActivePath from "../../../hooks/useGetActivePath";
 import "./sidebar.css";
@@ -24,7 +24,7 @@ function Sidebar({ showSidebar }) {
             {/* dashboard  */}
 
             <li>
-              <NavLink
+              <Link
                 to="/"
                 className={`${
                   activePath === "/" ? "active" : ""
@@ -57,13 +57,13 @@ function Sidebar({ showSidebar }) {
                 </svg>
 
                 <span>Dashboard</span>
-              </NavLink>
+              </Link>
             </li>
 
             {/* Users */}
 
             <li>
-              <NavLink
+              <Link
                 to="/users"
                 className={`${
                   activePath === "users" ? "active" : ""
@@ -95,13 +95,13 @@ function Sidebar({ showSidebar }) {
                   />
                 </svg>
                 <span>Users</span>
-              </NavLink>
+              </Link>
             </li>
 
             {/* Wallpaper Request */}
 
             <li>
-              <NavLink
+              <Link
                 to="/wallpaper-requests"
                 className={`${
                   activePath === "wallpaper-requests" ? "active" : ""
@@ -134,13 +134,13 @@ function Sidebar({ showSidebar }) {
                 </svg>
 
                 <span>Wallpaper Request</span>
-              </NavLink>
+              </Link>
             </li>
 
             {/* Wallpapers  */}
 
             <li>
-              <NavLink
+              <Link
                 to="/wallpapers"
                 className={`${
                   activePath === "wallpapers" ? "active" : ""
@@ -173,13 +173,13 @@ function Sidebar({ showSidebar }) {
                 </svg>
 
                 <span>Wallpapers</span>
-              </NavLink>
+              </Link>
             </li>
 
             {/* Categories  */}
 
             <li>
-              <NavLink
+              <Link
                 to="/categories"
                 className={`${
                   activePath === "categories" ? "active" : ""
@@ -232,13 +232,13 @@ function Sidebar({ showSidebar }) {
                 </svg>
 
                 <span>Categories</span>
-              </NavLink>
+              </Link>
             </li>
 
             {/* Featured */}
 
             <li>
-              <NavLink
+              <Link
                 to="/featured"
                 className={`${
                   activePath === "featured" ? "active" : ""
@@ -274,13 +274,13 @@ function Sidebar({ showSidebar }) {
                   />
                 </svg>
                 <span>Featured</span>
-              </NavLink>
+              </Link>
             </li>
 
             {/* Ad Setup */}
 
             <li>
-              <NavLink
+              <Link
                 to="/ad-setup"
                 className={`${
                   activePath === "ad-setup" ? "active" : ""
@@ -307,12 +307,12 @@ function Sidebar({ showSidebar }) {
                 </svg>
 
                 <span>Ad Setup</span>
-              </NavLink>
+              </Link>
             </li>
 
             {/* Notification  */}
             <li>
-              <NavLink
+              <Link
                 to="/notification"
                 className={`${
                   activePath === "notification" ? "active" : ""
@@ -341,7 +341,7 @@ function Sidebar({ showSidebar }) {
                 </svg>
 
                 <span>Send Notification</span>
-              </NavLink>
+              </Link>
             </li>
           </ul>
         </div>

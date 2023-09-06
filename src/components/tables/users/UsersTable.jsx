@@ -13,7 +13,7 @@ function UserTable({ data }) {
   const currentRows = data?.slice(indexOfFirstRow, indexOfLastRow);
 
   const handleNavigate = (item) => {
-    navigate("/customer-edit", {
+    navigate("/user-edit", {
       state: {
         payload: item,
         type: "edit",
