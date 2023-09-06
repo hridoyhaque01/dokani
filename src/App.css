@@ -44,7 +44,7 @@
 /* ant style  */
 
 :where(.css-dev-only-do-not-override-nnuwmp).ant-picker {
-  padding: 17px 11px 17px;
+  padding: 17px 11px 17px !important;
 }
 
 .ant-picker-suffix {
@@ -58,7 +58,7 @@
 .ant-select-selector::after {
   content: url("./assets/images/arrow-down.png") !important; /* Unicode down arrow character */
   visibility: visible !important ;
-  transform: translateY(4px) translateX(-16px);
+  transform: translateY(16px) translateX(-16px);
 }
 
 :where(.css-dev-only-do-not-override-nnuwmp).ant-select-single
