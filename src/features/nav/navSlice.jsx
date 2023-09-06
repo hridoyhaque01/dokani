@@ -1,12 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  //   activePath: "",
-};
+// const initialState = {};
 
 const navSlice = createSlice({
   name: "navSlice",
-  initialState,
+  initialState: null,
   reducers: {
     setActivePath: (state, action) => {
       //   state.activePath = action.payload;
