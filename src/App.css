@@ -103,11 +103,15 @@
   align-items: center;
 }
 
+:where(.css-nnuwmp).ant-select-dropdown
+  .ant-select-item-option-selected:not(.ant-select-item-option-disabled),
 :where(.css-dev-only-do-not-override-nnuwmp).ant-select-dropdown
   .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
   background-color: #faf4f4;
 }
 
+:where(.css-nnuwmp).ant-select-dropdown
+  .ant-select-item-option-active:not(.ant-select-item-option-disabled),
 :where(.css-dev-only-do-not-override-nnuwmp).ant-select-dropdown
   .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
   background-color: #faf4f4;
