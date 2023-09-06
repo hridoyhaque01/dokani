@@ -61,7 +61,7 @@ function AdSettingForm() {
               </span>
               <input
                 type="text"
-                placeholder=""
+                placeholder="Enter your Application ID"
                 required
                 name="ApplicationId"
                 className={`w-full border border-slateLow ${
@@ -77,7 +77,7 @@ function AdSettingForm() {
               </span>
               <input
                 type="text"
-                placeholder=""
+                placeholder="Enter your App ID"
                 required
                 name="appId"
                 className={`w-full border border-slateLow ${
@@ -94,7 +94,7 @@ function AdSettingForm() {
               </span>
               <input
                 type="text"
-                placeholder=""
+                placeholder="Enter your Banner Ad Unit ID"
                 required
                 name="bannerUnitId"
                 className={`w-full border border-slateLow ${
@@ -111,7 +111,7 @@ function AdSettingForm() {
               </span>
               <input
                 type="text"
-                placeholder=""
+                placeholder="Enter your Interstitial Ad Unit ID"
                 required
                 name="interstitialUnitId"
                 className={`w-full border border-slateLow ${
@@ -129,7 +129,7 @@ function AdSettingForm() {
               </span>
               <input
                 type="text"
-                placeholder=""
+                placeholder="Enter your Native Ad Unit ID"
                 required
                 name="ntiveUnitId"
                 className={`w-full border border-slateLow ${
@@ -146,7 +146,7 @@ function AdSettingForm() {
               </span>
               <input
                 type="text"
-                placeholder=""
+                placeholder="Enter your Rewarded Ad Unit ID"
                 required
                 name="rewardedUnitId"
                 className={`w-full border border-slateLow ${

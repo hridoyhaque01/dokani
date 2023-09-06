@@ -4,6 +4,7 @@ import ApproveModal from "../../modals/ApproveModal";
 import ConfirmationModal from "../../modals/ConfirmationModal";
 import ViewModal from "../../modals/ViewModal";
 import { Pagination } from "../../shared/pagination/Pagination";
+import NoData from "../../shared/ui/NoData";
 
 function NotificationTable({ data }) {
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ function NotificationTable({ data }) {
           <thead className="px-0">
             <tr className="font-bold text-3xl text-blackHigh">
               <th className="bg-themeSemi text-base normal-case py-5">Sl.</th>
+              <th className="bg-themeSemi text-base normal-case py-5">Image</th>
               <th className="bg-themeSemi text-base normal-case py-5">Title</th>
               <th className="bg-themeSemi text-base normal-case py-5">
                 Message
@@ -46,8 +48,8 @@ function NotificationTable({ data }) {
           {currentRows?.length === 0 ? (
             <tbody>
               <tr>
-                <td colSpan="6" className="">
-                  "noData"
+                <td colSpan="10" className="">
+                  <NoData></NoData>
                 </td>
               </tr>
             </tbody>
@@ -61,6 +63,9 @@ function NotificationTable({ data }) {
                       : rowsPerPage * (currentPage - 1) + i + 1}
                   </td>
 
+                  <td className="py-3">
+                    <img src={category?.fileUrl} alt="" className="w-12 h-12" />
+                  </td>
                   <td className="py-3">{category?.title}</td>
                   <td className="py-3">{category?.message}</td>
                   <td className="py-3">{category?.coins}</td>

@@ -2,6 +2,7 @@ import { Select } from "antd";
 import React, { useState } from "react";
 import { avatar } from "../../assets/getAssets";
 import SearchLoader from "../../components/loaders/SearchLoader";
+import BackToPrev from "../../components/shared/back/BackToPrev";
 import FeaturedCards from "../../components/shared/cards/FeaturedCards";
 import SearchBar from "../../components/shared/searchbar/SearchBar";
 import NoData from "../../components/shared/ui/NoData";
@@ -288,6 +289,7 @@ function FeaturedFrom() {
   }
   return (
     <section className="h-full w-full overflow-auto px-4 md:px-6 py-6">
+      <BackToPrev title="Select Featured" path="/featured"></BackToPrev>
       <div className="bg-themeMid shadow-sm w-full h-full rounded-2xl overflow-hidden">
         <SearchBar
           title="Select Featured"

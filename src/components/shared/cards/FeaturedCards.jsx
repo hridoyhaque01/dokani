@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { avatar } from "../../../assets/getAssets";
 import ConfirmationModal from "../../modals/ConfirmationModal";
 import { Pagination } from "../pagination/Pagination";
+import NoData from "../ui/NoData";
 
 function FeaturedCards({ data, handler }) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -13,6 +14,12 @@ function FeaturedCards({ data, handler }) {
   return (
     <div className="h-full flex flex-col justify-between">
       <div className="w-full h-[calc(100%-75px)] overflow-auto">
+        {currentRows?.length === 0 && (
+          <div className="w-full flex items-center justify-center">
+            {" "}
+            <NoData></NoData>
+          </div>
+        )}
         <div className="w-full grid grid-cols-5 gap-6 p-6">
           {currentRows?.map((item, i) => (
             <div className="bg-white rounded-md overflow-hidden" key={i}>

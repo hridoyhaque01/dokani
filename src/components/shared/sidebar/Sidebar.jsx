@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { logo } from "../../../assets/getAssets";
 import "./sidebar.css";
 function Sidebar({ showSidebar }) {
+  const [currentPath, setCurrentPath] = useState("/");
+  const handleLocalstore = (path) => {
+    setCurrentPath(path);
+    localStorage.setItem("activePath", path);
+  };
+
+  useEffect(() => {
+    const localPath = localStorage.getItem("activePath");
+    if (localPath) {
+      setCurrentPath(localPath);
+    }
+  }, []);
+
   return (
     <div
       className={` h-full ${
@@ -21,7 +34,13 @@ function Sidebar({ showSidebar }) {
             {/* dashboard  */}
 
             <li>
-              <NavLink to="/" className="flex items-center gap-4 w-full p-4">
+              <NavLink
+                to="/"
+                className={`${
+                  currentPath === "/" ? "active" : ""
+                } flex items-center gap-4 w-full p-4`}
+                onClick={() => handleLocalstore("/")}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -56,7 +75,10 @@ function Sidebar({ showSidebar }) {
             <li>
               <NavLink
                 to="/users"
-                className="flex items-center gap-4 w-full p-4"
+                className={`${
+                  currentPath === "users" ? "active" : ""
+                } flex items-center gap-4 w-full p-4`}
+                onClick={() => handleLocalstore("users")}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -91,7 +113,10 @@ function Sidebar({ showSidebar }) {
             <li>
               <NavLink
                 to="/wallpaper-requests"
-                className="flex items-center gap-4 w-full p-4"
+                className={`${
+                  currentPath === "wallpaper-requests" ? "active" : ""
+                } flex items-center gap-4 w-full p-4`}
+                onClick={() => handleLocalstore("wallpaper-requests")}
               >
                 <svg
                   width="24"
@@ -127,7 +152,10 @@ function Sidebar({ showSidebar }) {
             <li>
               <NavLink
                 to="/wallpapers"
-                className="flex items-center gap-4 w-full p-4"
+                className={`${
+                  currentPath === "wallpapers" ? "active" : ""
+                } flex items-center gap-4 w-full p-4`}
+                onClick={() => handleLocalstore("wallpapers")}
               >
                 <svg
                   width="24"
@@ -163,7 +191,10 @@ function Sidebar({ showSidebar }) {
             <li>
               <NavLink
                 to="/categories"
-                className="flex items-center gap-4 w-full p-4"
+                className={`${
+                  currentPath === "categories" ? "active" : ""
+                } flex items-center gap-4 w-full p-4`}
+                onClick={() => handleLocalstore("categories")}
               >
                 <svg
                   width="24"
@@ -219,7 +250,10 @@ function Sidebar({ showSidebar }) {
             <li>
               <NavLink
                 to="/featured"
-                className="flex items-center gap-4 w-full p-4"
+                className={`${
+                  currentPath === "featured" ? "active" : ""
+                } flex items-center gap-4 w-full p-4`}
+                onClick={() => handleLocalstore("featured")}
               >
                 <svg
                   width="24"
@@ -258,7 +292,10 @@ function Sidebar({ showSidebar }) {
             <li>
               <NavLink
                 to="/ad-setup"
-                className="flex items-center gap-4 w-full p-4"
+                className={`${
+                  currentPath === "ad-setup" ? "active" : ""
+                } flex items-center gap-4 w-full p-4`}
+                onClick={() => handleLocalstore("ad-setup")}
               >
                 <svg
                   width="24"
@@ -287,7 +324,10 @@ function Sidebar({ showSidebar }) {
             <li>
               <NavLink
                 to="/notification"
-                className="flex items-center gap-4 w-full p-4"
+                className={`${
+                  currentPath === "notification" ? "active" : ""
+                } flex items-center gap-4 w-full p-4`}
+                onClick={() => handleLocalstore("notification")}
               >
                 <svg
                   width="24"

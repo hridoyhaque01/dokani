@@ -2,12 +2,13 @@ import { createBrowserRouter } from "react-router-dom";
 import Layout from "../layout/Layout";
 import AdSetup from "../pages/adSetup/AdSetup";
 import Login from "../pages/authentication/Login";
+import Registration from "../pages/authentication/Registration";
 import Categories from "../pages/categories/Categories";
 import Featured from "../pages/featured/Featured";
 import CategoriesForm from "../pages/forms/CategoriesForm";
 import FeaturedFrom from "../pages/forms/FeaturedFrom";
-import NotificationForm from "../pages/forms/NotificationForm";
 import Home from "../pages/home/Home";
+import NotificationAdd from "../pages/notifications/NotificationAdd";
 import Notifications from "../pages/notifications/Notifications";
 import Profile from "../pages/profile/Profile";
 import Users from "../pages/users/Users";
@@ -76,7 +77,7 @@ export const routes = createBrowserRouter([
       },
       {
         path: "/notification-add",
-        element: <NotificationForm></NotificationForm>,
+        element: <NotificationAdd></NotificationAdd>,
       },
     ],
   },
@@ -87,6 +88,10 @@ export const routes = createBrowserRouter([
   {
     path: "/login",
     element: <Login></Login>,
+  },
+  {
+    path: "/register",
+    element: <Registration></Registration>,
   },
   {
     path: "*",

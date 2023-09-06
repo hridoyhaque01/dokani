@@ -40,10 +40,30 @@ const ChartArea = ({ title, data }) => {
               left: 5,
             }}
           >
+            {/* <defs>
+              <linearGradient
+                id="gradientColor"
+                x1="250.907"
+                y1="-60.8982"
+                x2="255.512"
+                y2="156.531"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop stopColor="#3790FA" />
+                <stop offset="1" stopColor="white" stopOpacity="0.25" />
+              </linearGradient>
+            </defs> */}
             <defs>
-              <linearGradient id="gradientColor" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="10%" stopColor="#FFC227" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#F3BDB6" stopOpacity={0.2} />
+              <linearGradient
+                id="gradientColor"
+                x1="250.907"
+                y1="-60.8982"
+                x2="255.512"
+                y2="156.531"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop stopColor="#3790FA" />
+                <stop offset="1" stopColor="white" stopOpacity="0.25" />
               </linearGradient>
             </defs>
             <CartesianGrid stroke="#E8E8E8" />
@@ -53,15 +73,15 @@ const ChartArea = ({ title, data }) => {
             <Area
               type="monotone"
               dataKey="uv"
-              fill="url(#gradientColor)"
-              stroke="#FFC227"
+              fill="none"
+              stroke="#F93A6E"
               strokeWidth={2}
             />
             <Area
               type="monotone"
               dataKey="pv"
-              fill="none"
-              stroke="#54ADAA"
+              fill="url(#gradientColor)"
+              stroke="#3790FA"
               strokeWidth={2}
             />
           </ComposedChart>

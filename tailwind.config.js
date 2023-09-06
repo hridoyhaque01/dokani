@@ -9,7 +9,10 @@ export default {
     extend: {
       colors: {
         transparent: "transparent",
+
         white: "#fff",
+        whiteLow: "#F6F6F6",
+
         "black-25": "rgba(0, 0, 0, 0.25)",
         "black-04": "rgba(0, 0, 0, 0.04)",
         black: "#000",
@@ -37,6 +40,8 @@ export default {
         infoHigh: "#3790FA",
         infoLight: "#E1EFFF",
 
+        warningColor: "#F2C963",
+
         successColor: "#7FC767",
         successHigh: "#2CC672",
         successMid: "#12AA58",
@@ -48,6 +53,9 @@ export default {
 
         fadeColor: "#B8B8B8",
         fadeLight: "#F6F6F6",
+      },
+      backgroundImage: {
+        authBg: "url('./assets/images/bg.png')",
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],

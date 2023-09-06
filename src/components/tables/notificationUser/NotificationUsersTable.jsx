@@ -2,8 +2,15 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ConfirmationModal from "../../modals/ConfirmationModal";
 import { Pagination } from "../../shared/pagination/Pagination";
+import NoData from "../../shared/ui/NoData";
 
-function NotificationUsersTable({ data }) {
+function NotificationUsersTable({
+  data,
+  handleSelectAllCheckbox,
+  handleSelectCheckbox,
+  selectedItems,
+  selectedUser,
+}) {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -26,26 +33,35 @@ function NotificationUsersTable({ data }) {
         <table className="table w-full table-pin-rows table-pin-cols">
           <thead className=" p-0">
             <tr className="font-bold  text-3xl text-blackHigh">
-              <th className="bg-themeSemi text-base normal-case py-5">Sl.</th>
+              <th className="bg-themeSemi text-base normal-case flex items-center gap-2 py-5">
+                {/* <input
+                  type="checkbox"
+                  className="checkbox checkbox-sm checkbox-error rounded border-blackSemi hover:border-blackSemi checked:hover:border-errorColor"
+                  onChange={(e) => handleSelectAllCheckbox(currentRows, e)}
+                  checked={selectedUser === "all" ? true : false}
+                  disabled={selectedUser === "all" ? true : false}
+                /> */}
+                <span>Sl.</span>
+              </th>
               <th className="bg-themeSemi text-base normal-case py-5">Image</th>
               <th className="bg-themeSemi text-base normal-case py-5">Name</th>
               <th className="bg-themeSemi text-base normal-case py-5">Email</th>
               <th className="bg-themeSemi text-base normal-case py-5">
-                Points
+                Gender
               </th>
               <th className="bg-themeSemi text-base normal-case py-5">
-                Uploads
+                Birth Date
               </th>
-              <th className="bg-themeSemi text-base normal-case py-5 text-center">
+              {/* <th className="bg-themeSemi text-base normal-case py-5 text-center">
                 Actions
-              </th>
+              </th> */}
             </tr>
           </thead>
           {currentRows?.length === 0 ? (
             <tbody>
               <tr>
-                <td colSpan="6" className="">
-                  "noData"
+                <td colSpan="10" className="">
+                  <NoData></NoData>
                 </td>
               </tr>
             </tbody>
@@ -53,7 +69,14 @@ function NotificationUsersTable({ data }) {
             <tbody className="">
               {currentRows?.map((user, i) => (
                 <tr className=" bg-white text-blackSemi" key={i}>
-                  <td className="py-3">
+                  <td className="py-3 flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      className="checkbox checkbox-sm checkbox-error rounded border-blackSemi hover:border-blackSemi checked:hover:border-errorColor"
+                      checked={selectedItems?.includes(user?.id) ? true : false}
+                      onChange={(e) => handleSelectCheckbox(user, e)}
+                      disabled={selectedUser === "all" ? true : false}
+                    />
                     {currentPage === 1 && i + 1 < 10
                       ? "0" + (rowsPerPage * (currentPage - 1) + i + 1)
                       : rowsPerPage * (currentPage - 1) + i + 1}
@@ -67,9 +90,13 @@ function NotificationUsersTable({ data }) {
                   </td>
                   <td className="py-3">{user?.name}</td>
                   <td className="py-3">{user?.email}</td>
-                  <td className="py-3">{user?.points}</td>
-                  <td className="py-3">{user?.uploads}</td>
-                  <td className="py-3 flex items-center justify-center gap-4">
+                  <td className="py-3">{user?.gender}</td>
+                  <td className="py-3">
+                    {new Date(user?.birthdate * 1000).toLocaleDateString(
+                      "en-US"
+                    )}
+                  </td>
+                  {/* <td className="py-3 flex items-center justify-center gap-4">
                     <button
                       type="button"
                       onClick={() => handleNavigate(customer)}
@@ -130,7 +157,7 @@ function NotificationUsersTable({ data }) {
                         />
                       </svg>
                     </label>
-                  </td>
+                  </td> */}
                 </tr>
               ))}
             </tbody>

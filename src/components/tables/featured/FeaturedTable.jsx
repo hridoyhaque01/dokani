@@ -10,7 +10,7 @@ function FeaturedTable({ data }) {
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
   const currentRows = data?.slice(indexOfFirstRow, indexOfLastRow);
-  const [selectedItems, setSelectedItems] = useState(null);
+  const [selectedItems, setSelectedItems] = useState([]);
 
   const handleSelectAllCheckbox = (items, e) => {
     const selectedItemList = [];

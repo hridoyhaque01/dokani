@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ConfirmationModal from "../../modals/ConfirmationModal";
 import { Pagination } from "../../shared/pagination/Pagination";
+import NoData from "../../shared/ui/NoData";
 
 function UserTable({ data }) {
   const navigate = useNavigate();
@@ -44,8 +45,8 @@ function UserTable({ data }) {
           {currentRows?.length === 0 ? (
             <tbody>
               <tr>
-                <td colSpan="6" className="">
-                  "noData"
+                <td colSpan="10" className="">
+                  <NoData></NoData>
                 </td>
               </tr>
             </tbody>
@@ -70,10 +71,7 @@ function UserTable({ data }) {
                   <td className="py-3">{user?.points}</td>
                   <td className="py-3">{user?.uploads}</td>
                   <td className="py-3 flex items-center justify-center gap-4">
-                    <button
-                      type="button"
-                      onClick={() => handleNavigate(customer)}
-                    >
+                    <button type="button" onClick={() => handleNavigate(user)}>
                       <svg
                         width="24"
                         height="24"

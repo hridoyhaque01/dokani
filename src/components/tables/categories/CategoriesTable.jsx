@@ -4,6 +4,7 @@ import ApproveModal from "../../modals/ApproveModal";
 import ConfirmationModal from "../../modals/ConfirmationModal";
 import ViewModal from "../../modals/ViewModal";
 import { Pagination } from "../../shared/pagination/Pagination";
+import NoData from "../../shared/ui/NoData";
 
 function CategoriesTable({ data }) {
   const navigate = useNavigate();
@@ -43,8 +44,8 @@ function CategoriesTable({ data }) {
           {currentRows?.length === 0 ? (
             <tbody>
               <tr>
-                <td colSpan="6" className="">
-                  "noData"
+                <td colSpan="10" className="">
+                  <NoData></NoData>
                 </td>
               </tr>
             </tbody>
@@ -141,7 +142,7 @@ function CategoriesTable({ data }) {
           setRowsPerPage={setRowsPerPage}
           totalRows={data?.length}
         ></Pagination>
-        <ConfirmationModal title="wallpaper request"></ConfirmationModal>
+        <ConfirmationModal title="category"></ConfirmationModal>
         <ApproveModal></ApproveModal>
         <ViewModal url={selectedImage}></ViewModal>
       </div>

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import ConfirmationModal from "../../modals/ConfirmationModal";
 import ViewModal from "../../modals/ViewModal";
 import { Pagination } from "../../shared/pagination/Pagination";
+import NoData from "../../shared/ui/NoData";
 
 function WallpapersTable({ data }) {
   const navigate = useNavigate();
@@ -43,8 +44,8 @@ function WallpapersTable({ data }) {
           {currentRows?.length === 0 ? (
             <tbody>
               <tr>
-                <td colSpan="6" className="">
-                  "noData"
+                <td colSpan="10" className="">
+                  <NoData></NoData>
                 </td>
               </tr>
             </tbody>
@@ -131,7 +132,7 @@ function WallpapersTable({ data }) {
           setRowsPerPage={setRowsPerPage}
           totalRows={data?.length}
         ></Pagination>
-        <ConfirmationModal title="wallpaper request"></ConfirmationModal>
+        <ConfirmationModal title="wallpaper"></ConfirmationModal>
         <ViewModal url={selectedImage}></ViewModal>
       </div>
     </div>

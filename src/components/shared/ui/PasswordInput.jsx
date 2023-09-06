@@ -3,7 +3,6 @@ import React from "react";
 function PasswordInput({
   isShowPassword,
   setIsShowPassword,
-  handleInput,
   isShowIcon,
   ...rest
 }) {
@@ -11,8 +10,7 @@ function PasswordInput({
     <div className="relative w-full">
       <input
         type={isShowPassword ? "text" : "password"}
-        onInput={handleInput}
-        className="w-full py-3 px-4 border border-fadeLight outline-none rounded-lg text-black"
+        className="w-full border border-slateLow  rounded-lg outline-none p-4"
         autoComplete="false"
         {...rest}
       />

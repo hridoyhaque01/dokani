@@ -3,7 +3,7 @@ import SearchLoader from "../../components/loaders/SearchLoader";
 import NoData from "../../components/shared/ui/NoData";
 import SomethingWrong from "../../components/shared/ui/SomethingWrong";
 // import SalesTable from "../../components/tables/sales/SalesTable";
-import { avatar } from "../../assets/getAssets";
+import { trophy } from "../../assets/getAssets";
 import SearchBar from "../../components/shared/searchbar/SearchBar";
 import NotificationTable from "../../components/tables/notification/NotificationTable";
 function Notifications() {
@@ -12,7 +12,7 @@ function Notifications() {
   const [data, setData] = useState([
     {
       id: 1,
-      fileUrl: avatar,
+      fileUrl: trophy,
       title: "Winner Bird!",
       message: "You are a super player!",
       status: "pending",
@@ -21,7 +21,7 @@ function Notifications() {
     },
     {
       id: 2,
-      fileUrl: avatar,
+      fileUrl: trophy,
       title: "Winner Bird!",
       message: "You are a super player!",
       status: "pending",
@@ -30,7 +30,7 @@ function Notifications() {
     },
     {
       id: 3,
-      fileUrl: avatar,
+      fileUrl: trophy,
       title: "Winner Bird!",
       message: "You are a super player!",
       status: "active",
@@ -39,7 +39,7 @@ function Notifications() {
     },
     {
       id: 4,
-      fileUrl: avatar,
+      fileUrl: trophy,
       title: "Winner Bird!",
       message: "You are a super player!",
       status: "pending",
@@ -48,7 +48,7 @@ function Notifications() {
     },
     {
       id: 5,
-      fileUrl: avatar,
+      fileUrl: trophy,
       title: "Winner Bird!",
       message: "You are a super player!",
       status: "active",
@@ -57,7 +57,7 @@ function Notifications() {
     },
     {
       id: 6,
-      fileUrl: avatar,
+      fileUrl: trophy,
       title: "Winner Bird!",
       message: "You are a super player!",
       status: "pending",
@@ -66,7 +66,7 @@ function Notifications() {
     },
     {
       id: 7,
-      fileUrl: avatar,
+      fileUrl: trophy,
       title: "Winner Bird!",
       message: "You are a super player!",
       status: "pending",
