@@ -65,6 +65,12 @@
   transform: translateY(16px) translateX(-16px);
 }
 
+.test .ant-select-selector::after {
+  content: url("./assets/images/arrow-down.png") !important; /* Unicode down arrow character */
+  visibility: visible !important ;
+  transform: translateY(14px) translateX(-16px);
+}
+
 :where(.css-dev-only-do-not-override-nnuwmp).ant-select-single
   .ant-select-selector {
   align-items: center;

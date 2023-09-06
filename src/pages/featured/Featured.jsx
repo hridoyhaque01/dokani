@@ -297,7 +297,7 @@ function Featured() {
           onChange={onChange}
         >
           <Select
-            className="whitespace-nowrap w-52"
+            className="whitespace-nowrap w-52 test"
             defaultValue="all"
             onChange={handleChange}
           >
