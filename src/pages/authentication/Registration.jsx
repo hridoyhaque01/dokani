@@ -1,15 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import PasswordInput from "../../components/shared/ui/PasswordInput";
+import { setAuth } from "../../features/auth/authSlice";
 import checkStrong from "../../util/CheckStrong";
 
 function Registration() {
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowIcon, setIsShowIcon] = useState(false);
   const [isStrong, setIsStrong] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { email } = useSelector((state) => state.auth);
 
   const handleSignup = (event) => {
     event.preventDefault();
+    const form = event.target;
+    const firstName = form.firstName.value;
+    const lastName = form.lastName.value;
+    const email = form.email.value;
+    const password = form.password.value;
+    const data = {
+      email,
+      password,
+      firstName,
+      lastName,
+    };
+    localStorage.setItem("genieAuth", JSON.stringify(data));
+    dispatch(setAuth({ email, password }));
+    navigate("/");
   };
+
+  useEffect(() => {
+    if (email) {
+      navigate("/");
+    }
+  }, []);
 
   return (
     <section className="h-screen bg-authBg bg-bottom bg-no-repeat bg-cover bg-whiteLow flex flex-col items-center justify-center w-full">
@@ -64,10 +90,12 @@ function Registration() {
                   name="password"
                   placeholder={"Enter your password"}
                 ></PasswordInput>
-                <p className="text-xs text-fadeColor mt-1">
-                  Must contain more than 7 character with uppercase, lowercase,
-                  symble and number
-                </p>
+                {isStrong && (
+                  <p className="text-xs text-fadeColor mt-1">
+                    Must contain more than 7 character with uppercase,
+                    lowercase, symble and number
+                  </p>
+                )}
               </div>
             </div>
 

@@ -1,8 +1,11 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { profile } from "../../../assets/getAssets";
+import { logout } from "../../../features/auth/authSlice";
 
 function Navbar({ toggleSidebar }) {
+  const dispatch = useDispatch();
   return (
     <nav className="navbar py-5 px-8 bg-white">
       <div className="flex-1">
@@ -82,7 +85,7 @@ function Navbar({ toggleSidebar }) {
               </Link>
             </li>
             <li>
-              <Link to="/" className="py-2">
+              <Link to="/" className="py-2" onClick={() => dispatch(logout())}>
                 <span>
                   <svg
                     width="24"

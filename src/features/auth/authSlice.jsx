@@ -14,8 +14,13 @@ const authSlice = createSlice({
       state.email = action.payload.email;
       state.password = action.payload.password;
     },
+    logout: (state) => {
+      state.email = "";
+      state.password = "";
+      localStorage.removeItem("genieAuth");
+    },
   },
 });
 
 export default authSlice.reducer;
-export const { setAuth } = authSlice.actions;
+export const { setAuth, logout } = authSlice.actions;

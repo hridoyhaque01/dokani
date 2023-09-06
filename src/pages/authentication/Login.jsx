@@ -1,11 +1,16 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import PasswordInput from "../../components/shared/ui/PasswordInput";
+import { setAuth } from "../../features/auth/authSlice";
 import showPassword from "../../util/showPassword";
 
 function Login() {
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowIcon, setIsShowIcon] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { email } = useSelector((state) => state.auth);
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -17,7 +22,15 @@ function Login() {
       password,
     };
     localStorage.setItem("genieAuth", JSON.stringify(data));
+    dispatch(setAuth(data));
+    navigate("/");
   };
+
+  useEffect(() => {
+    if (email) {
+      navigate("/");
+    }
+  }, []);
   return (
     <section className="h-screen bg-whiteLow bg-authBg bg-bottom bg-no-repeat bg-cover flex flex-col items-center justify-center w-full">
       <div className="flex flex-col">
