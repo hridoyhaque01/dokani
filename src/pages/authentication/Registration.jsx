@@ -1,7 +1,12 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import PasswordInput from "../../components/shared/ui/PasswordInput";
+import checkStrong from "../../util/CheckStrong";
 
 function Registration() {
+  const [isShowPassword, setIsShowPassword] = useState(false);
+  const [isShowIcon, setIsShowIcon] = useState(false);
+  const [isStrong, setIsStrong] = useState(false);
+
   const handleSignup = (event) => {
     event.preventDefault();
   };
@@ -17,51 +22,62 @@ function Registration() {
         </div>
         <div className="flex items-center justify-center py-12 px-10 bg-white shadow-md shadow-whiteLow rounded-lg w-[476px]">
           <form className="flex flex-col w-full gap-4 " onSubmit={handleSignup}>
-            <div className="inline-flex flex-col justify-start items-start gap-4 ">
-              <span className="text-xs text-fadeColor font-medium leading-none">
-                First Name
-              </span>
+            <div className="flex flex-col gap-1">
+              <span className="text-blackHigh">First Name</span>
               <input
                 type="text"
+                placeholder="Enter your first name"
                 required
                 name="firstName"
-                placeholder="Enter your first name"
-                className="w-full py-3 px-4 border border-fadeLight outline-none rounded-lg text-black text-sm sm:text-base"
+                className={`w-full border border-slateLow  rounded-lg outline-none p-4`}
               />
             </div>
-            <div>
-              <p className="text-sm text-pureBlackColor font-bold mb-2">
-                Password
-              </p>
+            <div className="flex flex-col gap-1">
+              <span className="text-blackHigh">Last Name</span>
               <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                className="input bg-transparent border border-whiteLow focus:outline-none w-full"
+                type="text"
+                placeholder="Enter your last name"
+                required
+                name="lastName"
+                className={`w-full border border-slateLow  rounded-lg outline-none p-4`}
               />
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-col gap-1">
+              <span className="text-blackHigh">Email</span>
               <input
-                type="checkbox"
-                name="remember"
-                placeholder="Password"
-                className=" bg-whiteLow "
+                type="email"
+                placeholder="Enter your email address"
+                required
+                name="email"
+                className={`w-full border border-slateLow  rounded-lg outline-none p-4`}
               />
-              <p className="text-blackSemi">Remeber me</p>
             </div>
+            <div className="flex flex-col gap-1">
+              <span className="text-blackHigh">Password</span>
+
+              <div>
+                <PasswordInput
+                  isShowPassword={isShowPassword}
+                  setIsShowPassword={setIsShowPassword}
+                  isShowIcon={isShowIcon}
+                  onInput={(e) => checkStrong(setIsShowIcon, setIsStrong, e)}
+                  name="password"
+                  placeholder={"Enter your password"}
+                ></PasswordInput>
+                <p className="text-xs text-fadeColor mt-1">
+                  Must contain more than 7 character with uppercase, lowercase,
+                  symble and number
+                </p>
+              </div>
+            </div>
+
             <button
-              className="btn normal-case mt-4 mb-6 rounded-full bg-primaryMain text-whiteHigh border-0 hover:bg-primaryMain"
+              className="py-4 normal-case mt-4 mb-6 rounded-lg bg-primaryColor text-white font-semibold"
               type="submit"
             >
               {/* <img className="w-12" src={loginBtn} alt="login button" /> */}
-              Login
+              Sign Up
             </button>
-
-            <div className="text-center">
-              <Link to="/" className="text-lg text-primaryMain font-bold">
-                Forget Password?
-              </Link>
-            </div>
           </form>
         </div>
       </div>

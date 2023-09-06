@@ -1,20 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import { logo } from "../../../assets/getAssets";
+import useGetActivePath from "../../../hooks/useGetActivePath";
 import "./sidebar.css";
 function Sidebar({ showSidebar }) {
-  const [currentPath, setCurrentPath] = useState("/");
-  const handleLocalstore = (path) => {
-    setCurrentPath(path);
-    localStorage.setItem("activePath", path);
-  };
-
-  useEffect(() => {
-    const localPath = localStorage.getItem("activePath");
-    if (localPath) {
-      setCurrentPath(localPath);
-    }
-  }, []);
+  const { handleLocalstore, activePath } = useGetActivePath();
 
   return (
     <div
@@ -37,7 +27,7 @@ function Sidebar({ showSidebar }) {
               <NavLink
                 to="/"
                 className={`${
-                  currentPath === "/" ? "active" : ""
+                  activePath === "/" ? "active" : ""
                 } flex items-center gap-4 w-full p-4`}
                 onClick={() => handleLocalstore("/")}
               >
@@ -76,7 +66,7 @@ function Sidebar({ showSidebar }) {
               <NavLink
                 to="/users"
                 className={`${
-                  currentPath === "users" ? "active" : ""
+                  activePath === "users" ? "active" : ""
                 } flex items-center gap-4 w-full p-4`}
                 onClick={() => handleLocalstore("users")}
               >
@@ -114,7 +104,7 @@ function Sidebar({ showSidebar }) {
               <NavLink
                 to="/wallpaper-requests"
                 className={`${
-                  currentPath === "wallpaper-requests" ? "active" : ""
+                  activePath === "wallpaper-requests" ? "active" : ""
                 } flex items-center gap-4 w-full p-4`}
                 onClick={() => handleLocalstore("wallpaper-requests")}
               >
@@ -153,7 +143,7 @@ function Sidebar({ showSidebar }) {
               <NavLink
                 to="/wallpapers"
                 className={`${
-                  currentPath === "wallpapers" ? "active" : ""
+                  activePath === "wallpapers" ? "active" : ""
                 } flex items-center gap-4 w-full p-4`}
                 onClick={() => handleLocalstore("wallpapers")}
               >
@@ -192,7 +182,7 @@ function Sidebar({ showSidebar }) {
               <NavLink
                 to="/categories"
                 className={`${
-                  currentPath === "categories" ? "active" : ""
+                  activePath === "categories" ? "active" : ""
                 } flex items-center gap-4 w-full p-4`}
                 onClick={() => handleLocalstore("categories")}
               >
@@ -251,7 +241,7 @@ function Sidebar({ showSidebar }) {
               <NavLink
                 to="/featured"
                 className={`${
-                  currentPath === "featured" ? "active" : ""
+                  activePath === "featured" ? "active" : ""
                 } flex items-center gap-4 w-full p-4`}
                 onClick={() => handleLocalstore("featured")}
               >
@@ -293,7 +283,7 @@ function Sidebar({ showSidebar }) {
               <NavLink
                 to="/ad-setup"
                 className={`${
-                  currentPath === "ad-setup" ? "active" : ""
+                  activePath === "ad-setup" ? "active" : ""
                 } flex items-center gap-4 w-full p-4`}
                 onClick={() => handleLocalstore("ad-setup")}
               >
@@ -325,7 +315,7 @@ function Sidebar({ showSidebar }) {
               <NavLink
                 to="/notification"
                 className={`${
-                  currentPath === "notification" ? "active" : ""
+                  activePath === "notification" ? "active" : ""
                 } flex items-center gap-4 w-full p-4`}
                 onClick={() => handleLocalstore("notification")}
               >
