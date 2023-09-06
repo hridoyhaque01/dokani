@@ -47,6 +47,10 @@
   padding: 17px 11px 17px !important;
 }
 
+:where(.css-nnuwmp).ant-picker {
+  padding: 17px 11px 17px !important;
+}
+
 .ant-picker-suffix {
   color: #ef5777 !important;
 }
