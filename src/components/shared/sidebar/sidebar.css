@@ -2,9 +2,23 @@
   transition: width 0.4s ease-in-out;
 }
 
-.sidebar .active {
-  background-color: #faf4f4;
-  color: #ef5777;
+.sideNav::-webkit-scrollbar {
+  width: 0px;
+}
+
+.active {
+  background-color: #f2f8fd;
+  color: #3498db;
+}
+/* 
+.active svg,
+.active path {
+  fill: #3498db;
+} */
+
+.dropdown-menu .active {
+  background-color: transparent;
+  color: #3498db;
 }
 
 /* .sidebar .active svg,

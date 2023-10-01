@@ -20,8 +20,8 @@ export default {
         blackSemi: "#45526E",
         blackLow: "#707D9B",
 
-        blueColor: "#515EDB",
-        blueLight: "#F0F1FF",
+        blueColor: "#3498DB",
+        blueLight: "#F2F8FD",
 
         themeMid: "#EFF7FF",
         themeSemi: "#DAEDFF",
@@ -52,6 +52,7 @@ export default {
         errorHigh: "#F93A6E",
 
         fadeColor: "#B8B8B8",
+        fadeHigh: "#9E9FA7",
         fadeLight: "#F6F6F6",
       },
       backgroundImage: {

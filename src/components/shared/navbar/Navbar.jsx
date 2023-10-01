@@ -1,15 +1,21 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { profile } from "../../../assets/getAssets";
 import { logout } from "../../../features/auth/authSlice";
+import { setActiveSidebar } from "../../../features/path/pathSlice";
 
-function Navbar({ toggleSidebar }) {
+function Navbar() {
+  const { isSidebarActive } = useSelector((state) => state.path);
   const dispatch = useDispatch();
+
   return (
     <nav className="navbar py-5 px-8 bg-white">
       <div className="flex-1">
-        <button type="button" onClick={() => toggleSidebar((prev) => !prev)}>
+        <button
+          type="button"
+          onClick={() => dispatch(setActiveSidebar(!isSidebarActive))}
+        >
           <svg
             width="32"
             height="32"

@@ -4,14 +4,21 @@ import AdSetup from "../pages/adSetup/AdSetup";
 import Login from "../pages/authentication/Login";
 import Registration from "../pages/authentication/Registration";
 import Categories from "../pages/categories/Categories";
+import City from "../pages/city/City";
+import Country from "../pages/country/Country";
 import Featured from "../pages/featured/Featured";
 import CategoriesForm from "../pages/forms/CategoriesForm";
 import FeaturedFrom from "../pages/forms/FeaturedFrom";
 import UserProfileForm from "../pages/forms/UserProfileForm";
 import Home from "../pages/home/Home";
+import Hotel from "../pages/hotel/Hotel";
 import NotificationAdd from "../pages/notifications/NotificationAdd";
 import Notifications from "../pages/notifications/Notifications";
+import Place from "../pages/place/Place";
 import Profile from "../pages/profile/Profile";
+import Restaurants from "../pages/restaurants/Restaurants";
+import Settings from "../pages/settings/Settings";
+import State from "../pages/state/State";
 import Users from "../pages/users/Users";
 import WallpaperRequest from "../pages/wallpaperRequest/WallpaperRequest";
 import Wallpapers from "../pages/wallpapers/Wallpapers";
@@ -38,6 +45,34 @@ export const routes = createBrowserRouter([
         path: "/users",
         element: <Users></Users>,
       },
+      // place
+
+      {
+        path: "/place",
+        element: <Place></Place>,
+      },
+      {
+        path: "/hotel",
+        element: <Hotel></Hotel>,
+      },
+      {
+        path: "/restaurants",
+        element: <Restaurants></Restaurants>,
+      },
+      // geography
+      {
+        path: "/country",
+        element: <Country></Country>,
+      },
+      {
+        path: "/state",
+        element: <State></State>,
+      },
+      {
+        path: "/city",
+        element: <City></City>,
+      },
+
       {
         path: "/wallpaper-requests",
         element: <WallpaperRequest></WallpaperRequest>,
@@ -59,8 +94,17 @@ export const routes = createBrowserRouter([
         element: <AdSetup></AdSetup>,
       },
       {
-        path: "/notification",
+        path: "/add-notification",
+        element: <NotificationAdd></NotificationAdd>,
+      },
+      {
+        path: "/send-notification",
         element: <Notifications></Notifications>,
+      },
+
+      {
+        path: "/settings",
+        element: <Settings></Settings>,
       },
 
       // forms

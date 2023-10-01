@@ -6,6 +6,7 @@ import noData from "./images/empty-box.png";
 import lense from "./images/lense.png";
 import logo from "./images/logo.png";
 import logoIcon from "./images/logoIcon.png";
+import logoText from "./images/logoText.png";
 import profile from "./images/profile.png";
 import trophy from "./images/trophy.png";
 export {
@@ -15,6 +16,7 @@ export {
   loader,
   logo,
   logoIcon,
+  logoText,
   noData,
   profile,
   trophy,

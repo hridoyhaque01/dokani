@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authSlice from "../features/auth/authSlice";
-import navSlice from "../features/nav/navSlice";
+import pathReducer from "../features/path/pathSlice";
 
 export const store = configureStore({
   reducer: {
-    nav: navSlice,
+    path: pathReducer,
     auth: authSlice,
   },
 });

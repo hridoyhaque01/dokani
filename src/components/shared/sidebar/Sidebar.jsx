@@ -1,10 +1,35 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { logo } from "../../../assets/getAssets";
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
+import { logoIcon, logoText } from "../../../assets/getAssets";
+import { setActiveSidebar } from "../../../features/path/pathSlice";
 import useGetActivePath from "../../../hooks/useGetActivePath";
 import "./sidebar.css";
-function Sidebar({ showSidebar }) {
-  const { handleLocalstore, activePath } = useGetActivePath();
+function Sidebar() {
+  const { isSidebarActive: showSidebar } = useSelector((state) => state.path);
+  const activePath = useGetActivePath();
+  const [isSubmenuOpen, setIsSubmenuOpen] = useState({});
+  const submenuRef = useRef({});
+  const dispatch = useDispatch();
+
+  const handleDropdown = (menu, submenuOpen) => {
+    if (!submenuOpen) {
+      setIsSubmenuOpen((prev) => ({
+        [menu]: !prev[menu],
+      }));
+    }
+  };
+
+  const handleSidebar = (menu) => {
+    handleDropdown(menu);
+    dispatch(setActiveSidebar(true));
+  };
+
+  useEffect(() => {
+    if (!activePath) {
+      handleDropdown(activePath);
+    }
+  }, [activePath]);
 
   return (
     <div
@@ -13,8 +38,13 @@ function Sidebar({ showSidebar }) {
       } sidebar bg-white h-full overflow-auto`}
     >
       <div className="w-full px-4 py-6 whitespace-nowrap shrink-0">
-        <div className="h-12">
-          <img src={logo} alt="" />
+        <div className="flex items-center gap-1 pl-4">
+          <img src={logoIcon} alt="" />
+          <img
+            src={logoText}
+            alt=""
+            className={`${showSidebar ? "block" : "hidden"} duration-300`}
+          />
         </div>
 
         {/* nav items  */}
@@ -24,12 +54,10 @@ function Sidebar({ showSidebar }) {
             {/* dashboard  */}
 
             <li>
-              <Link
+              <NavLink
                 to="/"
-                className={`${
-                  activePath === "/" ? "active" : ""
-                } flex items-center  gap-4 w-full rounded-lg p-4`}
-                onClick={() => handleLocalstore("/")}
+                className={`flex items-center  gap-4 w-full rounded-lg p-4`}
+                onClick={() => handleDropdown("/")}
               >
                 {activePath === "/" ? (
                   <svg
@@ -42,19 +70,19 @@ function Sidebar({ showSidebar }) {
                   >
                     <path
                       d="M22 8.52V3.98C22 2.57 21.36 2 19.77 2H15.73C14.14 2 13.5 2.57 13.5 3.98V8.51C13.5 9.93 14.14 10.49 15.73 10.49H19.77C21.36 10.5 22 9.93 22 8.52Z"
-                      fill="#EF5777"
+                      fill="#3498DB"
                     />
                     <path
                       d="M22 19.77V15.73C22 14.14 21.36 13.5 19.77 13.5H15.73C14.14 13.5 13.5 14.14 13.5 15.73V19.77C13.5 21.36 14.14 22 15.73 22H19.77C21.36 22 22 21.36 22 19.77Z"
-                      fill="#EF5777"
+                      fill="#3498DB"
                     />
                     <path
                       d="M10.5 8.52V3.98C10.5 2.57 9.86 2 8.27 2H4.23C2.64 2 2 2.57 2 3.98V8.51C2 9.93 2.64 10.49 4.23 10.49H8.27C9.86 10.5 10.5 9.93 10.5 8.52Z"
-                      fill="#EF5777"
+                      fill="#3498DB"
                     />
                     <path
                       d="M10.5 19.77V15.73C10.5 14.14 9.86 13.5 8.27 13.5H4.23C2.64 13.5 2 14.14 2 15.73V19.77C2 21.36 2.64 22 4.23 22H8.27C9.86 22 10.5 21.36 10.5 19.77Z"
-                      fill="#EF5777"
+                      fill="#3498DB"
                     />
                   </svg>
                 ) : (
@@ -86,321 +114,329 @@ function Sidebar({ showSidebar }) {
                 )}
 
                 <span
-                  className={`duration-300 ${showSidebar ? "" : "opacity-0"}`}
+                  className={`duration-300 ${
+                    showSidebar ? "block" : "hidden"
+                  } shrink-0`}
                 >
                   Dashboard
                 </span>
-              </Link>
+              </NavLink>
             </li>
 
             {/* Users */}
 
             <li>
-              <Link
+              <NavLink
                 to="/users"
                 className={`${
                   activePath === "users" ? "active" : ""
-                } flex items-center gap-4 w-full p-4`}
-                onClick={() => handleLocalstore("users")}
+                } flex items-center gap-4 w-full rounded-lg p-4`}
+                onClick={() => handleDropdown("users")}
               >
                 {activePath === "users" ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="shrink-0"
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
                     fill="none"
+                    className="shrink-0"
                   >
                     <path
                       d="M16.19 2H7.81C4.17 2 2 4.17 2 7.81V16.19C2 19 3.29 20.93 5.56 21.66C6.22 21.89 6.98 22 7.81 22H16.19C17.02 22 17.78 21.89 18.44 21.66C20.71 20.93 22 19 22 16.19V7.81C22 4.17 19.83 2 16.19 2ZM20.5 16.19C20.5 18.33 19.66 19.68 17.97 20.24C17 18.33 14.7 16.97 12 16.97C9.3 16.97 7.01 18.32 6.03 20.24H6.02C4.35 19.7 3.5 18.34 3.5 16.2V7.81C3.5 4.99 4.99 3.5 7.81 3.5H16.19C19.01 3.5 20.5 4.99 20.5 7.81V16.19Z"
-                      fill="#EF5777"
+                      fill="#3498DB"
                     />
                     <path
                       d="M11.9999 8C10.0199 8 8.41992 9.6 8.41992 11.58C8.41992 13.56 10.0199 15.17 11.9999 15.17C13.9799 15.17 15.5799 13.56 15.5799 11.58C15.5799 9.6 13.9799 8 11.9999 8Z"
-                      fill="#EF5777"
+                      fill="#3498DB"
                     />
                   </svg>
                 ) : (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="shrink-0"
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
                     fill="none"
+                    className="shrink-0"
                   >
                     <path
                       d="M15.0006 22.75H9.00063C7.68063 22.75 6.58063 22.62 5.65063 22.34C5.31063 22.24 5.09063 21.91 5.11063 21.56C5.36063 18.57 8.39063 16.22 12.0006 16.22C15.6106 16.22 18.6306 18.56 18.8906 21.56C18.9206 21.92 18.7006 22.24 18.3506 22.34C17.4206 22.62 16.3206 22.75 15.0006 22.75ZM6.72063 21.06C7.38063 21.19 8.13063 21.25 9.00063 21.25H15.0006C15.8706 21.25 16.6206 21.19 17.2806 21.06C16.7506 19.14 14.5606 17.72 12.0006 17.72C9.44063 17.72 7.25063 19.14 6.72063 21.06Z"
-                      fill="#303C58"
+                      fill="#2F2F2F"
                     />
                     <path
                       d="M15 2H9C4 2 2 4 2 9V15C2 18.78 3.14 20.85 5.86 21.62C6.08 19.02 8.75 16.97 12 16.97C15.25 16.97 17.92 19.02 18.14 21.62C20.86 20.85 22 18.78 22 15V9C22 4 20 2 15 2ZM12 14.17C10.02 14.17 8.42 12.56 8.42 10.58C8.42 8.60002 10.02 7 12 7C13.98 7 15.58 8.60002 15.58 10.58C15.58 12.56 13.98 14.17 12 14.17Z"
-                      stroke="#292D32"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      stroke="#2F2F2F"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <path
                       d="M11.9999 14.92C9.60992 14.92 7.66992 12.97 7.66992 10.58C7.66992 8.19002 9.60992 6.25 11.9999 6.25C14.3899 6.25 16.3299 8.19002 16.3299 10.58C16.3299 12.97 14.3899 14.92 11.9999 14.92ZM11.9999 7.75C10.4399 7.75 9.16992 9.02002 9.16992 10.58C9.16992 12.15 10.4399 13.42 11.9999 13.42C13.5599 13.42 14.8299 12.15 14.8299 10.58C14.8299 9.02002 13.5599 7.75 11.9999 7.75Z"
-                      fill="#303C58"
+                      fill="#2F2F2F"
                     />
                   </svg>
                 )}
 
                 <span
-                  className={`duration-300 ${showSidebar ? "" : "opacity-0"}`}
+                  className={`duration-300 ${
+                    showSidebar ? "block" : "hidden"
+                  } shrink-0`}
                 >
                   Users
                 </span>
-              </Link>
+              </NavLink>
             </li>
 
-            {/* Wallpaper Request */}
+            {/* Places */}
 
-            <li>
-              <Link
-                to="/wallpaper-requests"
-                className={`${
-                  activePath === "wallpaper-requests" ? "active" : ""
-                } flex items-center gap-4 w-full p-4`}
-                onClick={() => handleLocalstore("wallpaper-requests")}
+            <div className="w-full overflow-hidden capitalize shrink-0 ">
+              <div
+                className={`flex items-center justify-between gap-4 w-full rounded-lg p-4 cursor-pointer select-none text-sm ${
+                  activePath === "places" ? "bg-blueLight text-blueColor" : ""
+                }`}
+                onClick={() => handleSidebar("places")}
               >
-                {activePath === "wallpaper-requests" ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="shrink-0"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                  >
-                    <path
-                      d="M22.0196 16.82L18.8896 9.50002C18.3196 8.16002 17.4696 7.40002 16.4996 7.35002C15.5396 7.30002 14.6096 7.97002 13.8996 9.25002L11.9996 12.66C11.5996 13.38 11.0296 13.81 10.4096 13.86C9.77965 13.92 9.14965 13.59 8.63965 12.94L8.41965 12.66C7.70965 11.77 6.82965 11.34 5.92965 11.43C5.02965 11.52 4.25965 12.14 3.74965 13.15L2.01965 16.6C1.39965 17.85 1.45965 19.3 2.18965 20.48C2.91965 21.66 4.18965 22.37 5.57965 22.37H18.3396C19.6796 22.37 20.9296 21.7 21.6696 20.58C22.4296 19.46 22.5497 18.05 22.0196 16.82Z"
-                      fill="#EF5777"
-                    />
-                    <path
-                      d="M6.96984 8.38C8.83657 8.38 10.3498 6.86672 10.3498 5C10.3498 3.13327 8.83657 1.62 6.96984 1.62C5.10312 1.62 3.58984 3.13327 3.58984 5C3.58984 6.86672 5.10312 8.38 6.96984 8.38Z"
-                      fill="#EF5777"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    className="shrink-0"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                  >
-                    <path
-                      d="M21.6799 16.96L18.5499 9.65C17.4899 7.17 15.5399 7.07 14.2299 9.43L12.3399 12.84C11.3799 14.57 9.58993 14.72 8.34993 13.17L8.12993 12.89C6.83993 11.27 5.01993 11.47 4.08993 13.32L2.36993 16.77C1.15993 19.17 2.90993 22 5.58993 22H18.3499C20.9499 22 22.6999 19.35 21.6799 16.96Z"
-                      stroke="#292D32"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                    <path
-                      d="M6.96973 8C8.62658 8 9.96973 6.65685 9.96973 5C9.96973 3.34315 8.62658 2 6.96973 2C5.31287 2 3.96973 3.34315 3.96973 5C3.96973 6.65685 5.31287 8 6.96973 8Z"
-                      stroke="#292D32"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                )}
+                <div className="flex items-center gap-4">
+                  {activePath === "places" ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      className="shrink-0"
+                    >
+                      <path
+                        d="M16.19 2H7.81C4.17 2 2 4.17 2 7.81V16.19C2 19.83 4.17 22 7.81 22H16.19C19.83 22 22 19.83 22 16.19V7.81C22 4.17 19.83 2 16.19 2ZM9.97 14.9L7.72 17.15C7.57 17.3 7.38 17.37 7.19 17.37C7 17.37 6.8 17.3 6.66 17.15L5.91 16.4C5.61 16.11 5.61 15.63 5.91 15.34C6.2 15.05 6.67 15.05 6.97 15.34L7.19 15.56L8.91 13.84C9.2 13.55 9.67 13.55 9.97 13.84C10.26 14.13 10.26 14.61 9.97 14.9ZM9.97 7.9L7.72 10.15C7.57 10.3 7.38 10.37 7.19 10.37C7 10.37 6.8 10.3 6.66 10.15L5.91 9.4C5.61 9.11 5.61 8.63 5.91 8.34C6.2 8.05 6.67 8.05 6.97 8.34L7.19 8.56L8.91 6.84C9.2 6.55 9.67 6.55 9.97 6.84C10.26 7.13 10.26 7.61 9.97 7.9ZM17.56 16.62H12.31C11.9 16.62 11.56 16.28 11.56 15.87C11.56 15.46 11.9 15.12 12.31 15.12H17.56C17.98 15.12 18.31 15.46 18.31 15.87C18.31 16.28 17.98 16.62 17.56 16.62ZM17.56 9.62H12.31C11.9 9.62 11.56 9.28 11.56 8.87C11.56 8.46 11.9 8.12 12.31 8.12H17.56C17.98 8.12 18.31 8.46 18.31 8.87C18.31 9.28 17.98 9.62 17.56 9.62Z"
+                        fill="#3498DB"
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      className="shrink-0"
+                    >
+                      <path
+                        d="M17.6191 9.62H12.3691C11.9591 9.62 11.6191 9.28 11.6191 8.87C11.6191 8.46 11.9591 8.12 12.3691 8.12H17.6191C18.0291 8.12 18.3691 8.46 18.3691 8.87C18.3691 9.28 18.0391 9.62 17.6191 9.62Z"
+                        fill="#2F2F2F"
+                      />
+                      <path
+                        d="M6.76699 8.9235L7.12055 9.27705L7.4741 8.9235L9.1941 7.2035C9.28884 7.10876 9.45226 7.10876 9.54699 7.2035C9.64173 7.29824 9.64173 7.46166 9.54699 7.55639L7.29699 9.80639C7.24969 9.85369 7.18643 9.87995 7.12055 9.87995C7.056 9.87995 6.99539 9.85768 6.9441 9.80639L6.1941 9.05639C6.09936 8.96165 6.09936 8.79824 6.1941 8.7035C6.28884 8.60876 6.45226 8.60876 6.54699 8.7035L6.90055 8.34995L6.54699 8.7035L6.76699 8.9235Z"
+                        stroke="#2F2F2F"
+                      />
+                      <path
+                        d="M17.6191 16.62H12.3691C11.9591 16.62 11.6191 16.28 11.6191 15.87C11.6191 15.46 11.9591 15.12 12.3691 15.12H17.6191C18.0291 15.12 18.3691 15.46 18.3691 15.87C18.3691 16.28 18.0391 16.62 17.6191 16.62Z"
+                        fill="#292D32"
+                      />
+                      <path
+                        d="M7.12055 17.3799C6.93055 17.3799 6.74055 17.3099 6.59055 17.1599L5.84055 16.4099C5.55055 16.1199 5.55055 15.6399 5.84055 15.3499C6.13055 15.0599 6.61055 15.0599 6.90055 15.3499L7.12055 15.5699L8.84055 13.8499C9.13055 13.5599 9.61055 13.5599 9.90055 13.8499C10.1905 14.1399 10.1905 14.6199 9.90055 14.9099L7.65055 17.1599C7.51055 17.2999 7.32055 17.3799 7.12055 17.3799Z"
+                        fill="#292D32"
+                      />
+                      <path
+                        d="M15 22.75H9C3.57 22.75 1.25 20.43 1.25 15V9C1.25 3.57 3.57 1.25 9 1.25H15C20.43 1.25 22.75 3.57 22.75 9V15C22.75 20.43 20.43 22.75 15 22.75ZM9 2.75C4.39 2.75 2.75 4.39 2.75 9V15C2.75 19.61 4.39 21.25 9 21.25H15C19.61 21.25 21.25 19.61 21.25 15V9C21.25 4.39 19.61 2.75 15 2.75H9Z"
+                        fill="#292D32"
+                      />
+                    </svg>
+                  )}
 
+                  <p
+                    className={`duration-300 ${
+                      showSidebar ? "block" : "hidden"
+                    } shrink-0`}
+                  >
+                    Places
+                  </p>
+                </div>
                 <span
-                  className={`duration-300 ${showSidebar ? "" : "opacity-0"}`}
+                  className={`duration-300 ${
+                    isSubmenuOpen["places"]
+                      ? showSidebar
+                        ? "rotate-90 inline-block"
+                        : "rotate-0 hidden"
+                      : "rotate-0"
+                  }`}
                 >
-                  Wallpaper Request
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                  >
+                    <path
+                      d="M12.6664 8.74161L11.0247 7.09994L8.34974 4.42494C7.78307 3.86661 6.81641 4.26661 6.81641 5.06661V10.2583V14.9333C6.81641 15.7333 7.78307 16.1333 8.34974 15.5666L12.6664 11.2499C13.3581 10.5666 13.3581 9.43327 12.6664 8.74161Z"
+                      className={
+                        activePath === "places"
+                          ? "fill-blueColor"
+                          : "fill-fadeHigh"
+                      }
+                    />
+                  </svg>
                 </span>
-              </Link>
-            </li>
+              </div>
+              {/* submenu  */}
 
-            {/* Wallpapers  */}
+              {showSidebar && (
+                <div
+                  ref={(ref) => (submenuRef.current["places"] = ref)}
+                  className={`flex flex-col gap-1 duration-200 dropdown-menu`}
+                  style={{
+                    maxHeight: isSubmenuOpen["places"]
+                      ? `${submenuRef.current["places"]?.scrollHeight}px`
+                      : "0",
+                  }}
+                >
+                  <NavLink
+                    to="/place"
+                    className={`${showSidebar ? "block" : "hidden"} py-3 pl-14`}
+                  >
+                    Place
+                  </NavLink>
+                  <NavLink
+                    to="/hotel"
+                    className={`${showSidebar ? "block" : "hidden"} py-3 pl-14`}
+                  >
+                    Hotel
+                  </NavLink>
+                  <NavLink
+                    to="/restaurants"
+                    className={`${showSidebar ? "block" : "hidden"} py-3 pl-14`}
+                  >
+                    Restaurants
+                  </NavLink>
+                </div>
+              )}
+            </div>
 
-            <li>
-              <Link
-                to="/wallpapers"
-                className={`${
-                  activePath === "wallpapers" ? "active" : ""
-                } flex items-center gap-4 w-full p-4`}
-                onClick={() => handleLocalstore("wallpapers")}
+            {/* Geography */}
+
+            <div className="w-full overflow-hidden capitalize shrink-0 ">
+              <div
+                className={`flex items-center justify-between gap-4 w-full rounded-lg p-4 cursor-pointer select-none text-sm ${
+                  activePath === "geography"
+                    ? "bg-blueLight text-blueColor"
+                    : ""
+                }`}
+                onClick={() => handleSidebar("geography")}
               >
-                {activePath === "wallpapers" ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="shrink-0"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                  >
-                    <path
-                      d="M22.0196 16.82L18.8896 9.50002C18.3196 8.16002 17.4696 7.40002 16.4996 7.35002C15.5396 7.30002 14.6096 7.97002 13.8996 9.25002L11.9996 12.66C11.5996 13.38 11.0296 13.81 10.4096 13.86C9.77965 13.92 9.14965 13.59 8.63965 12.94L8.41965 12.66C7.70965 11.77 6.82965 11.34 5.92965 11.43C5.02965 11.52 4.25965 12.14 3.74965 13.15L2.01965 16.6C1.39965 17.85 1.45965 19.3 2.18965 20.48C2.91965 21.66 4.18965 22.37 5.57965 22.37H18.3396C19.6796 22.37 20.9296 21.7 21.6696 20.58C22.4296 19.46 22.5497 18.05 22.0196 16.82Z"
-                      fill="#EF5777"
-                    />
-                    <path
-                      d="M6.96984 8.38C8.83657 8.38 10.3498 6.86672 10.3498 5C10.3498 3.13327 8.83657 1.62 6.96984 1.62C5.10312 1.62 3.58984 3.13327 3.58984 5C3.58984 6.86672 5.10312 8.38 6.96984 8.38Z"
-                      fill="#EF5777"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="shrink-0"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                  >
-                    <path
-                      d="M21.6799 16.96L18.5499 9.65C17.4899 7.17 15.5399 7.07 14.2299 9.43L12.3399 12.84C11.3799 14.57 9.58993 14.72 8.34993 13.17L8.12993 12.89C6.83993 11.27 5.01993 11.47 4.08993 13.32L2.36993 16.77C1.15993 19.17 2.90993 22 5.58993 22H18.3499C20.9499 22 22.6999 19.35 21.6799 16.96Z"
-                      stroke="#292D32"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                    <path
-                      d="M6.96973 8C8.62658 8 9.96973 6.65685 9.96973 5C9.96973 3.34315 8.62658 2 6.96973 2C5.31287 2 3.96973 3.34315 3.96973 5C3.96973 6.65685 5.31287 8 6.96973 8Z"
-                      stroke="#292D32"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                )}
+                <div className="flex items-center gap-4">
+                  {activePath === "geography" ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                    >
+                      <path
+                        d="M18.0204 12.33L16.8004 11.11C16.5104 10.86 16.3404 10.49 16.3304 10.08C16.3104 9.63 16.4904 9.18 16.8204 8.85L18.0204 7.65C19.0604 6.61 19.4504 5.61 19.1204 4.82C18.8004 4.04 17.8104 3.61 16.3504 3.61H5.90039V2.75C5.90039 2.34 5.56039 2 5.15039 2C4.74039 2 4.40039 2.34 4.40039 2.75V21.25C4.40039 21.66 4.74039 22 5.15039 22C5.56039 22 5.90039 21.66 5.90039 21.25V16.37H16.3504C17.7904 16.37 18.7604 15.93 19.0904 15.14C19.4204 14.35 19.0404 13.36 18.0204 12.33Z"
+                        fill="#3498DB"
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                    >
+                      <path
+                        d="M5.15039 22.75C4.74039 22.75 4.40039 22.41 4.40039 22V2C4.40039 1.59 4.74039 1.25 5.15039 1.25C5.56039 1.25 5.90039 1.59 5.90039 2V22C5.90039 22.41 5.56039 22.75 5.15039 22.75Z"
+                        fill="#2F2F2F"
+                      />
+                      <path
+                        d="M16.3739 11.5764L16.3624 11.5649L16.3502 11.5542C15.9723 11.2226 15.725 10.7058 15.7 10.1099C15.6758 9.49393 15.9194 8.87812 16.3739 8.42355L17.5739 7.22355C17.9705 6.827 18.2503 6.44874 18.4172 6.11198C18.5005 5.94372 18.5616 5.774 18.5895 5.60902C18.6166 5.44872 18.6181 5.25772 18.5409 5.07518C18.399 4.73986 18.0497 4.54794 17.7285 4.43899C17.3749 4.31909 16.9125 4.25 16.3504 4.25H5.15039C5.01087 4.25 4.90039 4.13821 4.90039 4C4.90039 3.86614 5.01653 3.75 5.15039 3.75H16.3504C17.3768 3.75 18.0024 3.96301 18.3826 4.19787C18.7565 4.42886 18.9271 4.70189 19.0088 4.89231C19.0851 5.08121 19.1582 5.39331 19.0564 5.82199C18.9529 6.25812 18.6587 6.85457 17.9268 7.58645L16.7268 8.78645C16.3806 9.13265 16.1866 9.61526 16.2006 10.1043L16.2007 10.1067C16.2147 10.5274 16.3835 10.9251 16.6956 11.2123L17.9268 12.4336C17.9271 12.4338 17.9273 12.434 17.9276 12.4343C18.6426 13.1495 18.9292 13.7372 19.0295 14.1703C19.1279 14.5949 19.0565 14.9103 18.9788 15.1075C18.8966 15.294 18.7228 15.5675 18.3508 15.7995C17.9721 16.0357 17.354 16.25 16.3504 16.25H5.15039C5.01653 16.25 4.90039 16.1339 4.90039 16C4.90039 15.8661 5.01653 15.75 5.15039 15.75H16.3504C16.9355 15.75 17.3989 15.6727 17.7474 15.5418C18.0743 15.4191 18.3872 15.2142 18.5146 14.8957C18.6386 14.5857 18.5668 14.2275 18.42 13.9068C18.2652 13.5688 17.9909 13.1882 17.5728 12.7753C17.5724 12.7749 17.572 12.7745 17.5717 12.7742L16.3739 11.5764Z"
+                        stroke="#2F2F2F"
+                      />
+                    </svg>
+                  )}
 
+                  <p
+                    className={`duration-300 ${
+                      showSidebar ? "block" : "hidden"
+                    } shrink-0`}
+                  >
+                    Geography
+                  </p>
+                </div>
                 <span
-                  className={`duration-300 ${showSidebar ? "" : "opacity-0"}`}
+                  className={`duration-300 ${
+                    isSubmenuOpen["geography"]
+                      ? showSidebar
+                        ? "rotate-90 inline-block"
+                        : "rotate-0 hidden"
+                      : "rotate-0"
+                  }`}
                 >
-                  Wallpapers
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                  >
+                    <path
+                      d="M12.6664 8.74161L11.0247 7.09994L8.34974 4.42494C7.78307 3.86661 6.81641 4.26661 6.81641 5.06661V10.2583V14.9333C6.81641 15.7333 7.78307 16.1333 8.34974 15.5666L12.6664 11.2499C13.3581 10.5666 13.3581 9.43327 12.6664 8.74161Z"
+                      className={
+                        activePath === "geography"
+                          ? "fill-blueColor"
+                          : "fill-fadeHigh"
+                      }
+                    />
+                  </svg>
                 </span>
-              </Link>
-            </li>
+              </div>
+              {/* submenu  */}
 
-            {/* Categories  */}
+              {showSidebar && (
+                <div
+                  ref={(ref) => (submenuRef.current["geography"] = ref)}
+                  className={`flex flex-col gap-1 duration-200 dropdown-menu`}
+                  style={{
+                    maxHeight: isSubmenuOpen["geography"]
+                      ? `${submenuRef.current["geography"]?.scrollHeight}px`
+                      : "0",
+                  }}
+                >
+                  <NavLink
+                    to="/country"
+                    className={`${showSidebar ? "block" : "hidden"} py-3 pl-14`}
+                  >
+                    Country
+                  </NavLink>
+                  <NavLink
+                    to="/state"
+                    className={`${showSidebar ? "block" : "hidden"} py-3 pl-14`}
+                  >
+                    State
+                  </NavLink>
+                  <NavLink
+                    to="/city"
+                    className={`${showSidebar ? "block" : "hidden"} py-3 pl-14`}
+                  >
+                    City
+                  </NavLink>
+                </div>
+              )}
+            </div>
+
+            {/* ads  */}
 
             <li>
-              <Link
-                to="/categories"
-                className={`${
-                  activePath === "categories" ? "active" : ""
-                } flex items-center gap-4 w-full p-4`}
-                onClick={() => handleLocalstore("categories")}
-              >
-                {activePath === "categories" ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                  >
-                    <path
-                      d="M16.19 2H7.81C4.17 2 2 4.17 2 7.81V16.18C2 19.83 4.17 22 7.81 22H16.18C19.82 22 21.99 19.83 21.99 16.19V7.81C22 4.17 19.83 2 16.19 2ZM17 17.25H7C6.59 17.25 6.25 16.91 6.25 16.5C6.25 16.09 6.59 15.75 7 15.75H17C17.41 15.75 17.75 16.09 17.75 16.5C17.75 16.91 17.41 17.25 17 17.25ZM17 12.75H7C6.59 12.75 6.25 12.41 6.25 12C6.25 11.59 6.59 11.25 7 11.25H17C17.41 11.25 17.75 11.59 17.75 12C17.75 12.41 17.41 12.75 17 12.75ZM17 8.25H7C6.59 8.25 6.25 7.91 6.25 7.5C6.25 7.09 6.59 6.75 7 6.75H17C17.41 6.75 17.75 7.09 17.75 7.5C17.75 7.91 17.41 8.25 17 8.25Z"
-                      fill="#EF5777"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                  >
-                    <path
-                      d="M3 7H21"
-                      stroke="#292D32"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                    />
-                    <path
-                      d="M3 12H21"
-                      stroke="#292D32"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                    />
-                    <path
-                      d="M3 17H21"
-                      stroke="#292D32"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                    />
-                  </svg>
-                )}
-
-                <span
-                  className={`duration-300 ${showSidebar ? "" : "opacity-0"}`}
-                >
-                  Categories
-                </span>
-              </Link>
-            </li>
-
-            {/* Featured */}
-
-            <li>
-              <Link
-                to="/featured"
-                className={`${
-                  activePath === "featured" ? "active" : ""
-                } flex items-center gap-4 w-full p-4`}
-                onClick={() => handleLocalstore("featured")}
-              >
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="shrink-0"
-                >
-                  <path
-                    d="M13.57 22.3801C13.34 22.3801 13.11 22.3401 12.89 22.2601C12.14 21.9801 11.66 21.2801 11.66 20.4801V14.0301H9.31997C8.55997 14.0301 7.89996 13.6001 7.58996 12.9101C7.27996 12.2201 7.39996 11.4401 7.89996 10.8701L15.47 2.27006C16 1.67006 16.82 1.46006 17.57 1.75006C18.32 2.03006 18.7999 2.73006 18.7999 3.53006V9.98006H21.14C21.9 9.98006 22.56 10.4101 22.87 11.1001C23.18 11.7901 23.06 12.5701 22.56 13.1401L14.99 21.7401C14.62 22.1601 14.1 22.3801 13.57 22.3801ZM16.88 3.12006C16.79 3.12006 16.68 3.15006 16.59 3.26006L9.01995 11.8701C8.85995 12.0501 8.91997 12.2301 8.94997 12.3001C8.97997 12.3701 9.07997 12.5401 9.31997 12.5401H12.41C12.82 12.5401 13.16 12.8801 13.16 13.2901V20.4901C13.16 20.7401 13.34 20.8401 13.42 20.8701C13.5 20.9001 13.6999 20.9501 13.8599 20.7601L21.43 12.1501C21.59 11.9701 21.53 11.7901 21.5 11.7201C21.47 11.6501 21.37 11.4801 21.13 11.4801H18.04C17.63 11.4801 17.29 11.1401 17.29 10.7301V3.53006C17.29 3.28006 17.11 3.18006 17.03 3.15006C17 3.13006 16.94 3.12006 16.88 3.12006Z"
-                    fill="#303C58"
-                    className="fill"
-                  />
-                  <path
-                    d="M8.5 4.75H1.5C1.09 4.75 0.75 4.41 0.75 4C0.75 3.59 1.09 3.25 1.5 3.25H8.5C8.91 3.25 9.25 3.59 9.25 4C9.25 4.41 8.91 4.75 8.5 4.75Z"
-                    fill="#303C58"
-                    className="fill"
-                  />
-                  <path
-                    d="M7.5 20.75H1.5C1.09 20.75 0.75 20.41 0.75 20C0.75 19.59 1.09 19.25 1.5 19.25H7.5C7.91 19.25 8.25 19.59 8.25 20C8.25 20.41 7.91 20.75 7.5 20.75Z"
-                    fill="#303C58"
-                    className="fill"
-                  />
-                  <path
-                    d="M4.5 12.75H1.5C1.09 12.75 0.75 12.41 0.75 12C0.75 11.59 1.09 11.25 1.5 11.25H4.5C4.91 11.25 5.25 11.59 5.25 12C5.25 12.41 4.91 12.75 4.5 12.75Z"
-                    fill="#292D32"
-                    className="fill"
-                  />
-                </svg>
-                <span
-                  className={`duration-300 ${showSidebar ? "" : "opacity-0"}`}
-                >
-                  Featured
-                </span>
-              </Link>
-            </li>
-
-            {/* Ad Setup */}
-
-            <li>
-              <Link
+              <NavLink
                 to="/ad-setup"
-                className={`${
-                  activePath === "ad-setup" ? "active" : ""
-                } flex items-center gap-4 w-full p-4`}
-                onClick={() => handleLocalstore("ad-setup")}
+                className={`flex items-center  gap-4 w-full rounded-lg p-4`}
+                onClick={() => handleDropdown("ad-setup")}
               >
                 {activePath === "ad-setup" ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="shrink-0"
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
@@ -408,13 +444,12 @@ function Sidebar({ showSidebar }) {
                   >
                     <path
                       d="M19.5099 5.85L13.5699 2.42C12.5999 1.86 11.3999 1.86 10.4199 2.42L4.48992 5.85C3.51992 6.41 2.91992 7.45 2.91992 8.58V15.42C2.91992 16.54 3.51992 17.58 4.48992 18.15L10.4299 21.58C11.3999 22.14 12.5999 22.14 13.5799 21.58L19.5199 18.15C20.4899 17.59 21.0899 16.55 21.0899 15.42V8.58C21.0799 7.45 20.4799 6.42 19.5099 5.85ZM14.2499 13.4L13.2099 14L12.1699 14.6C10.8399 15.37 9.74992 14.74 9.74992 13.2V12V10.8C9.74992 9.26 10.8399 8.63 12.1699 9.4L13.2099 10L14.2499 10.6C15.5799 11.37 15.5799 12.63 14.2499 13.4Z"
-                      fill="#EF5777"
+                      fill="#3498DB"
                     />
                   </svg>
                 ) : (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="shrink-0"
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
@@ -422,60 +457,188 @@ function Sidebar({ showSidebar }) {
                   >
                     <path
                       d="M12.0002 22.7501C11.3302 22.7501 10.6501 22.5801 10.0501 22.2301L4.11014 18.8001C2.91014 18.1001 2.16016 16.8101 2.16016 15.4201V8.58011C2.16016 7.19011 2.91014 5.90011 4.11014 5.20011L10.0501 1.77012C11.2501 1.07012 12.7402 1.07012 13.9502 1.77012L19.8902 5.20011C21.0902 5.90011 21.8401 7.19011 21.8401 8.58011V15.4201C21.8401 16.8101 21.0902 18.1001 19.8902 18.8001L13.9502 22.2301C13.3502 22.5801 12.6702 22.7501 12.0002 22.7501ZM12.0002 2.7501C11.5902 2.7501 11.1701 2.8601 10.8001 3.0701L4.86014 6.5001C4.12014 6.9301 3.66016 7.72011 3.66016 8.58011V15.4201C3.66016 16.2701 4.12014 17.0701 4.86014 17.5001L10.8001 20.9301C11.5401 21.3601 12.4602 21.3601 13.2002 20.9301L19.1402 17.5001C19.8802 17.0701 20.3401 16.2801 20.3401 15.4201V8.58011C20.3401 7.73011 19.8802 6.9301 19.1402 6.5001L13.2002 3.0701C12.8302 2.8601 12.4102 2.7501 12.0002 2.7501Z"
-                      fill="#303C58"
+                      fill="#2F2F2F"
                     />
                     <path
-                      d="M11.0902 15.6703C10.7302 15.6703 10.3902 15.5803 10.0802 15.4103C9.39023 15.0103 8.99023 14.2003 8.99023 13.1903V10.7903C8.99023 9.78027 9.39023 8.9703 10.0802 8.5703C10.7702 8.1703 11.6703 8.23028 12.5403 8.74028L14.6202 9.94029C15.4902 10.4403 16.0002 11.1903 16.0002 11.9903C16.0002 12.7903 15.5002 13.5303 14.6202 14.0403L12.5403 15.2403C12.0603 15.5303 11.5602 15.6703 11.0902 15.6703ZM11.1003 9.8203C11.0003 9.8203 10.9102 9.8403 10.8402 9.8803C10.6302 10.0003 10.5002 10.3403 10.5002 10.8003V13.2003C10.5002 13.6503 10.6302 13.9903 10.8402 14.1203C11.0502 14.2403 11.4102 14.1803 11.8002 13.9503L13.8802 12.7503C14.2702 12.5203 14.5002 12.2403 14.5002 12.0003C14.5002 11.7603 14.2702 11.4803 13.8802 11.2503L11.8002 10.0503C11.5402 9.90028 11.2903 9.8203 11.1003 9.8203Z"
-                      fill="#303C58"
+                      d="M12.2874 9.17163L12.2874 9.17164L12.2904 9.17337L14.3704 10.3734L14.3711 10.3738C15.1348 10.8127 15.5002 11.4193 15.5002 11.9903C15.5002 12.5612 15.1449 13.1581 14.37 13.6074C14.3699 13.6075 14.3697 13.6076 14.3695 13.6077L12.2904 14.8072L12.2903 14.8071L12.2817 14.8123C11.872 15.0598 11.4606 15.1703 11.0902 15.1703C10.8183 15.1703 10.5625 15.1034 10.3259 14.9747C9.83411 14.6868 9.49023 14.0723 9.49023 13.1903V10.7903C9.49023 9.9052 9.83646 9.28955 10.331 9.00287C10.8237 8.71726 11.5265 8.72557 12.2874 9.17163ZM10.5771 14.5454L10.5845 14.55L10.5922 14.5544C10.8338 14.6925 11.107 14.6995 11.3386 14.6591C11.5758 14.6178 11.8193 14.5193 12.0521 14.3822L14.1301 13.1834L14.1301 13.1834L14.1342 13.181C14.3654 13.0446 14.5698 12.8819 14.7221 12.6973C14.8702 12.5178 15.0002 12.2784 15.0002 12.0003C15.0002 11.7222 14.8702 11.4828 14.7221 11.3033C14.5698 11.1187 14.3654 10.9559 14.1342 10.8196L14.1343 10.8196L14.1301 10.8172L12.0501 9.61719C11.7495 9.44374 11.4113 9.3203 11.1003 9.3203C10.9389 9.3203 10.7572 9.35185 10.5922 9.44617C10.35 9.58456 10.2055 9.81684 10.123 10.038C10.0384 10.2649 10.0002 10.5269 10.0002 10.8003V13.2003C10.0002 13.4702 10.0388 13.7293 10.123 13.955C10.2055 14.1761 10.3467 14.4028 10.5771 14.5454Z"
+                      stroke="#2F2F2F"
                     />
                   </svg>
                 )}
 
                 <span
-                  className={`duration-300 ${showSidebar ? "" : "opacity-0"}`}
+                  className={`duration-300 ${
+                    showSidebar ? "block" : "hidden"
+                  } shrink-0`}
                 >
-                  Ad Setup
+                  Ads
                 </span>
-              </Link>
+              </NavLink>
             </li>
 
             {/* Notification  */}
-            <li>
-              <Link
-                to="/notification"
-                className={`${
-                  activePath === "notification" ? "active" : ""
-                } flex items-center gap-4 w-full p-4`}
-                onClick={() => handleLocalstore("notification")}
+
+            <div className="w-full overflow-hidden capitalize shrink-0 ">
+              <div
+                className={`flex items-center justify-between gap-4 w-full rounded-lg p-4 cursor-pointer select-none text-sm ${
+                  activePath === "notifications"
+                    ? "bg-blueLight text-blueColor"
+                    : ""
+                }`}
+                onClick={() => handleSidebar("notifications")}
               >
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="shrink-0"
+                <div className="flex items-center gap-4">
+                  {activePath === "notifications" ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                    >
+                      <path
+                        d="M20.1892 14.0598L19.0592 12.1798C18.8092 11.7698 18.5892 10.9798 18.5892 10.4998V8.6298C18.5892 4.9998 15.6392 2.0498 12.0192 2.0498C8.38923 2.0598 5.43923 4.9998 5.43923 8.6298V10.4898C5.43923 10.9698 5.21923 11.7598 4.97923 12.1698L3.84923 14.0498C3.41923 14.7798 3.31923 15.6098 3.58923 16.3298C3.85923 17.0598 4.46923 17.6398 5.26923 17.8998C6.34923 18.2598 7.43923 18.5198 8.54923 18.7098C8.65923 18.7298 8.76923 18.7398 8.87923 18.7598C9.01923 18.7798 9.16923 18.7998 9.31923 18.8198C9.57923 18.8598 9.83923 18.8898 10.1092 18.9098C10.7392 18.9698 11.3792 18.9998 12.0192 18.9998C12.6492 18.9998 13.2792 18.9698 13.8992 18.9098C14.1292 18.8898 14.3592 18.8698 14.5792 18.8398C14.7592 18.8198 14.9392 18.7998 15.1192 18.7698C15.2292 18.7598 15.3392 18.7398 15.4492 18.7198C16.5692 18.5398 17.6792 18.2598 18.7592 17.8998C19.5292 17.6398 20.1192 17.0598 20.3992 16.3198C20.6792 15.5698 20.5992 14.7498 20.1892 14.0598ZM12.7492 9.9998C12.7492 10.4198 12.4092 10.7598 11.9892 10.7598C11.5692 10.7598 11.2292 10.4198 11.2292 9.9998V6.89981C11.2292 6.4798 11.5692 6.1398 11.9892 6.1398C12.4092 6.1398 12.7492 6.4798 12.7492 6.89981V9.9998Z"
+                        fill="#3498DB"
+                      />
+                      <path
+                        d="M10.0952 20.6143C10.1457 20.6193 10.1963 20.6239 10.2471 20.6282C10.8286 20.6792 11.423 20.71 12.0197 20.71C12.607 20.71 13.1921 20.6791 13.7642 20.628L13.7642 20.628L13.7671 20.6277C13.8101 20.6237 13.8577 20.6197 13.9083 20.6156C13.4471 21.1572 12.7618 21.5 11.9997 21.5C11.3408 21.5 10.6921 21.2319 10.2395 20.7628L10.2308 20.7538L10.2217 20.7452C10.1779 20.7042 10.1357 20.6604 10.0952 20.6143Z"
+                        stroke="#3498DB"
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                    >
+                      <path
+                        d="M12 10.5204C11.59 10.5204 11.25 10.1804 11.25 9.77043V6.44043C11.25 6.03043 11.59 5.69043 12 5.69043C12.41 5.69043 12.75 6.03043 12.75 6.44043V9.77043C12.75 10.1904 12.41 10.5204 12 10.5204Z"
+                        fill="#2F2F2F"
+                      />
+                      <path
+                        d="M4.94373 13.1703L4.94374 13.1703C5.31461 12.561 5.61084 11.4814 5.61084 10.7602V8.66023C5.61084 5.12409 8.4847 2.25023 12.0208 2.25023C15.5578 2.25023 18.43 5.1246 18.4408 8.66871L18.4408 8.67023L18.4408 10.7702C18.4408 11.4914 18.7371 12.571 19.1079 13.1803L19.1098 13.1833L20.3798 15.3033L20.3815 15.3062C20.6827 15.817 20.7553 16.4334 20.54 17.0033C20.3367 17.5678 19.8904 17.998 19.3171 18.1852L4.94373 13.1703ZM4.94373 13.1703L4.94139 13.1742M4.94373 13.1703L4.94139 13.1742M4.94139 13.1742L3.67298 15.3015M4.94139 13.1742L3.67298 15.3015M3.67298 15.3015C3.67271 15.302 3.67244 15.3024 3.67216 15.3029L3.67298 15.3015ZM4.57954 18.6461L4.57739 18.6454C3.79984 18.389 3.23344 17.8427 2.99041 17.1784C2.74633 16.5113 2.82101 15.7283 3.23977 15.0272C3.23977 15.0272 3.23978 15.0272 3.23978 15.0272C3.23987 15.027 3.23996 15.0269 3.24005 15.0267L4.50977 12.9072L4.51039 12.9061C4.68079 12.6201 4.82788 12.2373 4.93225 11.8653C5.03647 11.4939 5.11084 11.0879 5.11084 10.7502V8.65023C5.11084 4.83638 8.20699 1.74023 12.0208 1.74023C15.8347 1.74023 18.9308 4.83638 18.9308 8.65023V10.7502C18.9308 11.0832 19.0054 11.4893 19.1093 11.8611C19.2134 12.2335 19.3605 12.6194 19.5313 12.9061L19.5319 12.9072L20.8019 15.0272L20.8026 15.0283C21.1927 15.6757 21.2605 16.4476 21.0011 17.1589C20.7446 17.8622 20.1813 18.4036 19.4611 18.6464L19.4604 18.6467C17.0649 19.4582 14.5493 19.8502 12.0208 19.8502C9.4937 19.8502 6.97736 19.4486 4.57954 18.6461Z"
+                        stroke="#2F2F2F"
+                      />
+                      <path
+                        d="M11.9999 22.9003C10.9299 22.9003 9.87992 22.4603 9.11992 21.7003C8.35992 20.9403 7.91992 19.8903 7.91992 18.8203H9.41992C9.41992 19.5003 9.69992 20.1603 10.1799 20.6403C10.6599 21.1203 11.3199 21.4003 11.9999 21.4003C13.4199 21.4003 14.5799 20.2403 14.5799 18.8203H16.0799C16.0799 21.0703 14.2499 22.9003 11.9999 22.9003Z"
+                        fill="#2F2F2F"
+                      />
+                    </svg>
+                  )}
+
+                  <p
+                    className={`duration-300 ${
+                      showSidebar ? "block" : "hidden"
+                    } shrink-0`}
+                  >
+                    Notifications
+                  </p>
+                </div>
+                <span
+                  className={`duration-300 ${
+                    isSubmenuOpen["notifications"]
+                      ? showSidebar
+                        ? "rotate-90 inline-block"
+                        : "rotate-0 hidden"
+                      : "rotate-0"
+                  }`}
                 >
-                  <path
-                    d="M12.0199 20.5299C9.68987 20.5299 7.35987 20.1599 5.14987 19.4199C4.30987 19.1299 3.66987 18.5399 3.38987 17.7699C3.09987 16.9999 3.19987 16.1499 3.65987 15.3899L4.80987 13.4799C5.04987 13.0799 5.26987 12.2799 5.26987 11.8099V8.91992C5.26987 5.19992 8.29987 2.16992 12.0199 2.16992C15.7399 2.16992 18.7699 5.19992 18.7699 8.91992V11.8099C18.7699 12.2699 18.9899 13.0799 19.2299 13.4899L20.3699 15.3899C20.7999 16.1099 20.8799 16.9799 20.5899 17.7699C20.2999 18.5599 19.6699 19.1599 18.8799 19.4199C16.6799 20.1599 14.3499 20.5299 12.0199 20.5299ZM12.0199 3.66992C9.12987 3.66992 6.76987 6.01992 6.76987 8.91992V11.8099C6.76987 12.5399 6.46987 13.6199 6.09987 14.2499L4.94987 16.1599C4.72987 16.5299 4.66987 16.9199 4.79987 17.2499C4.91987 17.5899 5.21987 17.8499 5.62987 17.9899C9.80987 19.3899 14.2399 19.3899 18.4199 17.9899C18.7799 17.8699 19.0599 17.5999 19.1899 17.2399C19.3199 16.8799 19.2899 16.4899 19.0899 16.1599L17.9399 14.2499C17.5599 13.5999 17.2699 12.5299 17.2699 11.7999V8.91992C17.2699 6.01992 14.9199 3.66992 12.0199 3.66992Z"
-                    fill="#303C58"
-                  />
-                  <path
-                    d="M13.8796 3.93969C13.8096 3.93969 13.7396 3.92969 13.6696 3.90969C13.3796 3.82969 13.0996 3.76969 12.8296 3.72969C11.9796 3.61969 11.1596 3.67969 10.3896 3.90969C10.1096 3.99969 9.80963 3.90969 9.61963 3.69969C9.42963 3.48969 9.36963 3.18969 9.47963 2.91969C9.88963 1.86969 10.8896 1.17969 12.0296 1.17969C13.1696 1.17969 14.1696 1.85969 14.5796 2.91969C14.6796 3.18969 14.6296 3.48969 14.4396 3.69969C14.2896 3.85969 14.0796 3.93969 13.8796 3.93969Z"
-                    fill="#303C58"
-                  />
-                  <path
-                    d="M12.0195 22.8105C11.0295 22.8105 10.0695 22.4105 9.36953 21.7105C8.66953 21.0105 8.26953 20.0505 8.26953 19.0605H9.76953C9.76953 19.6505 10.0095 20.2305 10.4295 20.6505C10.8495 21.0705 11.4295 21.3105 12.0195 21.3105C13.2595 21.3105 14.2695 20.3005 14.2695 19.0605H15.7695C15.7695 21.1305 14.0895 22.8105 12.0195 22.8105Z"
-                    fill="#303C58"
-                  />
-                </svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                  >
+                    <path
+                      d="M12.6664 8.74161L11.0247 7.09994L8.34974 4.42494C7.78307 3.86661 6.81641 4.26661 6.81641 5.06661V10.2583V14.9333C6.81641 15.7333 7.78307 16.1333 8.34974 15.5666L12.6664 11.2499C13.3581 10.5666 13.3581 9.43327 12.6664 8.74161Z"
+                      className={
+                        activePath === "notifications"
+                          ? "fill-blueColor"
+                          : "fill-fadeHigh"
+                      }
+                    />
+                  </svg>
+                </span>
+              </div>
+              {/* submenu  */}
+
+              {showSidebar && (
+                <div
+                  ref={(ref) => (submenuRef.current["notifications"] = ref)}
+                  className={`flex flex-col gap-1 duration-200 dropdown-menu`}
+                  style={{
+                    maxHeight: isSubmenuOpen["notifications"]
+                      ? `${submenuRef.current["notifications"]?.scrollHeight}px`
+                      : "0",
+                  }}
+                >
+                  <NavLink
+                    to="/add-notification"
+                    className={`${showSidebar ? "block" : "hidden"} py-3 pl-14`}
+                  >
+                    Add Notification
+                  </NavLink>
+                  <NavLink
+                    to="/send-notification"
+                    className={`${showSidebar ? "block" : "hidden"} py-3 pl-14`}
+                  >
+                    Send
+                  </NavLink>
+                </div>
+              )}
+            </div>
+
+            {/* Settings  */}
+
+            <li>
+              <NavLink
+                to="/settings"
+                className={`flex items-center  gap-4 w-full rounded-lg p-4`}
+                onClick={() => handleDropdown("/settings")}
+              >
+                {activePath === "settings" ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <path
+                      d="M20.1 9.22043C18.29 9.22043 17.55 7.94042 18.45 6.37042C18.97 5.46042 18.66 4.30042 17.75 3.78042L16.02 2.79042C15.23 2.32042 14.21 2.60042 13.74 3.39042L13.63 3.58042C12.73 5.15042 11.25 5.15042 10.34 3.58042L10.23 3.39042C9.78 2.60042 8.76 2.32042 7.97 2.79042L6.24 3.78042C5.33 4.30042 5.02 5.47042 5.54 6.38042C6.45 7.94042 5.71 9.22043 3.9 9.22043C2.86 9.22043 2 10.0704 2 11.1204V12.8804C2 13.9204 2.85 14.7804 3.9 14.7804C5.71 14.7804 6.45 16.0604 5.54 17.6304C5.02 18.5404 5.33 19.7004 6.24 20.2204L7.97 21.2104C8.76 21.6804 9.78 21.4004 10.25 20.6104L10.36 20.4204C11.26 18.8504 12.74 18.8504 13.65 20.4204L13.76 20.6104C14.23 21.4004 15.25 21.6804 16.04 21.2104L17.77 20.2204C18.68 19.7004 18.99 18.5304 18.47 17.6304C17.56 16.0604 18.3 14.7804 20.11 14.7804C21.15 14.7804 22.01 13.9304 22.01 12.8804V11.1204C22 10.0804 21.15 9.22043 20.1 9.22043ZM12 15.2504C10.21 15.2504 8.75 13.7904 8.75 12.0004C8.75 10.2104 10.21 8.75042 12 8.75042C13.79 8.75042 15.25 10.2104 15.25 12.0004C15.25 13.7904 13.79 15.2504 12 15.2504Z"
+                      fill="#3498DB"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <path
+                      d="M12 15.75C9.93 15.75 8.25 14.07 8.25 12C8.25 9.93 9.93 8.25 12 8.25C14.07 8.25 15.75 9.93 15.75 12C15.75 14.07 14.07 15.75 12 15.75ZM12 9.75C10.76 9.75 9.75 10.76 9.75 12C9.75 13.24 10.76 14.25 12 14.25C13.24 14.25 14.25 13.24 14.25 12C14.25 10.76 13.24 9.75 12 9.75Z"
+                      fill="#2F2F2F"
+                    />
+                    <path
+                      d="M9.29506 21.6261L9.29505 21.6261L9.28974 21.6276C8.78935 21.7626 8.27942 21.6908 7.84725 21.4315L7.84729 21.4315L7.83943 21.4269L6.11942 20.4369L6.11883 20.4366C5.62587 20.1538 5.26895 19.6941 5.11296 19.1308C4.96627 18.5652 5.04116 17.9915 5.32369 17.4991L5.32465 17.4974C5.48974 17.2071 5.60884 16.9078 5.656 16.6181C5.70286 16.3303 5.68369 16.0144 5.52135 15.7374C5.21133 15.2086 4.53815 15.0303 3.9 15.0303C2.71614 15.0303 1.75 14.0641 1.75 12.8803V11.1203C1.75 9.93643 2.71614 8.97029 3.9 8.97029C4.53815 8.97029 5.21133 8.79201 5.52135 8.26315C5.8349 7.72827 5.64497 7.04869 5.32247 6.49934C5.04025 6.00616 4.96658 5.4227 5.11336 4.86823L5.11381 4.8665C5.25952 4.30793 5.61339 3.84932 6.1158 3.5657L6.1158 3.56571L6.11834 3.56425L7.84834 2.57425L7.84837 2.57431L7.85501 2.57037C8.74208 2.04441 9.92719 2.34744 10.4696 3.26478L10.4696 3.26478L10.4713 3.26754L10.5893 3.46422C10.92 4.0344 11.4019 4.47529 12.015 4.47529C12.6294 4.47529 13.1119 4.03264 13.4427 3.4608C13.4427 3.46075 13.4428 3.46069 13.4428 3.46064L13.5513 3.27315C13.5516 3.27277 13.5518 3.2724 13.552 3.27203C14.0945 2.34804 15.277 2.04472 16.1739 2.5797L16.1738 2.57975L16.1806 2.58363L17.9006 3.57363L17.9012 3.57397C18.3941 3.85682 18.7511 4.3165 18.907 4.87976C19.0537 5.44537 18.9788 6.01906 18.6963 6.51145L18.6954 6.51313C18.5303 6.80348 18.4112 7.10274 18.364 7.39245C18.3171 7.68027 18.3363 7.99621 18.4987 8.27315C18.8087 8.80201 19.4819 8.98029 20.12 8.98029C21.3039 8.98029 22.27 9.94643 22.27 11.1303V12.8903C22.27 14.0741 21.3039 15.0403 20.12 15.0403C19.4818 15.0403 18.8087 15.2186 18.4987 15.7474C18.1851 16.2823 18.375 16.9619 18.6975 17.5113C18.9824 18.0089 19.0608 18.5903 18.9084 19.1357L18.9084 19.1357L18.9062 19.1441C18.7605 19.7026 18.4066 20.1613 17.9042 20.4449L17.9017 20.4463L16.1751 21.4344C15.8657 21.6047 15.5395 21.6903 15.21 21.6903C15.05 21.6903 14.8823 21.6678 14.7042 21.6259C14.2097 21.4882 13.8 21.1784 13.5387 20.743L13.4207 20.5463C13.0899 19.9761 12.6081 19.5353 11.995 19.5353C11.3806 19.5353 10.898 19.978 10.5672 20.5499L10.4592 20.7364C10.4589 20.7369 10.4586 20.7374 10.4583 20.738C10.1931 21.1871 9.7813 21.5007 9.29506 21.6261ZM13.8567 20.2898L13.8573 20.2908L13.9659 20.4784C13.9661 20.4788 13.9664 20.4793 13.9667 20.4797C14.1561 20.8104 14.4704 21.0433 14.8387 21.1354C15.1931 21.2239 15.5696 21.1841 15.8933 20.9914L17.6199 19.9934C17.9901 19.7798 18.2775 19.4228 18.3931 18.9891C18.5063 18.5647 18.451 18.1181 18.2331 17.7404L18.2322 17.7389C17.7242 16.8655 17.7069 16.0509 18.0341 15.4784C18.3586 14.9105 19.0688 14.5203 20.09 14.5203C21.0061 14.5203 21.74 13.7864 21.74 12.8703V11.1103C21.74 10.207 21.009 9.46029 20.09 9.46029C19.0688 9.46029 18.3586 9.0701 18.0341 8.50222C17.7069 7.92964 17.7242 7.11507 18.2322 6.24167L18.2331 6.24015C18.451 5.86247 18.5063 5.4159 18.3931 4.99146C18.2776 4.55843 18.0025 4.21625 17.642 3.99446L17.6353 3.99028L17.6283 3.98632L15.903 2.99899C15.2278 2.59505 14.3551 2.83647 13.9595 3.50592L13.9595 3.50591L13.9573 3.50977L13.8473 3.69977L13.8467 3.7008C13.3372 4.58564 12.6503 5.00029 11.99 5.00029C11.3308 5.00029 10.6449 4.58692 10.1357 3.70492L10.0281 3.50933L10.024 3.50186L10.0196 3.49454C9.6304 2.84062 8.76766 2.60955 8.09931 2.99767C8.0991 2.99779 8.0989 2.99791 8.09869 2.99803L6.37014 3.99719C6.37005 3.99725 6.36995 3.9973 6.36986 3.99735C6.36983 3.99737 6.36981 3.99739 6.36978 3.9974C5.99973 4.21102 5.7125 4.56788 5.59688 5.00146C5.4837 5.4259 5.53902 5.87247 5.7569 6.25015L5.75779 6.25167C6.26579 7.12507 6.28306 7.93964 5.95588 8.51222C5.63137 9.0801 4.9212 9.47029 3.9 9.47029C2.98386 9.47029 2.25 10.2041 2.25 11.1203V12.8803C2.25 13.7836 2.98103 14.5303 3.9 14.5303C4.9212 14.5303 5.63137 14.9205 5.95588 15.4884C6.28306 16.0609 6.26579 16.8755 5.75779 17.7489L5.75691 17.7504C5.53902 18.1281 5.4837 18.5747 5.59688 18.9991C5.71235 19.4321 5.98753 19.7743 6.34795 19.9961L6.35474 20.0003L6.36166 20.0043L8.08504 20.9905C8.41615 21.1922 8.80356 21.2354 9.15373 21.1447C9.53454 21.0488 9.836 20.799 10.0251 20.4935L10.029 20.4872L10.0327 20.4808L10.1422 20.2917C10.1423 20.2915 10.1424 20.2914 10.1424 20.2913C10.6537 19.4125 11.3419 18.9903 12 18.9903C12.6603 18.9903 13.3472 19.4049 13.8567 20.2898Z"
+                      stroke="#2F2F2F"
+                    />
+                  </svg>
+                )}
 
                 <span
-                  className={`duration-300 ${showSidebar ? "" : "opacity-0"}`}
+                  className={`duration-300 ${
+                    showSidebar ? "block" : "hidden"
+                  } shrink-0`}
                 >
-                  Send Notification
+                  Settings
                 </span>
-              </Link>
+              </NavLink>
             </li>
           </ul>
         </div>

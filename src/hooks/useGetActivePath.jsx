@@ -1,17 +1,12 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { setActivePath } from "../features/nav/navSlice";
+import { setActivePath } from "../features/path/pathSlice";
 
 export default function useGetActivePath() {
   const dispatch = useDispatch();
-  const activePath = useSelector((state) => state.nav);
+  const { activePath } = useSelector((state) => state.path);
   const location = useLocation();
-
-  const handleLocalstore = (path) => {
-    dispatch(setActivePath(path));
-    localStorage.setItem("activePath", path);
-  };
 
   useEffect(() => {
     const localPath = localStorage.getItem("activePath");
@@ -21,23 +16,42 @@ export default function useGetActivePath() {
   }, []);
 
   useEffect(() => {
-    if (
-      location?.pathname === "/category-add" ||
-      location?.pathname === "/category-edit"
-    ) {
-      dispatch(setActivePath("categories"));
-    } else if (location?.pathname === "/user-edit") {
-      dispatch(setActivePath("users"));
-    } else if (location?.pathname === "/featured-add") {
-      dispatch(setActivePath("featured"));
-    } else if (location?.pathname === "/notification-add") {
-      dispatch(setActivePath("notification"));
-    } else if (location?.pathname === "/profile") {
-      dispatch(setActivePath(""));
-    } else if (location?.pathname === "/") {
+    if (location?.pathname === "/") {
       dispatch(setActivePath("/"));
+      localStorage.setItem("activePath", "/");
+    } else if (location?.pathname === "/users") {
+      dispatch(setActivePath("users"));
+      localStorage.setItem("activePath", "users");
+    } else if (
+      location?.pathname === "/place" ||
+      location?.pathname === "/hotel" ||
+      location?.pathname === "/restaurants"
+    ) {
+      dispatch(setActivePath("places"));
+      localStorage.setItem("activePath", "places");
+    } else if (
+      location?.pathname === "/country" ||
+      location?.pathname === "/state" ||
+      location?.pathname === "/city"
+    ) {
+      dispatch(setActivePath("geography"));
+      localStorage.setItem("activePath", "geography");
+    } else if (location?.pathname === "/ad-setup") {
+      dispatch(setActivePath("ad-setup"));
+      localStorage.setItem("activePath", "ad-setup");
+    } else if (
+      location?.pathname === "/add-notification" ||
+      location?.pathname === "/send-notification"
+    ) {
+      dispatch(setActivePath("notification"));
+      localStorage.setItem("activePath", "notification");
+    } else if (location?.pathname === "/settings") {
+      dispatch(setActivePath("settings"));
+      localStorage.setItem("activePath", "settings");
+    } else {
+      dispatch(setActivePath(undefined));
+      localStorage.setItem("activePath", undefined);
     }
-  }, []);
-
-  return { handleLocalstore, activePath };
+  }, [location]);
+  return activePath;
 }

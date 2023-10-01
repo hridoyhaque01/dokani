@@ -5,7 +5,7 @@ function PrivateRouter({ children }) {
   const { email } = useSelector((state) => state.auth);
   const location = useLocation();
   if (email) {
-    return <>{children}</>; // Wrap children in JSX syntax
+    return <>{children}</>;
   }
 
   return <Navigate to="/login" state={{ from: location }} replace />;
