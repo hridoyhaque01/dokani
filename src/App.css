@@ -52,7 +52,7 @@
 }
 
 .ant-picker-suffix {
-  color: #ef5777 !important;
+  color: #3498db !important;
 }
 
 .ant-select-arrow {
@@ -62,7 +62,8 @@
 .ant-select-selector::after {
   content: url("./assets/images/arrow-down.png") !important; /* Unicode down arrow character */
   visibility: visible !important ;
-  transform: translateY(16px) translateX(-16px);
+  /* transform: translateY(16px) translateX(-16px); */
+  transform: translateY(6px) translateX(-16px);
 }
 
 .test .ant-select-selector::after {
@@ -107,14 +108,14 @@
   .ant-select-item-option-selected:not(.ant-select-item-option-disabled),
 :where(.css-dev-only-do-not-override-nnuwmp).ant-select-dropdown
   .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
-  background-color: #faf4f4;
+  background-color: #f2f8fd;
 }
 
 :where(.css-nnuwmp).ant-select-dropdown
   .ant-select-item-option-active:not(.ant-select-item-option-disabled),
 :where(.css-dev-only-do-not-override-nnuwmp).ant-select-dropdown
   .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
-  background-color: #faf4f4;
+  background-color: #f2f8fd;
 }
 /* 
 .ant-switch {
@@ -151,8 +152,8 @@
 .toggle-error:checked,
 .toggle-error[checked="true"],
 .toggle-error[aria-checked="true"] {
-  border-color: #ef5777 !important;
-  background-color: #ef5777 !important;
+  border-color: #3498db !important;
+  background-color: #3498db !important;
 }
 /* daisy ui style end */
 

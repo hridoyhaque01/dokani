@@ -19,7 +19,10 @@ export default function useGetActivePath() {
     if (location?.pathname === "/") {
       dispatch(setActivePath("/"));
       localStorage.setItem("activePath", "/");
-    } else if (location?.pathname === "/users") {
+    } else if (
+      location?.pathname === "/users" ||
+      location?.pathname === "/user-edit"
+    ) {
       dispatch(setActivePath("users"));
       localStorage.setItem("activePath", "users");
     } else if (

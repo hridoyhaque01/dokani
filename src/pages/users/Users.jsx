@@ -9,6 +9,7 @@ import UserTable from "../../components/tables/users/UsersTable";
 function Users() {
   const isLoading = false;
   const isError = false;
+  const [isShowAscending, setIsShowAscending] = useState(true);
   const [data, setData] = useState([
     {
       id: 1,
@@ -45,7 +46,11 @@ function Users() {
   };
 
   const sortByTime = (a, b) => {
-    return b.timestamp - a.timestamp;
+    if (isShowAscending) {
+      return a.timestamp - b.timestamp;
+    } else {
+      return b.timestamp - a.timestamp;
+    }
   };
 
   const filterBySearch = (data) => {
@@ -66,7 +71,12 @@ function Users() {
     content = <NoData></NoData>;
   } else if (!isLoading && !isError && data?.length > 0) {
     const newData = [...data]?.sort(sortByTime)?.filter(filterBySearch);
-    content = <UserTable data={newData}></UserTable>;
+    content = (
+      <UserTable
+        data={newData}
+        setIsShowAscending={setIsShowAscending}
+      ></UserTable>
+    );
   }
 
   return (

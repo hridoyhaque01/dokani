@@ -4,7 +4,7 @@ import ConfirmationModal from "../../modals/ConfirmationModal";
 import { Pagination } from "../../shared/pagination/Pagination";
 import NoData from "../../shared/ui/NoData";
 
-function UserTable({ data }) {
+function UserTable({ data, setIsShowAscending }) {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -32,10 +32,31 @@ function UserTable({ data }) {
               <th className="bg-themeSemi text-base normal-case py-5">Name</th>
               <th className="bg-themeSemi text-base normal-case py-5">Email</th>
               <th className="bg-themeSemi text-base normal-case py-5">
-                Points
+                Numbers
               </th>
-              <th className="bg-themeSemi text-base normal-case py-5">
-                Uploads
+              <th className="bg-themeSemi text-base normal-case py-5 flex items-center gap-2">
+                <span>Join Date</span>
+                <button
+                  type="button"
+                  onClick={() => setIsShowAscending((prev) => !prev)}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                  >
+                    <path
+                      d="M9.14987 5.15833L6.0582 2.06667C5.99987 2.00833 5.92487 1.95833 5.84154 1.925C5.8332 1.925 5.82487 1.925 5.81654 1.91667C5.74987 1.89167 5.6832 1.875 5.6082 1.875C5.44154 1.875 5.2832 1.94167 5.16654 2.05833L2.0582 5.15833C1.81654 5.4 1.81654 5.8 2.0582 6.04167C2.29987 6.28333 2.69987 6.28333 2.94154 6.04167L4.9832 4V17.5C4.9832 17.8417 5.26654 18.125 5.6082 18.125C5.94987 18.125 6.2332 17.8417 6.2332 17.5V4.00833L8.26654 6.04167C8.39154 6.16667 8.54987 6.225 8.7082 6.225C8.86654 6.225 9.02487 6.16667 9.14987 6.04167C9.39154 5.8 9.39154 5.40833 9.14987 5.15833Z"
+                      fill="#5E6064"
+                    />
+                    <path
+                      d="M17.9409 13.9583C17.6992 13.7167 17.2992 13.7167 17.0576 13.9583L15.0159 16V2.5C15.0159 2.15833 14.7326 1.875 14.3909 1.875C14.0492 1.875 13.7659 2.15833 13.7659 2.5V15.9917L11.7326 13.9583C11.4909 13.7167 11.0909 13.7167 10.8492 13.9583C10.6076 14.2 10.6076 14.6 10.8492 14.8417L13.9409 17.9333C13.9992 17.9917 14.0742 18.0417 14.1576 18.075C14.1659 18.075 14.1742 18.075 14.1826 18.0833C14.2492 18.1083 14.3242 18.125 14.3992 18.125C14.5659 18.125 14.7242 18.0583 14.8409 17.9417L17.9409 14.8417C18.1826 14.5917 18.1826 14.2 17.9409 13.9583Z"
+                      fill="#5E6064"
+                    />
+                  </svg>
+                </button>
               </th>
               <th className="bg-themeSemi text-base normal-case py-5 text-center">
                 Actions
@@ -68,8 +89,12 @@ function UserTable({ data }) {
                   </td>
                   <td className="py-3">{user?.name}</td>
                   <td className="py-3">{user?.email}</td>
-                  <td className="py-3">{user?.points}</td>
-                  <td className="py-3">{user?.uploads}</td>
+                  <td className="py-3">{user?.phone}</td>
+                  <td className="py-3">
+                    {new Date(user?.timestamp * 1000).toLocaleDateString(
+                      "en-US"
+                    )}
+                  </td>
                   <td className="py-3 flex items-center justify-center gap-4">
                     <button type="button" onClick={() => handleNavigate(user)}>
                       <svg

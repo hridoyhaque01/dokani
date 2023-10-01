@@ -21,13 +21,15 @@ export default {
         blackLow: "#707D9B",
 
         blueColor: "#3498DB",
+        blueHigh: "#3A4DF9",
         blueLight: "#F2F8FD",
+        blueGrey: "#CED0FF",
 
-        themeMid: "#EFF7FF",
-        themeSemi: "#DAEDFF",
+        themeMid: "#F2F8FD",
+        themeSemi: "#E3EFFB",
         slateLow: "#E0E0E0",
 
-        primaryColor: "#EF5777",
+        primaryColor: "#3498DB",
 
         secondaryColor: "#FFEBF0",
 
@@ -54,6 +56,15 @@ export default {
         fadeColor: "#B8B8B8",
         fadeHigh: "#9E9FA7",
         fadeLight: "#F6F6F6",
+
+        yellowGreenHigh: "#9BBB57",
+        yellowGreen: "#EAFFC7",
+
+        purpleHigh: "#A437FA",
+        purple: "#F4E1FF",
+
+        aquaHigh: "#44ADA7",
+        aqua: "#CCFFF6",
       },
       backgroundImage: {
         authBg: "url('./assets/images/bg.png')",
