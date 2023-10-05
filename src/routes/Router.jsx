@@ -1,25 +1,26 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "../layout/Layout";
+import ActiveProducts from "../pages/activeProducts/ActiveProducts";
 import AdSetup from "../pages/adSetup/AdSetup";
 import Login from "../pages/authentication/Login";
 import Registration from "../pages/authentication/Registration";
 import Categories from "../pages/categories/Categories";
 import City from "../pages/city/City";
-import Country from "../pages/country/Country";
+import Customers from "../pages/customers/Customers";
 import Featured from "../pages/featured/Featured";
 import CategoriesForm from "../pages/forms/CategoriesForm";
 import FeaturedFrom from "../pages/forms/FeaturedFrom";
 import UserProfileForm from "../pages/forms/UserProfileForm";
+import AddSalesPerson from "../pages/forms/salesPerson/AddSalesPerson";
+import UpdateSalesPerson from "../pages/forms/salesPerson/UpdateSalesPerson";
 import Home from "../pages/home/Home";
-import Hotel from "../pages/hotel/Hotel";
 import NotificationAdd from "../pages/notifications/NotificationAdd";
 import Notifications from "../pages/notifications/Notifications";
-import Place from "../pages/place/Place";
+import PausedProducts from "../pages/pausedProducts/PausedProducts";
 import Profile from "../pages/profile/Profile";
-import Restaurants from "../pages/restaurants/Restaurants";
+import Sales from "../pages/sales/Sales";
+import SalesPerson from "../pages/salesPerson/SalesPerson";
 import Settings from "../pages/settings/Settings";
-import State from "../pages/state/State";
-import Users from "../pages/users/Users";
 import WallpaperRequest from "../pages/wallpaperRequest/WallpaperRequest";
 import Wallpapers from "../pages/wallpapers/Wallpapers";
 import PrivateRouter from "./PrivateRouter";
@@ -41,32 +42,31 @@ export const routes = createBrowserRouter([
         path: "/profile",
         element: <Profile></Profile>,
       },
-      {
-        path: "/users",
-        element: <Users></Users>,
-      },
+
       // place
 
       {
-        path: "/place",
-        element: <Place></Place>,
+        path: "/active-products",
+        element: <ActiveProducts></ActiveProducts>,
       },
       {
-        path: "/hotel",
-        element: <Hotel></Hotel>,
+        path: "/paused-products",
+        element: <PausedProducts></PausedProducts>,
+      },
+      // sales
+      {
+        path: "/sales",
+        element: <Sales></Sales>,
+      },
+      // customers
+
+      {
+        path: "/customers",
+        element: <Customers></Customers>,
       },
       {
-        path: "/restaurants",
-        element: <Restaurants></Restaurants>,
-      },
-      // geography
-      {
-        path: "/country",
-        element: <Country></Country>,
-      },
-      {
-        path: "/state",
-        element: <State></State>,
+        path: "/sales-person",
+        element: <SalesPerson></SalesPerson>,
       },
       {
         path: "/city",
@@ -109,8 +109,12 @@ export const routes = createBrowserRouter([
 
       // forms
       {
-        path: "/category-add",
-        element: <CategoriesForm></CategoriesForm>,
+        path: "/add-sales-person",
+        element: <AddSalesPerson></AddSalesPerson>,
+      },
+      {
+        path: "/update-sales-person",
+        element: <UpdateSalesPerson></UpdateSalesPerson>,
       },
       {
         path: "/category-edit",

@@ -7,6 +7,7 @@ import lense from "./images/lense.png";
 import logo from "./images/logo.png";
 import logoIcon from "./images/logoIcon.png";
 import logoText from "./images/logoText.png";
+import product1 from "./images/product1.png";
 import profile from "./images/profile.png";
 import trophy from "./images/trophy.png";
 export {
@@ -18,6 +19,7 @@ export {
   logoIcon,
   logoText,
   noData,
+  product1,
   profile,
   trophy,
   wrong,

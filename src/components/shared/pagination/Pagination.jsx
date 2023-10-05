@@ -27,7 +27,7 @@ export const Pagination = ({
   };
 
   return (
-    <section className="flex items-center justify-end gap-4 text-darkHigh w-full flex-nowrap whitespace-nowrap px-5 py-4 bg-white border-t border-slateLow">
+    <section className="flex items-center justify-end gap-4 text-darkHigh w-full flex-nowrap whitespace-nowrap px-5 py-4 bg-white border-t border-slateLow rounded-b-2xl">
       {/* <div>{renderPagination()}</div> */}
 
       <div className="flex items-center gap-2">

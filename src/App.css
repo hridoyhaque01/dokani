@@ -1,5 +1,4 @@
 * {
-  font-family: "Lato", sans-serif;
   font-size: 16px;
 }
 
@@ -28,7 +27,7 @@
 }
 
 .stdropdown-container {
-  border-color: #cdd2f0 !important;
+  border-color: #e0e0e0 !important;
 }
 
 .stsearch-box {
@@ -108,14 +107,14 @@
   .ant-select-item-option-selected:not(.ant-select-item-option-disabled),
 :where(.css-dev-only-do-not-override-nnuwmp).ant-select-dropdown
   .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
-  background-color: #f2f8fd;
+  background-color: #faf4f4;
 }
 
 :where(.css-nnuwmp).ant-select-dropdown
   .ant-select-item-option-active:not(.ant-select-item-option-disabled),
 :where(.css-dev-only-do-not-override-nnuwmp).ant-select-dropdown
   .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
-  background-color: #f2f8fd;
+  background-color: #faf4f4;
 }
 /* 
 .ant-switch {

@@ -7,14 +7,14 @@ function Layout() {
   const [showSidebar, setShowSidebar] = useState(true);
 
   return (
-    <div className="bg-themeMid h-screen w-full overflow-hidden">
+    <div className="bg-themeMid h-screen w-full overflow-hidden font-poppins">
       <div className="flex items-start h-full">
         <div className="h-full">
           <Sidebar showSidebar={showSidebar}></Sidebar>
         </div>
         <div className="h-full flex-1 w-full overflow-hidden">
           <Navbar toggleSidebar={setShowSidebar}></Navbar>
-          <div className="h-[calc(100%-90px)]">
+          <div className="h-[calc(100%-92px)]">
             <Outlet></Outlet>
           </div>
         </div>

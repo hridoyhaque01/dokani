@@ -13,35 +13,33 @@ export default function useGetActivePath() {
     if (localPath) {
       dispatch(setActivePath(localPath));
     }
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (location?.pathname === "/") {
       dispatch(setActivePath("/"));
       localStorage.setItem("activePath", "/");
     } else if (
-      location?.pathname === "/users" ||
-      location?.pathname === "/user-edit"
+      location?.pathname === "/customers" ||
+      location?.pathname === "/customer-edit"
     ) {
-      dispatch(setActivePath("users"));
-      localStorage.setItem("activePath", "users");
+      dispatch(setActivePath("customers"));
+      localStorage.setItem("activePath", "customers");
     } else if (
-      location?.pathname === "/place" ||
-      location?.pathname === "/hotel" ||
-      location?.pathname === "/restaurants"
+      location?.pathname === "/active-products" ||
+      location?.pathname === "/paused-products"
     ) {
-      dispatch(setActivePath("places"));
-      localStorage.setItem("activePath", "places");
+      dispatch(setActivePath("products"));
+      localStorage.setItem("activePath", "products");
+    } else if (location?.pathname === "/sales") {
+      dispatch(setActivePath("sales"));
+      localStorage.setItem("activePath", "sales");
     } else if (
-      location?.pathname === "/country" ||
-      location?.pathname === "/state" ||
-      location?.pathname === "/city"
+      location?.pathname === "/sales-person" ||
+      location?.pathname === "/add-sales-person"
     ) {
-      dispatch(setActivePath("geography"));
-      localStorage.setItem("activePath", "geography");
-    } else if (location?.pathname === "/ad-setup") {
-      dispatch(setActivePath("ad-setup"));
-      localStorage.setItem("activePath", "ad-setup");
+      dispatch(setActivePath("sales-person"));
+      localStorage.setItem("activePath", "sales-person");
     } else if (
       location?.pathname === "/add-notification" ||
       location?.pathname === "/send-notification"
@@ -55,6 +53,6 @@ export default function useGetActivePath() {
       dispatch(setActivePath(undefined));
       localStorage.setItem("activePath", undefined);
     }
-  }, [location]);
+  }, [location, dispatch]);
   return activePath;
 }

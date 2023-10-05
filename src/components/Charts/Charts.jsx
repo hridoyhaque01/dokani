@@ -23,13 +23,13 @@ const Charts = () => {
   return (
     <section className="grid grid-cols-1 xl:grid-cols-2 items-stretch justify-around gap-6">
       <div className="bg-whiteHigh rounded-xl">
-        <ChartArea data={data} title="New Users"></ChartArea>
+        <ChartArea data={data} title="Today’s sale"></ChartArea>
       </div>
       {/* <div className="bg-whiteHigh rounded-xl p-4 md:p-6">
         <ChartBar data={data} title="cards.totalProfit"></ChartBar>
       </div> */}
       <div className="bg-whiteHigh rounded-xl">
-        <ChartLine data={data} title="New Wallpapers"></ChartLine>
+        <ChartLine data={data} title="Revenue"></ChartLine>
       </div>
     </section>
   );

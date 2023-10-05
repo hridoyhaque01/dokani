@@ -7,8 +7,10 @@
 }
 
 .active {
-  background-color: #f2f8fd;
-  color: #3498db;
+  background-color: #faf4f4;
+  color: #ef5777;
+  font-weight: 600;
+  transition: all 0.1s ease-in-out;
 }
 /* 
 .active svg,
@@ -18,7 +20,8 @@
 
 .dropdown-menu .active {
   background-color: transparent;
-  color: #3498db;
+  color: #ef5777;
+  font-weight: 400;
 }
 
 /* .sidebar .active svg,

@@ -40,7 +40,7 @@ function Login() {
             Login to continue
           </h1>
         </div>
-        <div className="flex items-center justify-center py-12 px-10 bg-white shadow-md shadow-whiteLow rounded-lg w-[476px]">
+        <div className="flex items-center justify-center py-12 px-10 bg-white shadow-lg shadow-whiteLow rounded-lg w-[476px]">
           <form className="flex flex-col w-full gap-4 " onSubmit={handleLogin}>
             {/* Email Address */}
             <div className="flex flex-col gap-1">

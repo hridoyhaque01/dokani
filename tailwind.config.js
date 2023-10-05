@@ -22,14 +22,18 @@ export default {
 
         blueColor: "#3498DB",
         blueHigh: "#3A4DF9",
+        blueSemi: "#181A17",
         blueLight: "#F2F8FD",
         blueGrey: "#CED0FF",
 
         themeMid: "#F2F8FD",
         themeSemi: "#E3EFFB",
-        slateLow: "#E0E0E0",
 
-        primaryColor: "#3498DB",
+        slateLow: "#E0E0E0",
+        slateReg: "#CFCFCF",
+
+        primaryColor: "#EF5777",
+        primaryLight: "#faf4f4",
 
         secondaryColor: "#FFEBF0",
 
@@ -56,6 +60,7 @@ export default {
         fadeColor: "#B8B8B8",
         fadeHigh: "#9E9FA7",
         fadeLight: "#F6F6F6",
+        fadeLow: "#E3E3E3",
 
         yellowGreenHigh: "#9BBB57",
         yellowGreen: "#EAFFC7",
@@ -71,6 +76,7 @@ export default {
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
+        lato: ["Lato", "sans-serif"],
       },
     },
   },
