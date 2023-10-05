@@ -61,8 +61,13 @@
 .ant-select-selector::after {
   content: url("./assets/images/arrow-down.png") !important; /* Unicode down arrow character */
   visibility: visible !important ;
-  /* transform: translateY(16px) translateX(-16px); */
-  transform: translateY(6px) translateX(-16px);
+  transform: translateY(13px) translateX(-16px);
+  /* transform: translateY(6px) translateX(-16px); */
+}
+
+:where(.css-nnuwmp).ant-select:not(.ant-select-customize-input)
+  .ant-select-selector {
+  border: none;
 }
 
 .test .ant-select-selector::after {
