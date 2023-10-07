@@ -4,7 +4,7 @@ import ConfirmationModal from "../../modals/ConfirmationModal";
 import { Pagination } from "../../shared/pagination/Pagination";
 import NoData from "../../shared/ui/NoData";
 
-function SalesmanTable({ data }) {
+function ActiveProductsTable({ data }) {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -13,7 +13,7 @@ function SalesmanTable({ data }) {
   const currentRows = data?.slice(indexOfFirstRow, indexOfLastRow);
 
   const handleNavigate = (item) => {
-    navigate("/update-sales-person", {
+    navigate("/edit-product", {
       state: {
         payload: item,
       },
@@ -23,15 +23,21 @@ function SalesmanTable({ data }) {
   return (
     <div className="h-full flex flex-col justify-between">
       <div className=" overflow-x-auto">
-        <table className="table w-full table-pin-rows table-pin-cols rounded-b-2xl">
+        <table className="table w-full table-pin-rows table-pin-cols">
           <thead className=" p-0">
             <tr className="font-bold text-3xl text-blackHigh font-lato">
               <th className="bg-fadeLow text-base normal-case py-5">Image</th>
               <th className="bg-fadeLow text-base normal-case py-5">Name</th>
-              <th className="bg-fadeLow text-base normal-case py-5">Email</th>
-
-              <th className="bg-fadeLow text-base normal-case py-5 flex items-center gap-2">
-                <span>Date</span>
+              <th className="bg-fadeLow text-base normal-case py-5">Variant</th>
+              <th className="bg-fadeLow text-base normal-case py-5">Lot</th>
+              <th className="bg-fadeLow text-base normal-case py-5 ">
+                Inventory
+              </th>
+              <th className="bg-fadeLow text-base normal-case py-5">
+                Buy Price
+              </th>
+              <th className="bg-fadeLow text-base normal-case py-5">
+                Sale Price
               </th>
               <th className="bg-fadeLow text-base normal-case py-5 text-center">
                 Actions
@@ -48,22 +54,21 @@ function SalesmanTable({ data }) {
             </tbody>
           ) : (
             <tbody className="font-lato text-blackSemi">
-              {currentRows?.map((salesman, i) => (
+              {currentRows?.map((product, i) => (
                 <tr className=" bg-white " key={i}>
                   <td className="py-3">
                     <img
-                      src={salesman?.fileUrl}
-                      className="w-10 h-10 rounded"
+                      src={product?.fileUrl}
                       alt=""
+                      className="w-10 h-10 rounded object-cover bg-center"
                     />
                   </td>
-                  <td className="py-3">{salesman?.name}</td>
-                  <td className="py-3">{salesman?.email}</td>
-                  <td className="py-3">
-                    {new Date(salesman?.timestamp * 1000).toLocaleDateString(
-                      "en-US"
-                    )}
-                  </td>
+                  <td className="py-3 max-w-[200]">{product?.name}</td>
+                  <td className="py-3">{product?.veriant}</td>
+                  <td className="py-3">{product?.Lot}</td>
+                  <td className="py-3">{product?.inventory}</td>
+                  <td className="py-3">${product?.buyingPrice}</td>
+                  <td className="py-3">${product?.sellingPrice}</td>
                   <td className="py-3 flex items-center justify-center gap-3">
                     <label
                       htmlFor="confirmationPopup"
@@ -82,9 +87,26 @@ function SalesmanTable({ data }) {
                         />
                       </svg>
                     </label>
+                    <label
+                      htmlFor="confirmationPopup"
+                      className="cursor-pointer"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="25"
+                        height="24"
+                        viewBox="0 0 25 24"
+                        fill="none"
+                      >
+                        <path
+                          d="M12.5 2C6.98 2 2.5 6.48 2.5 12C2.5 17.52 6.98 22 12.5 22C18.02 22 22.5 17.52 22.5 12C22.5 6.48 18.02 2 12.5 2ZM17.5 13H7.5V11H17.5V13Z"
+                          fill="#797979"
+                        />
+                      </svg>
+                    </label>
                     <button
                       type="button"
-                      onClick={() => handleNavigate(salesman)}
+                      onClick={() => handleNavigate(product)}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -117,9 +139,9 @@ function SalesmanTable({ data }) {
           ></Pagination>
         </div>
       )}
-      <ConfirmationModal title="salesman"></ConfirmationModal>
+      <ConfirmationModal title="product"></ConfirmationModal>
     </div>
   );
 }
 
-export default SalesmanTable;
+export default ActiveProductsTable;

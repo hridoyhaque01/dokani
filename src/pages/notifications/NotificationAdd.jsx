@@ -4,6 +4,7 @@ import SearchLoader from "../../components/loaders/SearchLoader";
 import BackToPrev from "../../components/shared/back/BackToPrev";
 import SearchBar from "../../components/shared/searchbar/SearchBar";
 import NoData from "../../components/shared/ui/NoData";
+import SomethingWrong from "../../components/shared/ui/SomethingWrong";
 import NotificationUsersTable from "../../components/tables/notificationUser/NotificationUsersTable";
 import NotificationForm from "../forms/NotificationForm";
 
@@ -117,7 +118,7 @@ function NotificationAdd() {
     } else {
       setSelectedItems([]);
     }
-  }, [selectedUser]);
+  }, [selectedUser, data]);
 
   return (
     <section className="px-8 py-6 h-full overflow-auto">

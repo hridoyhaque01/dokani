@@ -11,6 +11,8 @@ import Featured from "../pages/featured/Featured";
 import CategoriesForm from "../pages/forms/CategoriesForm";
 import FeaturedFrom from "../pages/forms/FeaturedFrom";
 import UserProfileForm from "../pages/forms/UserProfileForm";
+import AddProduct from "../pages/forms/products/AddProduct";
+import EditProduct from "../pages/forms/products/EditProduct";
 import AddSalesPerson from "../pages/forms/salesPerson/AddSalesPerson";
 import UpdateSalesPerson from "../pages/forms/salesPerson/UpdateSalesPerson";
 import Home from "../pages/home/Home";
@@ -111,6 +113,14 @@ export const routes = createBrowserRouter([
       {
         path: "/add-sales-person",
         element: <AddSalesPerson></AddSalesPerson>,
+      },
+      {
+        path: "/add-product",
+        element: <AddProduct></AddProduct>,
+      },
+      {
+        path: "/edit-product",
+        element: <EditProduct></EditProduct>,
       },
       {
         path: "/update-sales-person",

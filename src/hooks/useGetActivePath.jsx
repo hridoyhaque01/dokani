@@ -27,6 +27,7 @@ export default function useGetActivePath() {
       localStorage.setItem("activePath", "customers");
     } else if (
       location?.pathname === "/active-products" ||
+      location?.pathname === "/add-product" ||
       location?.pathname === "/paused-products"
     ) {
       dispatch(setActivePath("products"));
