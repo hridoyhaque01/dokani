@@ -15,6 +15,7 @@ export default {
 
         "black-25": "rgba(0, 0, 0, 0.25)",
         "black-04": "rgba(0, 0, 0, 0.04)",
+        "black-70": "rgba(18, 18, 18, 0.70)",
         black: "#000",
         blackHigh: "#303C58",
         blackSemi: "#45526E",

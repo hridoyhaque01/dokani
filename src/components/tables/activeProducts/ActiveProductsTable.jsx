@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ConfirmationModal from "../../modals/ConfirmationModal";
+import HistoryModal from "../../modals/HistoryModal";
 import { Pagination } from "../../shared/pagination/Pagination";
 import NoData from "../../shared/ui/NoData";
 
@@ -11,6 +11,7 @@ function ActiveProductsTable({ data }) {
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
   const currentRows = data?.slice(indexOfFirstRow, indexOfLastRow);
+  const [activeProduct, setActiveProduct] = useState({});
 
   const handleNavigate = (item) => {
     navigate("/edit-product", {
@@ -63,7 +64,15 @@ function ActiveProductsTable({ data }) {
                       className="w-10 h-10 rounded object-cover bg-center"
                     />
                   </td>
-                  <td className="py-3 max-w-[200]">{product?.name}</td>
+                  <td className="py-3 max-w-[200px]">
+                    <label
+                      htmlFor="historyPopup"
+                      className="underline cursor-pointer"
+                      onClick={() => setActiveProduct(product)}
+                    >
+                      {product?.name}
+                    </label>
+                  </td>
                   <td className="py-3">{product?.veriant}</td>
                   <td className="py-3">{product?.Lot}</td>
                   <td className="py-3">{product?.inventory}</td>
@@ -139,7 +148,7 @@ function ActiveProductsTable({ data }) {
           ></Pagination>
         </div>
       )}
-      <ConfirmationModal title="product"></ConfirmationModal>
+      <HistoryModal items={activeProduct}></HistoryModal>
     </div>
   );
 }

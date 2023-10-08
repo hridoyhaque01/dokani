@@ -157,6 +157,11 @@ input[type="number"] {
 
 /* daisy ui style start  */
 
+.modal:not(dialog:not(.modal-open)),
+.modal::backdrop {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+}
+
 .menu li > *:not(ul):not(.menu-title):not(details):active,
 .menu li > *:not(ul):not(.menu-title):not(details).active,
 .menu li > details > summary:active {
