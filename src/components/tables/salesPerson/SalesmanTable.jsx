@@ -11,6 +11,7 @@ function SalesmanTable({ data }) {
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
   const currentRows = data?.slice(indexOfFirstRow, indexOfLastRow);
+  const [status, setStatus] = useState("");
 
   const handleNavigate = (item) => {
     navigate("/update-sales-person", {
@@ -22,8 +23,8 @@ function SalesmanTable({ data }) {
 
   return (
     <div className="h-full flex flex-col justify-between">
-      <div className=" overflow-x-auto">
-        <table className="table w-full table-pin-rows table-pin-cols rounded-b-2xl">
+      <div className="overflow-x-auto ">
+        <table className="w-full rounded-b-2xl table table-xs table-pin-rows table-pin-cols">
           <thead className=" p-0">
             <tr className="font-bold text-3xl text-blackHigh font-lato">
               <th className="bg-fadeLow text-base normal-case py-5">Image</th>
@@ -47,7 +48,7 @@ function SalesmanTable({ data }) {
               </tr>
             </tbody>
           ) : (
-            <tbody className="font-lato text-blackSemi">
+            <tbody className="font-lato text-blackSemi overflow-x-auto h-[calc(100%-200px)]">
               {currentRows?.map((salesman, i) => (
                 <tr className=" bg-white " key={i}>
                   <td className="py-3">
@@ -68,6 +69,7 @@ function SalesmanTable({ data }) {
                     <label
                       htmlFor="confirmationPopup"
                       className="cursor-pointer"
+                      onClick={() => setStatus("delete")}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -117,7 +119,7 @@ function SalesmanTable({ data }) {
           ></Pagination>
         </div>
       )}
-      <ConfirmationModal title="salesman"></ConfirmationModal>
+      <ConfirmationModal status={status} title="salesman"></ConfirmationModal>
     </div>
   );
 }

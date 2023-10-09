@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ConfirmationModal from "../../modals/ConfirmationModal";
 import HistoryModal from "../../modals/HistoryModal";
 import { Pagination } from "../../shared/pagination/Pagination";
 import NoData from "../../shared/ui/NoData";
@@ -12,6 +13,7 @@ function ActiveProductsTable({ data }) {
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
   const currentRows = data?.slice(indexOfFirstRow, indexOfLastRow);
   const [activeProduct, setActiveProduct] = useState({});
+  const [status, setStatus] = useState("");
 
   const handleNavigate = (item) => {
     navigate("/edit-product", {
@@ -82,6 +84,7 @@ function ActiveProductsTable({ data }) {
                     <label
                       htmlFor="confirmationPopup"
                       className="cursor-pointer"
+                      onClick={() => setStatus("delete")}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -99,6 +102,7 @@ function ActiveProductsTable({ data }) {
                     <label
                       htmlFor="confirmationPopup"
                       className="cursor-pointer"
+                      onClick={() => setStatus("pause")}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -148,6 +152,7 @@ function ActiveProductsTable({ data }) {
           ></Pagination>
         </div>
       )}
+      <ConfirmationModal title="Product" status={status}></ConfirmationModal>
       <HistoryModal items={activeProduct}></HistoryModal>
     </div>
   );

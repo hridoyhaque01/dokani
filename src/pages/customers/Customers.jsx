@@ -70,7 +70,7 @@ function Customers() {
 
   const filterBySearch = (data) => {
     if (searchValue.trim().length > 0) {
-      return data?.name?.toLowerCase().includes(searchValue?.toLowerCase());
+      return data?.name?.toLowerCase().startsWith(searchValue?.toLowerCase());
     } else {
       return true;
     }

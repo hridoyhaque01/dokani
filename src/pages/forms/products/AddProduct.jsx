@@ -181,7 +181,7 @@ function AddProduct() {
                 <div className="flex flex-col gap-1 text-blackHigh">
                   <span>Inventory</span>
                   <input
-                    type="text"
+                    type="number"
                     className="p-4 border border-slateLow rounded-lg outline-none"
                     placeholder="Enter inventory"
                     required
@@ -234,7 +234,7 @@ function AddProduct() {
                   <div className="flex flex-col gap-1 text-blackHigh">
                     <span>Inventory 2</span>
                     <input
-                      type="text"
+                      type="number"
                       className="p-4 border border-slateLow rounded-lg outline-none"
                       placeholder="Enter inventory"
                       required

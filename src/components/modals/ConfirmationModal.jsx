@@ -1,6 +1,6 @@
 import React from "react";
 
-const ConfirmationModal = ({ handleStatus, modalClose, title }) => {
+const ConfirmationModal = ({ handleStatus, modalClose, title, status }) => {
   return (
     <section>
       <input type="checkbox" id="confirmationPopup" className="modal-toggle" />
@@ -30,9 +30,11 @@ const ConfirmationModal = ({ handleStatus, modalClose, title }) => {
             </svg>
           </div>
           <div className="text-center">
-            <h4 className=" text-errorColor text-4xl font-bold ">Delete</h4>
+            <h4 className=" text-errorColor text-4xl font-bold capitalize">
+              {status}
+            </h4>
             <p className="text-2xl text-blackLow mt-2">
-              Are you sure to delete the {title}?
+              Are you sure to {status} the {title}?
             </p>
           </div>
           <div className="modal-action flex items-center justify-center gap-6">
@@ -48,7 +50,7 @@ const ConfirmationModal = ({ handleStatus, modalClose, title }) => {
               htmlFor="confirmationPopup"
               className="btn bg-errorColor hover:bg-errorColor text-white text-base font-semibold w-full max-w-[200px]"
             >
-              Yes, Delete
+              Yes, {status}
             </label>
           </div>
         </div>

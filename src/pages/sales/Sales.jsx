@@ -86,7 +86,7 @@ function Sales() {
     if (searchValue.trim().length > 0) {
       return data?.salesPerson
         ?.toLowerCase()
-        .includes(searchValue?.toLowerCase());
+        .startsWith(searchValue?.toLowerCase());
     } else {
       return true;
     }
