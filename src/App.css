@@ -1,0 +1,188 @@
+* {
+  font-size: 16px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.checkbox-error {
+  --chkbg: var(--er);
+  --chkfg: #fff;
+}
+
+/* phone number input  */
+.PhoneInputCountrySelectArrow {
+  width: 0.5em !important;
+  height: 0.5em !important;
+  border-bottom-width: 2px !important;
+  border-right-width: 2px !important;
+  border-color: #555568 !important;
+  opacity: 1 !important;
+}
+
+.PhoneInputInput {
+  outline: none !important;
+  background-color: transparent !important;
+}
+
+.PhoneInputCountrySelect {
+  background-color: #fff;
+}
+
+.stdropdown-container {
+  border-color: #e0e0e0 !important;
+}
+
+.stsearch-box {
+  padding: 11px !important;
+}
+
+.stdropdown-input input {
+  border: none !important;
+  outline: none;
+  background-color: transparent;
+}
+
+/* ant style  */
+
+:where(.css-dev-only-do-not-override-nnuwmp).ant-picker {
+  padding: 17px 11px 17px !important;
+}
+
+:where(.css-nnuwmp).ant-picker {
+  padding: 17px 11px 17px !important;
+}
+
+.ant-picker-suffix {
+  color: #3498db !important;
+}
+
+.ant-select-arrow {
+  display: none !important;
+}
+
+.ant-select-selector::after {
+  content: url("./assets/images/arrow-down.png") !important; /* Unicode down arrow character */
+  visibility: visible !important ;
+  transform: translateY(13px) translateX(-16px);
+  /* transform: translateY(6px) translateX(-16px); */
+}
+
+:where(.css-nnuwmp).ant-select:not(.ant-select-customize-input)
+  .ant-select-selector {
+  border: none;
+}
+
+.test .ant-select-selector::after {
+  content: url("./assets/images/arrow-down.png") !important; /* Unicode down arrow character */
+  visibility: visible !important ;
+  transform: translateY(14px) translateX(-16px);
+}
+
+:where(.css-dev-only-do-not-override-nnuwmp).ant-select-single
+  .ant-select-selector {
+  align-items: center;
+}
+
+:where(.css-dev-only-do-not-override-nnuwmp).ant-select-single:not(
+    .ant-select-customize-input
+  )
+  .ant-select-selector {
+  width: 100%;
+  height: 46px;
+  padding: 0 10px;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+:where(.css-nnuwmp).ant-select-single:not(.ant-select-customize-input)
+  .ant-select-selector {
+  height: 46px !important;
+}
+
+.adSetting .ant-select-selector {
+  height: 56px !important;
+}
+
+.ant-select-selection-search,
+.ant-select-selection-item {
+  display: flex;
+  align-items: center;
+}
+
+:where(.css-nnuwmp).ant-select-dropdown
+  .ant-select-item-option-selected:not(.ant-select-item-option-disabled),
+:where(.css-dev-only-do-not-override-nnuwmp).ant-select-dropdown
+  .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  background-color: #faf4f4;
+}
+
+:where(.css-nnuwmp).ant-select-dropdown
+  .ant-select-item-option-active:not(.ant-select-item-option-disabled),
+:where(.css-dev-only-do-not-override-nnuwmp).ant-select-dropdown
+  .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+  background-color: #faf4f4;
+}
+/* 
+.ant-switch {
+  box-shadow: none !important;
+}
+
+:where(.css-dev-only-do-not-override-nnuwmp).ant-switch.ant-switch-checked {
+  background: #ef5777;
+}
+
+:where(
+    .css-dev-only-do-not-override-nnuwmp
+  ).ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled) {
+  background: #ef5777;
+}
+
+:where(.css-dev-only-do-not-override-nnuwmp).ant-switch:focus-visible {
+  outline: none;
+  outline-offset: 1px;
+  transition: outline-offset 0s, outline 0s;
+} */
+
+/* ant style end  */
+
+/* daisy ui style start  */
+
+.modal:not(dialog:not(.modal-open)),
+.modal::backdrop {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+}
+
+.menu li > *:not(ul):not(.menu-title):not(details):active,
+.menu li > *:not(ul):not(.menu-title):not(details).active,
+.menu li > details > summary:active {
+  background-color: transparent !important;
+  color: #303c58 !important;
+}
+
+.toggle-error:checked,
+.toggle-error[checked="true"],
+.toggle-error[aria-checked="true"] {
+  border-color: #3498db !important;
+  background-color: #3498db !important;
+}
+/* daisy ui style end */
+
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: #fff;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(238, 93, 124, 0.534);
+  border-radius: 10px;
+}
