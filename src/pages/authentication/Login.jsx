@@ -7,7 +7,7 @@ import showPassword from "../../util/showPassword";
 
 function Login() {
   const [isShowPassword, setIsShowPassword] = useState(false);
-  const [isShowIcon, setIsShowIcon] = useState(false);
+  const [isShowIcon, setIsShowIcon] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { email } = useSelector((state) => state.auth);
@@ -51,6 +51,7 @@ function Login() {
                 required
                 name="email"
                 className={`w-full border border-slateLow  rounded-lg outline-none p-4`}
+                defaultValue="admin@gmail.com"
               />
             </div>
             {/* Password */}
@@ -63,6 +64,7 @@ function Login() {
                 onInput={(e) => showPassword(setIsShowIcon, e)}
                 name="password"
                 placeholder={"Enter your password"}
+                defaultValue="Admin123!"
               ></PasswordInput>
             </div>
 
@@ -76,7 +78,7 @@ function Login() {
 
             <div className="text-center">
               <Link to="/" className="text-lg font-medium">
-                Forget Password?
+                Forgot Password?
               </Link>
             </div>
           </form>

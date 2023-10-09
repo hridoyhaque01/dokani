@@ -6,7 +6,7 @@ const HistoryModal = ({ items }) => {
       <input type="checkbox" id="historyPopup" className="modal-toggle" />
       <label
         htmlFor="historyPopup"
-        className="modal modal-bottom sm:modal-middle bg-black-70"
+        className="modal modal-bottom sm:modal-middle bg-black-70 overflow-auto"
       >
         <div className="w-full max-w-[600px] flex flex-col gap-4 bg-white p-6 rounded-2xl relative z-50">
           <div>
