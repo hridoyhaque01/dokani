@@ -15,6 +15,8 @@ import Sales from "../pages/sales/Sales";
 import SalesPerson from "../pages/salesPerson/SalesPerson";
 import Settings from "../pages/settings/Settings";
 import PrivateRouter from "./PrivateRouter";
+import ForgetPasword from "../pages/authentication/ForgetPassword";
+import AdminReset from "../pages/authentication/AdminReset";
 
 export const routes = createBrowserRouter([
   {
@@ -93,7 +95,15 @@ export const routes = createBrowserRouter([
     element: <Login></Login>,
   },
   {
-    path: "/register",
+    path: "/Z9yXwV5uT3sRqP0oMnLjK1/:email",
+    element: <AdminReset></AdminReset>,
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgetPasword></ForgetPasword>,
+  },
+  {
+    path: "eyJhbGciOiJIUzAI1NiIsInR5I2eyJuK4a/register",
     element: <Registration></Registration>,
   },
   {

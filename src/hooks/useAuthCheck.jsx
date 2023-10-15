@@ -7,17 +7,15 @@ export default function useAuthCheck() {
   const [authChecked, setAuthChecked] = useState(false);
 
   useEffect(() => {
-    const localAuth = localStorage?.getItem("genieAuth");
-
+    const localAuth = localStorage?.getItem("dokani");
     if (localAuth) {
       const auth = JSON.parse(localAuth);
-
-      if (auth?.email) {
+      const validUser = auth?.accessToken && auth?.expireIn > Date.now();
+      if (validUser) {
         dispatch(setAuth(auth));
       }
     }
     setAuthChecked(true);
   }, [dispatch, setAuthChecked]);
-
   return authChecked;
 }

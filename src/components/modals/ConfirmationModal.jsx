@@ -1,6 +1,6 @@
 import React from "react";
 
-const ConfirmationModal = ({ handleStatus, modalClose, title, status }) => {
+const ConfirmationModal = ({ handleStatus, title, status }) => {
   return (
     <section>
       <input type="checkbox" id="confirmationPopup" className="modal-toggle" />
@@ -34,21 +34,20 @@ const ConfirmationModal = ({ handleStatus, modalClose, title, status }) => {
               {status}
             </h4>
             <p className="text-2xl text-blackLow mt-2">
-              Are you sure to {status} the {title}?
+              Are you sure to {status} this {title}?
             </p>
           </div>
           <div className="modal-action flex items-center justify-center gap-6">
             <label
               htmlFor="confirmationPopup"
               className="btn bg-infoColor hover:bg-infoColor text-white text-base font-semibold w-full max-w-[200px]"
-              onClick={handleStatus}
-              data-hs-overlay={modalClose || ""}
             >
               No, Thanks
             </label>
             <label
               htmlFor="confirmationPopup"
               className="btn bg-errorColor hover:bg-errorColor text-white text-base font-semibold w-full max-w-[200px]"
+              onClick={handleStatus}
             >
               Yes, {status}
             </label>

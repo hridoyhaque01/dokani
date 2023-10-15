@@ -11,6 +11,41 @@ function PausedProductsTable({ data }) {
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
   const currentRows = data?.slice(indexOfFirstRow, indexOfLastRow);
+  const [status, setStatus] = useState("");
+  const [currentObj, setCurrentObj] = useState({});
+
+
+  const handleItem = (item, itemStatus) => {
+    setStatus(itemStatus);
+    setCurrentObj(item);
+  };
+
+  const handler = () => {
+    if (status === "pause") {
+      const data = {
+        status: "paused",
+      };
+      const formData = new FormData();
+      formData.append("data", JSON.stringify(data));
+      updateItem({ id: currentObj?._id, data: formData })
+        .unwrap()
+        .then((res) => {
+          infoNotify("Successfully update item");
+        })
+        .catch((error) => {
+          errorNotify("Failed to update item");
+        });
+    } else if (status === "delete") {
+      deleteItem(currentObj?._id)
+        .unwrap()
+        .then((res) => {
+          infoNotify("Successfully delete item");
+        })
+        .catch((error) => {
+          errorNotify("Failed to delete item");
+        });
+    }
+  };
 
   const handleNavigate = (item) => {
     navigate("/edit-product", {
@@ -29,7 +64,6 @@ function PausedProductsTable({ data }) {
               <th className="bg-fadeLow text-base normal-case py-5">Image</th>
               <th className="bg-fadeLow text-base normal-case py-5">Name</th>
               <th className="bg-fadeLow text-base normal-case py-5">Variant</th>
-              <th className="bg-fadeLow text-base normal-case py-5">Lot</th>
               <th className="bg-fadeLow text-base normal-case py-5 ">
                 Inventory
               </th>
@@ -58,21 +92,21 @@ function PausedProductsTable({ data }) {
                 <tr className=" bg-white " key={i}>
                   <td className="py-3">
                     <img
-                      src={product?.fileUrl}
+                      src={product?.imageUrl}
                       alt=""
                       className="w-10 h-10 rounded object-cover bg-center"
                     />
                   </td>
                   <td className="py-3 max-w-[200]">{product?.name}</td>
-                  <td className="py-3">{product?.veriant}</td>
-                  <td className="py-3">{product?.Lot}</td>
-                  <td className="py-3">{product?.inventory}</td>
+                  <td className="py-3">{product?.variant}</td>
+                  <td className="py-3">{product?.quantity}</td>
                   <td className="py-3">${product?.buyingPrice}</td>
                   <td className="py-3">${product?.sellingPrice}</td>
                   <td className="py-3 flex items-center justify-center gap-3">
-                    <button
-                      type="button"
-                      // onClick={() => handleNavigate(product)}
+                    <label
+                      htmlFor="confirmationPopup"
+                      className="cursor-pointer"
+                      onClick={() => handleItem(product, "delete")}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -86,7 +120,7 @@ function PausedProductsTable({ data }) {
                           fill="#FF5858"
                         />
                       </svg>
-                    </button>
+                    </label>
                   </td>
                 </tr>
               ))}
@@ -105,7 +139,11 @@ function PausedProductsTable({ data }) {
           ></Pagination>
         </div>
       )}
-      <ConfirmationModal title="product"></ConfirmationModal>
+      <ConfirmationModal
+        title="Product"
+        status={status}
+        handleStatus={handler}
+      ></ConfirmationModal>
     </div>
   );
 }

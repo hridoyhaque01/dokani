@@ -5,7 +5,13 @@ import HistoryModal from "../../modals/HistoryModal";
 import { Pagination } from "../../shared/pagination/Pagination";
 import NoData from "../../shared/ui/NoData";
 
-function ActiveProductsTable({ data }) {
+function ActiveProductsTable({
+  data,
+  errorNotify,
+  infoNotify,
+  updateItem,
+  deleteItem,
+}) {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -14,6 +20,7 @@ function ActiveProductsTable({ data }) {
   const currentRows = data?.slice(indexOfFirstRow, indexOfLastRow);
   const [activeProduct, setActiveProduct] = useState({});
   const [status, setStatus] = useState("");
+  const [currentObj, setCurrentObj] = useState({});
 
   const handleNavigate = (item) => {
     navigate("/edit-product", {
@@ -21,6 +28,38 @@ function ActiveProductsTable({ data }) {
         payload: item,
       },
     });
+  };
+
+  const handleItem = (item, itemStatus) => {
+    setStatus(itemStatus);
+    setCurrentObj(item);
+  };
+
+  const handler = () => {
+    if (status === "pause") {
+      const data = {
+        status: "paused",
+      };
+      const formData = new FormData();
+      formData.append("data", JSON.stringify(data));
+      updateItem({ id: currentObj?._id, data: formData })
+        .unwrap()
+        .then((res) => {
+          infoNotify("Successfully update item");
+        })
+        .catch((error) => {
+          errorNotify("Failed to update item");
+        });
+    } else if (status === "delete") {
+      deleteItem(currentObj?._id)
+        .unwrap()
+        .then((res) => {
+          infoNotify("Successfully delete item");
+        })
+        .catch((error) => {
+          errorNotify("Failed to delete item");
+        });
+    }
   };
 
   return (
@@ -32,7 +71,6 @@ function ActiveProductsTable({ data }) {
               <th className="bg-fadeLow text-base normal-case py-5">Image</th>
               <th className="bg-fadeLow text-base normal-case py-5">Name</th>
               <th className="bg-fadeLow text-base normal-case py-5">Variant</th>
-              <th className="bg-fadeLow text-base normal-case py-5">Lot</th>
               <th className="bg-fadeLow text-base normal-case py-5 ">
                 Inventory
               </th>
@@ -61,7 +99,7 @@ function ActiveProductsTable({ data }) {
                 <tr className=" bg-white " key={i}>
                   <td className="py-3">
                     <img
-                      src={product?.fileUrl}
+                      src={product?.imageUrl}
                       alt=""
                       className="w-10 h-10 rounded object-cover bg-center"
                     />
@@ -75,16 +113,15 @@ function ActiveProductsTable({ data }) {
                       {product?.name}
                     </label>
                   </td>
-                  <td className="py-3">{product?.veriant}</td>
-                  <td className="py-3">{product?.Lot}</td>
-                  <td className="py-3">{product?.inventory}</td>
+                  <td className="py-3">{product?.variant}</td>
+                  <td className="py-3">{product?.quantity}</td>
                   <td className="py-3">${product?.buyingPrice}</td>
                   <td className="py-3">${product?.sellingPrice}</td>
                   <td className="py-3 flex items-center justify-center gap-3">
                     <label
                       htmlFor="confirmationPopup"
                       className="cursor-pointer"
-                      onClick={() => setStatus("delete")}
+                      onClick={() => handleItem(product, "delete")}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -102,7 +139,7 @@ function ActiveProductsTable({ data }) {
                     <label
                       htmlFor="confirmationPopup"
                       className="cursor-pointer"
-                      onClick={() => setStatus("pause")}
+                      onClick={() => handleItem(product, "pause")}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -152,7 +189,11 @@ function ActiveProductsTable({ data }) {
           ></Pagination>
         </div>
       )}
-      <ConfirmationModal title="Product" status={status}></ConfirmationModal>
+      <ConfirmationModal
+        title="Product"
+        status={status}
+        handleStatus={handler}
+      ></ConfirmationModal>
       <HistoryModal items={activeProduct}></HistoryModal>
     </div>
   );

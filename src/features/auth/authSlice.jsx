@@ -1,26 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  //   activePath: "",
-  email: "",
-  password: "",
+  accessToken: undefined,
+  auth: undefined,
 };
 
-const authSlice = createSlice({
-  name: "authSlice",
+const adminSlice = createSlice({
+  name: "adminSlice",
   initialState,
   reducers: {
     setAuth: (state, action) => {
-      state.email = action.payload.email;
-      state.password = action.payload.password;
+      state.accessToken = action.payload.accessToken;
+      state.auth = action.payload.auth;
+    },
+    updateAuth: (state, action) => {
+      state.auth = { ...state.auth, ...action.payload };
     },
     logout: (state) => {
-      state.email = "";
-      state.password = "";
-      localStorage.removeItem("genieAuth");
+      state.accessToken = undefined;
+      state.auth = undefined;
+      localStorage.removeItem("dokani");
     },
   },
 });
 
-export default authSlice.reducer;
-export const { setAuth, logout } = authSlice.actions;
+export const { setAuth, logout, updateAuth } = adminSlice.actions;
+export default adminSlice.reducer;

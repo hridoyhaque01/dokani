@@ -12,6 +12,7 @@ export default {
 
         white: "#fff",
         whiteLow: "#F6F6F6",
+        overlay: "rgba(0, 0, 0, 0.45)",
 
         "black-25": "rgba(0, 0, 0, 0.25)",
         "black-04": "rgba(0, 0, 0, 0.04)",

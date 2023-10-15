@@ -1,16 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import RequestLoader from "../../components/loaders/RequestLoader";
 import PasswordInput from "../../components/shared/ui/PasswordInput";
-import { setAuth } from "../../features/auth/authSlice";
+import { useLoginMutation } from "../../features/auth/authApi";
+import NotifyContainer, { errorNotify } from "../../util/getNotify";
 import showPassword from "../../util/showPassword";
+import { useEffect } from "react";
 
 function Login() {
   const [isShowPassword, setIsShowPassword] = useState(false);
+  const [login, { isLoading }] = useLoginMutation();
   const [isShowIcon, setIsShowIcon] = useState(true);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { email } = useSelector((state) => state.auth);
+  const { accessToken } = useSelector((state) => state.auth);
+
+  console.log(accessToken);
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -21,16 +26,24 @@ function Login() {
       email,
       password,
     };
-    localStorage.setItem("genieAuth", JSON.stringify(data));
-    dispatch(setAuth(data));
-    navigate("/");
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(data));
+    login(formData)
+      .unwrap()
+      .then((res) => {
+        navigate("/");
+      })
+      .catch((error) => {
+        errorNotify(error?.data?.error);
+      });
   };
 
   useEffect(() => {
-    if (email) {
+    if (accessToken) {
       navigate("/");
     }
   }, []);
+
   return (
     <section className="h-screen bg-whiteLow bg-authBg bg-bottom bg-no-repeat bg-cover flex flex-col items-center justify-center w-full">
       <div className="flex flex-col">
@@ -51,7 +64,6 @@ function Login() {
                 required
                 name="email"
                 className={`w-full border border-slateLow  rounded-lg outline-none p-4`}
-                defaultValue="admin@gmail.com"
               />
             </div>
             {/* Password */}
@@ -64,7 +76,6 @@ function Login() {
                 onInput={(e) => showPassword(setIsShowIcon, e)}
                 name="password"
                 placeholder={"Enter your password"}
-                defaultValue="Admin123!"
               ></PasswordInput>
             </div>
 
@@ -77,12 +88,14 @@ function Login() {
             </button>
 
             <div className="text-center">
-              <Link to="/" className="text-lg font-medium">
+              <Link to="/forgot-password" className="text-lg font-medium">
                 Forgot Password?
               </Link>
             </div>
           </form>
         </div>
+        {isLoading && <RequestLoader></RequestLoader>}
+        <NotifyContainer></NotifyContainer>
       </div>
     </section>
   );

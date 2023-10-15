@@ -74,8 +74,8 @@ input[type="number"] {
 .ant-select-selector::after {
   content: url("./assets/images/arrow-down.png") !important; /* Unicode down arrow character */
   visibility: visible !important ;
-  transform: translateY(13px) translateX(-16px);
-  /* transform: translateY(6px) translateX(-16px); */
+  /* transform: translateY(13px) translateX(-16px); */
+  transform: translateY(6px) translateX(-16px);
 }
 
 :where(.css-nnuwmp).ant-select:not(.ant-select-customize-input)
@@ -181,6 +181,7 @@ input[type="number"] {
 
 ::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
   background-color: #fff;
 }
 

@@ -1,4 +1,3 @@
-import { Select } from "antd";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { profile } from "../../assets/getAssets";
@@ -97,22 +96,6 @@ function Profile() {
               </div>
             </div>
             <div className="grid grid-cols-2 gap-y-4 gap-x-12">
-              {/* User role  */}
-              <div className="flex flex-col gap-1">
-                <span className="text-blackHigh">User role</span>
-                <div className="w-full">
-                  <Select
-                    className="w-full border border-slateLow rounded-lg outline-none adSetting"
-                    defaultValue={role}
-                    onChange={handleChange}
-                    aria-required
-                  >
-                    <Select.Option value="admin">Admin</Select.Option>
-                    <Select.Option value="user">User</Select.Option>
-                    <Select.Option value="editor">Editor</Select.Option>
-                  </Select>
-                </div>
-              </div>
               {/* Email Address */}
               <div className="flex flex-col gap-1">
                 <span className="text-blackHigh">Email Address</span>

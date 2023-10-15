@@ -1,6 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import RequestLoader from "../../../components/loaders/RequestLoader";
 import BackToPrev from "../../../components/shared/back/BackToPrev";
 import PasswordInput from "../../../components/shared/ui/PasswordInput";
+import { useRegisterSellerMutation } from "../../../features/sellers/sellersApi";
+import checkStrong from "../../../util/CheckStrong";
 import NotifyContainer, { errorNotify } from "../../../util/getNotify";
 import showPassword from "../../../util/showPassword";
 
@@ -9,6 +13,9 @@ function AddSalesPerson() {
   const [isShowIcon, setIsShowIcon] = useState(false);
   const [isShowConfirmPassword, setIsShowConfirmPassword] = useState(false);
   const [isShowConfirmIcon, setIsShowConfirmIcon] = useState(false);
+  const [isStrong, setIsStrong] = useState(false);
+  const [registerSeller, { isLoading }] = useRegisterSellerMutation();
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -27,10 +34,18 @@ function AddSalesPerson() {
       name,
       email,
       password,
-      confirmPassword,
     };
-
-    console.log(data);
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(data));
+    registerSeller(formData)
+      .unwrap()
+      .then((res) => {
+        form.reset();
+        navigate("/sales-person");
+      })
+      .catch((error) => {
+        errorNotify("Failed to register seller");
+      });
   };
 
   return (
@@ -70,15 +85,23 @@ function AddSalesPerson() {
               {/* Password */}
               <div className="flex flex-col gap-1">
                 <span className="text-blackHigh">Password</span>
-                <PasswordInput
-                  isShowPassword={isShowPassword}
-                  setIsShowPassword={setIsShowPassword}
-                  isShowIcon={isShowIcon}
-                  onInput={(e) => showPassword(setIsShowIcon, e)}
-                  name="password"
-                  placeholder={"Enter your password"}
-                  required
-                ></PasswordInput>
+                <div>
+                  <PasswordInput
+                    isShowPassword={isShowPassword}
+                    setIsShowPassword={setIsShowPassword}
+                    isShowIcon={isShowIcon}
+                    onInput={(e) => checkStrong(setIsShowIcon, setIsStrong, e)}
+                    name="password"
+                    placeholder={"Enter your password"}
+                    required
+                  ></PasswordInput>
+                  {!isStrong && (
+                    <p className="text-xs text-fadeColor mt-1">
+                      Must contain more than 7 character with uppercase,
+                      lowercase, symble and number
+                    </p>
+                  )}
+                </div>
               </div>
               {/* Password */}
               <div className="flex flex-col gap-1">
@@ -96,7 +119,10 @@ function AddSalesPerson() {
             </div>
             {/* submit button  */}
             <div className="mt-8">
-              <button className=" w-[200px] bg-primaryColor hover:bg-primaryColor py-4 px-10 rounded-lg text-white font-semibold">
+              <button
+                className=" w-[200px] bg-primaryColor hover:bg-primaryColor py-4 px-10 rounded-lg text-white font-semibold"
+                disabled={!isStrong}
+              >
                 Save
               </button>
             </div>
@@ -104,6 +130,7 @@ function AddSalesPerson() {
         </div>
       </div>
       <NotifyContainer></NotifyContainer>
+      {isLoading && <RequestLoader></RequestLoader>}
     </section>
   );
 }

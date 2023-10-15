@@ -2,9 +2,9 @@ import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 
 function PrivateRouter({ children }) {
-  const { email } = useSelector((state) => state.auth);
+  const { accessToken } = useSelector((state) => state.auth);
   const location = useLocation();
-  if (email) {
+  if (accessToken) {
     return <>{children}</>;
   }
 

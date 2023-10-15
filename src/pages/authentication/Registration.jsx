@@ -4,12 +4,15 @@ import { useNavigate } from "react-router-dom";
 import PasswordInput from "../../components/shared/ui/PasswordInput";
 import { setAuth } from "../../features/auth/authSlice";
 import checkStrong from "../../util/CheckStrong";
+import { useRegisterMutation } from "../../features/auth/authApi";
+import NotifyContainer, { errorNotify, infoNotify } from "../../util/getNotify";
+import RequestLoader from "../../components/loaders/RequestLoader";
 
 function Registration() {
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowIcon, setIsShowIcon] = useState(false);
   const [isStrong, setIsStrong] = useState(false);
-  const dispatch = useDispatch();
+  const [register,{isLoading}] = useRegisterMutation()
   const navigate = useNavigate();
   const { email } = useSelector((state) => state.auth);
 
@@ -26,9 +29,21 @@ function Registration() {
       firstName,
       lastName,
     };
-    localStorage.setItem("genieAuth", JSON.stringify(data));
-    dispatch(setAuth({ email, password }));
-    navigate("/");
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(data));
+    register(formData)
+      .unwrap()
+      .then((res) => {
+        form.reset();
+        infoNotify("Successfully signup");
+        setTimeout(() => {
+          navigate("/");
+        }, 600);
+      })
+      .catch((error) => {
+        const msg = error?.data?.error;
+        errorNotify(msg);
+      });
   };
 
   useEffect(() => {
@@ -90,7 +105,7 @@ function Registration() {
                   name="password"
                   placeholder={"Enter your password"}
                 ></PasswordInput>
-                {isStrong && (
+                {!isStrong && (
                   <p className="text-xs text-fadeColor mt-1">
                     Must contain more than 7 character with uppercase,
                     lowercase, symble and number
@@ -108,6 +123,8 @@ function Registration() {
             </button>
           </form>
         </div>
+        {isLoading && <RequestLoader></RequestLoader>}
+        <NotifyContainer></NotifyContainer>
       </div>
     </section>
   );

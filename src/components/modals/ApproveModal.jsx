@@ -1,6 +1,6 @@
 import React from "react";
 
-const ApproveModal = ({ handleStatus, status, modalClose }) => {
+const ApproveModal = ({ handleStatus, status, title }) => {
   return (
     <section>
       <input type="checkbox" id="approvePopup" className="modal-toggle" />
@@ -32,9 +32,11 @@ const ApproveModal = ({ handleStatus, status, modalClose }) => {
             </svg>
           </div>
           <div className="text-center">
-            <h4 className=" text-successHigh text-4xl font-bold ">Approve</h4>
+            <h4 className=" text-successHigh text-4xl font-bold capitalize">
+              {status}
+            </h4>
             <p className="text-2xl text-blackLow mt-2">
-              Are you sure to approve?
+              Are you sure to {status} this {title}?
             </p>
           </div>
           <div className="modal-action flex items-center justify-center gap-6">
@@ -42,7 +44,6 @@ const ApproveModal = ({ handleStatus, status, modalClose }) => {
               htmlFor="approvePopup"
               className="btn bg-fadeColor hover:bg-fadeColor text-white text-base font-semibold w-full max-w-[200px]"
               onClick={handleStatus}
-              data-hs-overlay={modalClose || ""}
             >
               Cancel
             </label>

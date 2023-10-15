@@ -1,306 +1,36 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { product1 } from "../../assets/getAssets";
+import RequestLoader from "../../components/loaders/RequestLoader";
 import SearchLoader from "../../components/loaders/SearchLoader";
 import SearchBar from "../../components/shared/searchbar/SearchBar";
 import NoData from "../../components/shared/ui/NoData";
 import SomethingWrong from "../../components/shared/ui/SomethingWrong";
 import ActiveProductsTable from "../../components/tables/activeProducts/ActiveProductsTable";
+import {
+  useDeleteProductMutation,
+  useGetAllProductsQuery,
+  useUpdateProductMutation,
+} from "../../features/products/productsApi";
+import NotifyContainer, { errorNotify, infoNotify } from "../../util/getNotify";
 
 function ActiveProducts() {
-  const isLoading = false;
-  const isError = false;
-  const data = [
-    {
-      _id: 1,
-      fileUrl: product1,
-      name: "Sunsilk Black Shine Shampoo",
-      email: "john.doe@example.com",
-      phone: 223448632,
-      veriant: "250g",
-      Lot: "L1",
-      inventory: 45,
-      buyingPrice: 250,
-      sellingPrice: 300,
-      timestamp: 1696468268,
-      previous: [
-        {
-          name: "Sunsilk Black Shine Shampoo",
-          fileUrl: product1,
-          id: 1,
-          inventory: 30,
-          buyingPrice: 240,
-          sellingPrice: 280,
-        },
-        {
-          name: "John Doe",
-          fileUrl: product1,
-          id: 2,
-          inventory: 45,
-          buyingPrice: 260,
-          sellingPrice: 300,
-        },
-        {
-          name: "John Doe",
-          fileUrl: product1,
-          id: 3,
-          inventory: 45,
-          buyingPrice: 250,
-          sellingPrice: 300,
-        },
-      ],
-    },
-    {
-      _id: 2,
-      fileUrl: product1,
-      name: "Jane Smith",
-      email: "jane.smith@example.com",
-      phone: 223448632,
-      veriant: "250g",
-      Lot: "L1",
-      inventory: 45,
-      buyingPrice: 250,
-      sellingPrice: 300,
-      timestamp: 1696468269,
-      previous: [
-        {
-          name: "Sunsilk Black Shine Shampoo",
-          fileUrl: product1,
-          id: 1,
-          inventory: 30,
-          buyingPrice: 240,
-          sellingPrice: 280,
-        },
-        {
-          name: "John Doe",
-          fileUrl: product1,
-          id: 2,
-          inventory: 45,
-          buyingPrice: 260,
-          sellingPrice: 300,
-        },
-        {
-          name: "John Doe",
-          fileUrl: product1,
-          id: 3,
-          inventory: 45,
-          buyingPrice: 250,
-          sellingPrice: 300,
-        },
-      ],
-    },
-    {
-      _id: 3,
-      fileUrl: product1,
-      name: "Alice Johnson",
-      email: "alice.johnson@example.com",
-      phone: 223448632,
-      veriant: "250g",
-      Lot: "L1",
-      inventory: 45,
-      buyingPrice: 250,
-      sellingPrice: 300,
-      inventoryTwo: 30,
-      buyingPriceTwo: 200,
-      sellingPriceTwo: 250,
-      timestamp: 1696468270,
-      previous: [
-        {
-          name: "Sunsilk Black Shine Shampoo",
-          fileUrl: product1,
-          id: 1,
-          inventory: 30,
-          buyingPrice: 240,
-          sellingPrice: 280,
-        },
-        {
-          name: "John Doe",
-          fileUrl: product1,
-          id: 2,
-          inventory: 45,
-          buyingPrice: 260,
-          sellingPrice: 300,
-        },
-        {
-          name: "John Doe",
-          fileUrl: product1,
-          id: 3,
-          inventory: 45,
-          buyingPrice: 250,
-          sellingPrice: 300,
-        },
-      ],
-    },
-    {
-      _id: 4,
-      fileUrl: product1,
-      name: "Bob Brown",
-      email: "bob.brown@example.com",
-      phone: 223448632,
-      veriant: "250g",
-      Lot: "L1",
-      inventory: 45,
-      buyingPrice: 250,
-      sellingPrice: 300,
-      inventoryTwo: 30,
-      buyingPriceTwo: 200,
-      sellingPriceTwo: 250,
-      timestamp: 1696468271,
-      previous: [
-        {
-          name: "Sunsilk Black Shine Shampoo",
-          fileUrl: product1,
-          id: 1,
-          inventory: 30,
-          buyingPrice: 240,
-          sellingPrice: 280,
-        },
-        {
-          name: "John Doe",
-          fileUrl: product1,
-          id: 2,
-          inventory: 45,
-          buyingPrice: 260,
-          sellingPrice: 300,
-        },
-        {
-          name: "John Doe",
-          fileUrl: product1,
-          id: 3,
-          inventory: 45,
-          buyingPrice: 250,
-          sellingPrice: 300,
-        },
-      ],
-    },
-    {
-      _id: 5,
-      fileUrl: product1,
-      name: "Eva Williams",
-      email: "eva.williams@example.com",
-      phone: 223448632,
-      veriant: "250g",
-      Lot: "L1",
-      inventory: 45,
-      buyingPrice: 250,
-      sellingPrice: 300,
-      inventoryTwo: 30,
-      buyingPriceTwo: 200,
-      sellingPriceTwo: 250,
-      timestamp: 1696468272,
-      previous: [
-        {
-          name: "Sunsilk Black Shine Shampoo",
-          fileUrl: product1,
-          id: 1,
-          inventory: 30,
-          buyingPrice: 240,
-          sellingPrice: 280,
-        },
-        {
-          name: "John Doe",
-          fileUrl: product1,
-          id: 2,
-          inventory: 45,
-          buyingPrice: 260,
-          sellingPrice: 300,
-        },
-        {
-          name: "John Doe",
-          fileUrl: product1,
-          id: 3,
-          inventory: 45,
-          buyingPrice: 250,
-          sellingPrice: 300,
-        },
-      ],
-    },
-    {
-      _id: 6,
-      fileUrl: product1,
-      name: "Michael Davis",
-      email: "michael.davis@example.com",
-      phone: 223448632,
-      veriant: "250g",
-      Lot: "L1",
-      inventory: 45,
-      buyingPrice: 250,
-      sellingPrice: 300,
-      timestamp: 1696468273,
-      previous: [
-        {
-          name: "Sunsilk Black Shine Shampoo",
-          fileUrl: product1,
-          id: 1,
-          inventory: 30,
-          buyingPrice: 240,
-          sellingPrice: 280,
-        },
-        {
-          name: "John Doe",
-          fileUrl: product1,
-          id: 2,
-          inventory: 45,
-          buyingPrice: 260,
-          sellingPrice: 300,
-        },
-        {
-          name: "John Doe",
-          fileUrl: product1,
-          id: 3,
-          inventory: 45,
-          buyingPrice: 250,
-          sellingPrice: 300,
-        },
-      ],
-    },
-    {
-      _id: 7,
-      fileUrl: product1,
-      name: "Olivia Wilson",
-      email: "olivia.wilson@example.com",
-      phone: 223448632,
-      veriant: "250g",
-      Lot: "L1",
-      inventory: 45,
-      buyingPrice: 250,
-      sellingPrice: 300,
-      inventoryTwo: 30,
-      buyingPriceTwo: 200,
-      sellingPriceTwo: 250,
-      timestamp: 1696468274,
-      previous: [
-        {
-          name: "Sunsilk Black Shine Shampoo",
-          fileUrl: product1,
-          id: 1,
-          inventory: 30,
-          buyingPrice: 240,
-          sellingPrice: 280,
-        },
-        {
-          name: "John Doe",
-          fileUrl: product1,
-          id: 2,
-          inventory: 45,
-          buyingPrice: 260,
-          sellingPrice: 300,
-        },
-        {
-          name: "John Doe",
-          fileUrl: product1,
-          id: 3,
-          inventory: 45,
-          buyingPrice: 250,
-          sellingPrice: 300,
-        },
-      ],
-    },
-  ];
+  const { data, isLoading, isError } = useGetAllProductsQuery();
+  const [updateProduct, { isLoading: isUpdateLoading }] =
+    useUpdateProductMutation();
+  const [deleteProduct, { isLoading: isDeleteLoading }] =
+    useDeleteProductMutation();
 
   const filterBySearch = (data) => {
     if (searchValue.trim().length > 0) {
       return data?.name?.toLowerCase().startsWith(searchValue?.toLowerCase());
+    } else {
+      return true;
+    }
+  };
+
+  const filterByStatus = (data) => {
+    if (data?.status) {
+      return data?.status !== "paused";
     } else {
       return true;
     }
@@ -322,9 +52,17 @@ function ActiveProducts() {
   } else if (!isLoading && !isError && data?.length === 0) {
     content = <NoData></NoData>;
   } else if (!isLoading && !isError && data?.length > 0) {
-    const newData = [...data]?.filter(filterBySearch);
+    const newData = [...data]?.filter(filterByStatus)?.filter(filterBySearch);
     if (newData?.length > 0) {
-      content = <ActiveProductsTable data={newData}></ActiveProductsTable>;
+      content = (
+        <ActiveProductsTable
+          data={newData}
+          errorNotify={errorNotify}
+          infoNotify={infoNotify}
+          updateItem={updateProduct}
+          deleteItem={deleteProduct}
+        ></ActiveProductsTable>
+      );
     } else {
       content = (
         <div className="bg-whiteLow h-full rounded-b-2xl">
@@ -369,6 +107,8 @@ function ActiveProducts() {
 
         <div className="h-[calc(100%-108px)]">{content}</div>
       </div>
+      {(isUpdateLoading || isDeleteLoading) && <RequestLoader></RequestLoader>}
+      <NotifyContainer></NotifyContainer>
     </section>
   );
 }
